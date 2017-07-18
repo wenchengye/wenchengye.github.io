@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="null">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          Android Developer Guide中的Android概览 - Overspark的博客
+        
+    </title>
+
+    <link rel="canonical" href="http://blog.overspark.me/2017/07/18/android-developers-guide-note-introduction/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('img/header_img/android-note-header.jpg')
+            /*post*/
+        
+    }
+    
+    #signature{
+        background-image: url('/img/signature/***.png');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#Android" title="Android">Android</a>
+                            
+                        </div>
+                        <h1>Android Developer Guide中的Android概览</h1>
+                        <h2 class="subheading">Android官方guide随笔 - Introduction</h2>
+                        <span class="meta">
+                            Posted by Overspark on
+                            2017-07-18
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">World&#39;s End Tavern</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h2 id="Application-Fundamentals"><a href="#Application-Fundamentals" class="headerlink" title="Application Fundamentals"></a>Application Fundamentals</h2><h3 id="展开点"><a href="#展开点" class="headerlink" title="展开点"></a><strong>展开点</strong></h3><ul>
+<li>Android app、Android进程、Linux UID、Android VM的对应关系。</li>
+<li>令不同app使用同一个Linux UID的方法与用处（文中提到了share UID的app需要有相同签名）。</li>
+<li>Android各个组件状态(background、foreground、service是否被bind)和进程回收优先级的关系。</li>
+<li>JobScheduler、JobScheduler和Service的关系。</li>
+</ul>
+<h3 id="Caution"><a href="#Caution" class="headerlink" title="Caution"></a><strong>Caution</strong></h3><ul>
+<li>(出于安全原因)对Service不能使用implicit intent</li>
+</ul>
+<h3 id="概要"><a href="#概要" class="headerlink" title="概要"></a><strong>概要</strong></h3><p>首先介绍Android App和Android系统的关系。</p>
+<ul>
+<li>一个Apk文件包括了一个Android App的全部内容。</li>
+<li>每个Android App在Android Linux上使用独立UID，通过Linux权限系统来实现安全性（私有文件不会被其他app访问）。</li>
+<li>每个Android进程运行在单独的Android VM上，每个Android app运行在自己的进程上，Android app所属的进程由Android系统负责。</li>
+</ul>
+<p>然后介绍Android App所包含的几类内容。</p>
+<ul>
+<li>app components，即Android组件，定义了App的功能。</li>
+<li>manifest文件，声明App包含的所有app components；声明App对设备的筛选要求(sdk、软件&amp;硬件功能等)。</li>
+<li>资源，把资源和代码分离的重要目的是，便于在不同的系统配置下使用不同的资源。</li>
+</ul>
+<p>文章的之后几节分类介绍了Android App的各类内容。</p>
+<h4 id="app-components"><a href="#app-components" class="headerlink" title="app components"></a><em>app components</em></h4><p>“四大组件”。</p>
+<h4 id="manifest"><a href="#manifest" class="headerlink" title="manifest"></a><em>manifest</em></h4><p>介绍manifest包含的重点功能。</p>
+<ul>
+<li>声明App包含的app components，通过<code>&lt;activity&gt;</code>、<code>&lt;service&gt;</code>、<code>&lt;receiver&gt;</code>、<code>&lt;provider&gt;</code>标签。</li>
+<li>声明每个App component能力（即能执行哪些Action），通过intent-filter。</li>
+<li>声明App对设备能力的筛选要求（sdk、软件&amp;硬件功能等）。</li>
+</ul>
+<h4 id="资源"><a href="#资源" class="headerlink" title="资源"></a><em>资源</em></h4><p>概述而已。</p>
+<h2 id="Device-Compatibility"><a href="#Device-Compatibility" class="headerlink" title="Device Compatibility"></a>Device Compatibility</h2><h3 id="展开点-1"><a href="#展开点-1" class="headerlink" title="展开点"></a><strong>展开点</strong></h3><ul>
+<li><a href="https://source.android.com/compatibility/overview" target="_blank" rel="external">Android compatibility program</a>，Android系统对设备的要求。</li>
+<li>PackageManager的职责。</li>
+<li>google play filter</li>
+</ul>
+<h3 id="caution"><a href="#caution" class="headerlink" title="caution"></a><strong>caution</strong></h3><ul>
+<li><code>&lt;user-feature&gt;</code>标签中的feature IDs，定义在PackageManager的String类型静态常量中；可以调用PackageManager.hasSystemFeature()来查询feature是否可用。</li>
+<li>某些<code>&lt;user-permission&gt;</code>会隐含<code>&lt;user-feature&gt;</code>，例如”android.permission.BLUETOOTH”会隐含”android.hardware.bluetooth”（PackageManager.FEATURE_BLUETOOTH）。如果需要避免<code>&lt;user-permission&gt;</code>去影响google play filter，需要显示声明<code>&lt;user-feature&gt;</code>并将require设为false。</li>
+</ul>
+<h3 id="概要-1"><a href="#概要-1" class="headerlink" title="概要"></a><strong>概要</strong></h3><p>支持Android操作系统的设备多种多样，App应该支持尽量多的设备；同时也有方法对App可以被安装到的设备进行筛选（借助Google Play）。本章介绍App筛选设备的方式。</p>
+<h4 id="基于技术原因筛选设备"><a href="#基于技术原因筛选设备" class="headerlink" title="基于技术原因筛选设备"></a><em>基于技术原因筛选设备</em></h4><p>借助google play，App可以依赖以下条件筛选设备，设备功能(device feature)、系统版本、屏幕规格。<br>这些筛选条件声明在manifest文件中。</p>
+<ul>
+<li>设备功能，在mainfest中通过<code>&lt;uses-feature&gt;</code>标签增加对设备功能的筛选条件（例如需要蓝牙、重力感应、系统支持widget等）。</li>
+<li>系统版本，在mainfest中通过<code>&lt;uses-sdk&gt;</code>标签的minSdkVersion属性和targetSdkVersion属性来筛选系统版本。minSdkVersion表示可安装的最低版本；targetSdkVersion表示App完全适配的最高版本，要求比targetSdkVersion更高版本的系统对App行为进行向前兼容。</li>
+<li>屏幕规格，不能通过屏幕规格筛选设备，请进行适配。</li>
+</ul>
+<h4 id="基于非技术原因筛选设备"><a href="#基于非技术原因筛选设备" class="headerlink" title="基于非技术原因筛选设备"></a><em>基于非技术原因筛选设备</em></h4><p>在Google Play控制台中，可以对App可安装的设备增加更多的条件，例如地区、年龄等，通常出于商业&amp;产品的顾虑。<br>基数技术原因的筛选条件通常声明在Apk文件中（manifest）；基于非技术原因的筛选条件通畅声明在google play控制台。</p>
+<h2 id="System-Permissions——Requesting-Permissions"><a href="#System-Permissions——Requesting-Permissions" class="headerlink" title="System Permissions——Requesting Permissions"></a>System Permissions——Requesting Permissions</h2><h3 id="展开点-2"><a href="#展开点-2" class="headerlink" title="展开点"></a><strong>展开点</strong></h3><ul>
+<li><a href="https://www.youtube.com/watch?v=f17qe9vZ8RM" target="_blank" rel="external">Google I/O 2015 - Android M Permissions</a>。</li>
+<li>SYSTEM_ALERT_WINDOW和WRITE_SETTINGS这两个属于Special Permissions，不是normal or dangerous permissions。</li>
+<li><a href="https://source.android.com/security/" target="_blank" rel="external">Android系统的安全模型</a>。</li>
+<li>实验自动权限调整，查看自动加入的权限会否在安装时显示，实验自动权限调整是怎么影响dangerous权限的。</li>
+</ul>
+<h3 id="caution-1"><a href="#caution-1" class="headerlink" title="caution"></a><strong>caution</strong></h3><ul>
+<li>normal permission的permission group作用不大。</li>
+<li>请求dangerous permission时的系统dialog<strong><em>不能</em></strong>自定义。</li>
+<li>Manifest类定义了permission常量(String)和permission group常量(String)。</li>
+</ul>
+<h3 id="概要-2"><a href="#概要-2" class="headerlink" title="概要"></a><strong>概要</strong></h3><p>本章介绍如何请求Android系统的标准权限，下一章介绍如何自定义权限。</p>
+<h4 id="请求权限"><a href="#请求权限" class="headerlink" title="请求权限"></a><em>请求权限</em></h4><p>App需要请求的权限都需要通过<code>&lt;uses-permission&gt;</code>标签在manifest文件中声明（无论normal还是dangerous），其中normal权限会自动获得；dangerous权限则需要用户显示授予。</p>
+<p>大多情况下，违反权限规则的接口调用（还未请求权限就使用权限），会抛出异常&amp;打印错误日志。   </p>
+<h4 id="动态请求权限"><a href="#动态请求权限" class="headerlink" title="动态请求权限"></a><em>动态请求权限</em></h4><p>Dangerous权限和动态权限授予的功能是从6.0（23）加入Android系统的，所以Android对动态权限的兼容方式如下：</p>
+<ul>
+<li>App的targetSdkVersion大于等于23<strong><em>且</em></strong>系统大于等于6.0时，App需要在运行时请求dangerous权限（请求之后，系统弹出权限授予dialog，用户选择后回调App）；dangerous权限可以随时被剥夺（在 Settings -&gt; Apps 中）。</li>
+<li>App的targetSdkVersion小于等于22<strong><em>且</em></strong>系统大于等于6.0时，angerous权限在App安装时请求用户授予，否则不能被安装；dangerous权限可以随时被剥夺（在 Settings -&gt; Apps 中）。</li>
+<li>系统小于等于5.1时，dangerous权限在App安装时请求用户授予，否则不能被安装；当系统小于等于5.1时dangerous权限只能在删除App之后被剥夺。</li>
+</ul>
+<p>所以即便App的targetSdkVersion小于等于22，也要测试App在没有所需权限时能否适当的运行，因为系统大于等于6.0后用户可以在安装后剥夺dangerous权限。</p>
+<p>使用ContextCompat和ActivityCompat中的方法来检查动态权限和请求动态权限。</p>
+<p>如果用户在显示授予dialog拒绝授予权限并且勾选“don’t show again”，再次请求这个权限会直接被拒绝（不弹出dialog）。</p>
+<h4 id="自动权限调整"><a href="#自动权限调整" class="headerlink" title="自动权限调整"></a><em>自动权限调整</em></h4><p>当Android系统版本更新之后，可能会加入新的权限种类。当App的targetSdkVersion较小，并且后续Android版本加入新的权限种类时，Android会自动为App加入新的权限声明（就像App在manifest里声明了这些新权限一样）。</p>
+<p>自动加入的权限，也会被列在Google Play的权限列表中。   </p>
+<p>这种自动权限调整的行为很奇怪对不对，新权限不一定需要对不对，那么及时更新App的targetSdkVersion哦。（呵呵…）</p>
+<h4 id="查看权限列表"><a href="#查看权限列表" class="headerlink" title="查看权限列表"></a><em>查看权限列表</em></h4><p>adb shell pm list permissions；Settings -&gt; Apps。</p>
+<h4 id="permission-group"><a href="#permission-group" class="headerlink" title="permission group"></a><em>permission group</em></h4><p>对于同组的dangerous权限，如果App已经获得了其中一个，请求组内其他的权限时就无需用户显示授权，<strong>但是在App代码中仍然需要请求这些同组权限</strong>。</p>
+<h2 id="System-Permissions——Defining-Permissons"><a href="#System-Permissions——Defining-Permissons" class="headerlink" title="System Permissions——Defining Permissons"></a>System Permissions——Defining Permissons</h2><h3 id="展开点-3"><a href="#展开点-3" class="headerlink" title="展开点"></a><strong>展开点</strong></h3><ul>
+<li>自定义权限和签名的关系（相同的签名的App可以自动获取权限？）&amp; <code>&lt;permission&gt;</code>标签android:protectionLevel属性的取值，signature。</li>
+<li>如何做验证签名，App-to-App，App-to-Server。</li>
+<li>Context.registerReceiver()时添加权限限制的方法。</li>
+<li>Context.checkCallingPermission()的用法（在IDL中的使用）。</li>
+<li>URI Permission的生命周期。</li>
+<li>URI Permission。</li>
+<li>自定义Permission Group的方法与应用场景。</li>
+</ul>
+<h3 id="caution-2"><a href="#caution-2" class="headerlink" title="caution"></a><strong>caution</strong></h3><ul>
+<li>如果两个不同App需要share UID的话，它们需要使用相同的签名；share UID通过manifest文件中的<code>&lt;manifest&gt;</code>标签的sharedUserId属性来定义。</li>
+<li>App A <strong>签名级别</strong>的自定义权限，App B需要有与A相同的签名才能获得。</li>
+<li>Android系统不允许不同的App(原文是package)定义相同名称的permisson，除非它们(apps)有相同的签名。如果已经安装一个定义permisson的App，那么再安装另一个定义同名permisson的App(不同签名)会安装失败。</li>
+</ul>
+<h3 id="概要-3"><a href="#概要-3" class="headerlink" title="概要"></a><strong>概要</strong></h3><p>这一章简单介绍自定义权限，主要描述定义权限和要求权限的方式。</p>
+<h4 id="背景知识"><a href="#背景知识" class="headerlink" title="背景知识"></a><em>背景知识</em></h4><p>自定义权限的背景知识是，Android系统包括UID和签名的安全模型。</p>
+<h4 id="定义权限"><a href="#定义权限" class="headerlink" title="定义权限"></a><em>定义权限</em></h4><p>通过在mainfest文件中定义<code>&lt;permission&gt;</code>标签来定义权限，<code>&lt;permission&gt;</code>标签包含了protectionLevel、permissionGroup、label、description等属性。</p>
+<ul>
+<li>protectionLevel是必填字段，定义了权限类型，其值域包括normal、dangerous、signature、signatureOrSystem等。</li>
+<li>permissionGroup选填，仅在dangerous权限时有意义(大概)。可以通过<code>&lt;permission-group&gt;</code>可以自定义permissionGroup，不过大多数情况应该使用系统标准的permissionGroup。</li>
+<li>label和description用于提供权限的文字描述，按照惯例label为权限名字；description分为两句话，一句描述权限，一句恶意应用获得这个权限能造成的危害。</li>
+</ul>
+<h4 id="自定义权限的建议"><a href="#自定义权限的建议" class="headerlink" title="自定义权限的建议"></a><em>自定义权限的建议</em></h4><ul>
+<li>小心评估是否需要自定义权限。</li>
+<li>如果需要设计一组互相协作App，尽量让每个permission在这些App中只被定义一次（如果这些App的签名不同，那么必须只被定义一次）。</li>
+<li>如果权限尽在共享签名的App之间使用，则无需自定义权限，尽在跨App请求时进行签名验证。</li>
+<li>使用单独的App，不提供任何功能，仅定义权限。</li>
+</ul>
+<h4 id="要求权限"><a href="#要求权限" class="headerlink" title="要求权限"></a><em>要求权限</em></h4><p>在manifest文件中的四大组件标签中声明android:permisson属性，可以要求在访问该组件时所需的权限。</p>
+<ul>
+<li>Activity的权限检查发生在Context.startActivity()和 Activity.startActivityForResult()调用时。无权限会抛出异常。</li>
+<li>Service的权限检查发生在Context.startService(), Context.stopService()和Context.bindService() 调用时。无权限会抛出异常。</li>
+<li>BroadcastReceiver 的权限检查发生在 Context.sendBroadcast() 之后，BroadcastReceiver 的权限定义为  是否有权限向 BroadcastReceiver 发送广播。无权限时不会抛出异常，仅仅是广播无效。</li>
+<li>ContentProvider 的权限分为 android:readPermission 和 android:writePermission ，在请求 ContentProvider 是检查权限。无权限会抛出异常。</li>
+</ul>
+<h4 id="广播接收权限"><a href="#广播接收权限" class="headerlink" title="广播接收权限"></a><em>广播接收权限</em></h4><p>出了定义是否有权限向 BroadcastReceiver 发送广播，还可以定义 BroadcastReceiver 是否有权限接受广播。在 Context.sendBroadcast() 方法中加入 receiverPermission（String）参数可以定义接收者所需权限。</p>
+<h4 id="其他要求权限方法"><a href="#其他要求权限方法" class="headerlink" title="其他要求权限方法"></a><em>其他要求权限方法</em></h4><p> Context.checkCallingPermission()、Context.checkPermission(String, int, int)、Context.checkPermission(String, int, int)。</p>
+<h4 id="URI权限"><a href="#URI权限" class="headerlink" title="URI权限"></a><em>URI权限</em></h4><p>通过URI权限，可以赋予App通向ContentProvider的特定URI的临时权限（尽管App不具有访问 ContentProvider的权限）。</p>
+<p>通过Intent.FLAG_GRANT_READ_URI_PERMISSION或 Intent.FLAG_GRANT_WRITE_URI_PERMISSION向activity发Intent（包括返回result），activity将被赋予Intent所包含data URI的 URI权限。Context.grantUriPermission()方法也可以赋予URI权限，但尽量使用Intent来赋予URI权限，因为通过Intent方法赋予的URI权限有自动过期特性。</p>
+<p>支持的URI权限的ContentProvider需要在<code>&lt;provider&gt;</code>标签中定义grantUriPermissions属性；或在<code>&lt;provider&gt;</code>标签先定义<code>&lt;grant-uri-permissions&gt;</code>标签。</p>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    
+                </ul>
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                    <div class="comment">
+                        <div id="disqus_thread" class="disqus-thread"></div>
+                    </div>
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Application-Fundamentals"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Application Fundamentals</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#展开点"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">展开点</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Caution"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">Caution</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#概要"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">概要</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#app-components"><span class="toc-nav-number">1.3.1.</span> <span class="toc-nav-text">app components</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#manifest"><span class="toc-nav-number">1.3.2.</span> <span class="toc-nav-text">manifest</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#资源"><span class="toc-nav-number">1.3.3.</span> <span class="toc-nav-text">资源</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Device-Compatibility"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Device Compatibility</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#展开点-1"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">展开点</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#caution"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">caution</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#概要-1"><span class="toc-nav-number">2.3.</span> <span class="toc-nav-text">概要</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#基于技术原因筛选设备"><span class="toc-nav-number">2.3.1.</span> <span class="toc-nav-text">基于技术原因筛选设备</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#基于非技术原因筛选设备"><span class="toc-nav-number">2.3.2.</span> <span class="toc-nav-text">基于非技术原因筛选设备</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#System-Permissions——Requesting-Permissions"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">System Permissions——Requesting Permissions</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#展开点-2"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">展开点</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#caution-1"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">caution</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#概要-2"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">概要</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#请求权限"><span class="toc-nav-number">3.3.1.</span> <span class="toc-nav-text">请求权限</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#动态请求权限"><span class="toc-nav-number">3.3.2.</span> <span class="toc-nav-text">动态请求权限</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#自动权限调整"><span class="toc-nav-number">3.3.3.</span> <span class="toc-nav-text">自动权限调整</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#查看权限列表"><span class="toc-nav-number">3.3.4.</span> <span class="toc-nav-text">查看权限列表</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#permission-group"><span class="toc-nav-number">3.3.5.</span> <span class="toc-nav-text">permission group</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#System-Permissions——Defining-Permissons"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">System Permissions——Defining Permissons</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#展开点-3"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">展开点</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#caution-2"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">caution</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#概要-3"><span class="toc-nav-number">4.3.</span> <span class="toc-nav-text">概要</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#背景知识"><span class="toc-nav-number">4.3.1.</span> <span class="toc-nav-text">背景知识</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#定义权限"><span class="toc-nav-number">4.3.2.</span> <span class="toc-nav-text">定义权限</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#自定义权限的建议"><span class="toc-nav-number">4.3.3.</span> <span class="toc-nav-text">自定义权限的建议</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#要求权限"><span class="toc-nav-number">4.3.4.</span> <span class="toc-nav-text">要求权限</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#广播接收权限"><span class="toc-nav-number">4.3.5.</span> <span class="toc-nav-text">广播接收权限</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#其他要求权限方法"><span class="toc-nav-number">4.3.6.</span> <span class="toc-nav-text">其他要求权限方法</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#URI权限"><span class="toc-nav-number">4.3.7.</span> <span class="toc-nav-text">URI权限</span></a></li></ol></li></ol></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Android" title="Android">Android</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus embedded js code start (one page only need to embed once) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "your-disqus-ID";
+    var disqus_identifier = "http://blog.overspark.me/2017/07/18/android-developers-guide-note-introduction/";
+    var disqus_url = "http://blog.overspark.me/2017/07/18/android-developers-guide-note-introduction/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus embedded js code start end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/wenchengye">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Overspark 2017 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    re-Ported by <a href="http://beantech.org">BeanTech</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=YenYuHsuan&repo=hexo-theme-beantech&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://blog.overspark.me/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="http://blog.overspark.me/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
