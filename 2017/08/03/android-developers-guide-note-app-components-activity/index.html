@@ -250,6 +250,7 @@
 <h3 id="保存和恢复Activity状态"><a href="#保存和恢复Activity状态" class="headerlink" title="保存和恢复Activity状态"></a>保存和恢复Activity状态</h3><p>如果Activity由于进程回收、configuration change等原因被销毁，系统会用一个Bundle对象（即SaveInstanceState）来保存Activity状态，以便再次进入Activity时通过这个Bundle对象恢复Activity状态。<br>依靠默认行为，Activity会保存和恢复View的状态。</p>
 <p>Activity通过onSaveInstanceState()方法保存状态，重写它时需要调用super，super方法里会进行保存View状态发生的工作。</p>
 <p>SaveInstanceState会作为参数传递给onCreate()和onRestoreInstanceState()。onRestoreInstanceState()的调用顺序在onStart()之后，重写它时需要调用super，和onSaveInstanceState()同理。</p>
+<p>onSaveInstanceState()大概是在onPause和onStop之间调用，onRestoreInstanceState()在onStart()之后被调用。</p>
 <h2 id="Activity-State-Changes"><a href="#Activity-State-Changes" class="headerlink" title="Activity State Changes"></a>Activity State Changes</h2><p>本节列出了一些会造成Activity状态发生改变的情况。</p>
 <ul>
 <li>Configuration change，会引发Activity的销毁和重建，为了应对Configuration change应该实现onSaveInstanceState()来保存恢复状态。</li>
@@ -303,7 +304,7 @@
                 <ul class="pager">
                     
                         <li class="previous">
-                            <a href="/2017/08/04/android-developers-guide-note-app-components-fragment/" data-toggle="tooltip" data-placement="top" title="Android Developer Guide中的Fragment和Loader">&larr; Previous Post</a>
+                            <a href="/2017/08/04/android-developers-guide-note-app-components-fragment/" data-toggle="tooltip" data-placement="top" title="">&larr; Previous Post</a>
                         </li>
                     
                     

@@ -14,7 +14,7 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          Android Developer Guide中的Fragment和Loader - World&#39;s End Tavern
+          World&#39;s End Tavern
         
     </title>
 
@@ -93,8 +93,8 @@
                               <a class="tag" href="/tags/#Android" title="Android">Android</a>
                             
                         </div>
-                        <h1>Android Developer Guide中的Fragment和Loader</h1>
-                        <h2 class="subheading">Android官方guide随笔 - App Components：Fragment&amp;Loader</h2>
+                        <h1></h1>
+                        <h2 class="subheading">Android官方guide随笔 - App Components：Service</h2>
                         <span class="meta">
                             Posted by Overspark on
                             2017-08-04
@@ -225,8 +225,7 @@
 <li>经过commit()方法提交Fragment更改应该发生在Activity进行SaveInstanceState之前，如果在SaveInstanceState之后这么做会抛出异常；如果一定要在SaveInstanceState之后提交Fragment更改，使用commitAllowingStateLoss()。</li>
 <li>如果要Fragment能够收到onCreateOptionsMenu()回调，需要在Activity处于Created状态时调用setHasOptionsMenu()。</li>
 </ul>
-<p>##Fragments</p>
-<h3 id="创建Fragment"><a href="#创建Fragment" class="headerlink" title="创建Fragment"></a>创建Fragment</h3><p>创建包含UI的Fragment有两种途径：</p>
+<h2 id="Fragments"><a href="#Fragments" class="headerlink" title="Fragments"></a>Fragments</h2><h3 id="创建Fragment"><a href="#创建Fragment" class="headerlink" title="创建Fragment"></a>创建Fragment</h3><p>创建包含UI的Fragment有两种途径：</p>
 <ul>
 <li>在layout文件中声明<code>&lt;fragment&gt;</code>标签，如同使用View一样；系统会用onCreateView()返回的View替换<code>&lt;fragment&gt;</code>标签。</li>
 <li>使用FragmentTransaction.add(int, Fragment)方法提交fragment。</li>
@@ -264,6 +263,10 @@
                 <!-- Pager -->
                 <ul class="pager">
                     
+                        <li class="previous">
+                            <a href="/2017/08/04/android-developers-guide-note-app-components-service/" data-toggle="tooltip" data-placement="top" title="Android Developer Guide中的Service">&larr; Previous Post</a>
+                        </li>
+                    
                     
                         <li class="next">
                             <a href="/2017/08/03/android-developers-guide-note-app-components-activity/" data-toggle="tooltip" data-placement="top" title="Android Developer Guide中的Activity">Next Post &rarr;</a>
@@ -296,7 +299,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#展开点"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">展开点</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Caution"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Caution</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#创建Fragment"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">创建Fragment</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Fragment和Activity的交流"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">Fragment和Activity的交流</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Fragment的生命周期"><span class="toc-nav-number">2.3.</span> <span class="toc-nav-text">Fragment的生命周期</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Loader"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">Loader</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#为什么要使用Loader"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">为什么要使用Loader</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#使用Loader"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">使用Loader</span></a></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#展开点"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">展开点</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Caution"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Caution</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Fragments"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">Fragments</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#创建Fragment"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">创建Fragment</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Fragment和Activity的交流"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">Fragment和Activity的交流</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Fragment的生命周期"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">Fragment的生命周期</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Loader"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">Loader</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#为什么要使用Loader"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">为什么要使用Loader</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#使用Loader"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">使用Loader</span></a></li></ol></li></ol>
         
         </div>
       </aside>

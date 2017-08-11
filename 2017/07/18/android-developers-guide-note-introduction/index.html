@@ -280,7 +280,7 @@
 <h3 id="动态请求权限"><a href="#动态请求权限" class="headerlink" title="动态请求权限"></a><em>动态请求权限</em></h3><p>Dangerous权限和动态权限授予的功能是从6.0（23）加入Android系统的，所以Android对动态权限的兼容方式如下：</p>
 <ul>
 <li>App的targetSdkVersion大于等于23<strong><em>且</em></strong>系统大于等于6.0时，App需要在运行时请求dangerous权限（请求之后，系统弹出权限授予dialog，用户选择后回调App）；dangerous权限可以随时被剥夺（在 Settings -&gt; Apps 中）。</li>
-<li>App的targetSdkVersion小于等于22<strong><em>且</em></strong>系统大于等于6.0时，angerous权限在App安装时请求用户授予，否则不能被安装；dangerous权限可以随时被剥夺（在 Settings -&gt; Apps 中）。</li>
+<li>App的targetSdkVersion小于等于22<strong><em>且</em></strong>系统大于等于6.0时，dangerous权限在App安装时请求用户授予，否则不能被安装；dangerous权限可以随时被剥夺（在 Settings -&gt; Apps 中）。</li>
 <li>系统小于等于5.1时，dangerous权限在App安装时请求用户授予，否则不能被安装；当系统小于等于5.1时dangerous权限只能在删除App之后被剥夺。</li>
 </ul>
 <p>所以即便App的targetSdkVersion小于等于22，也要测试App在没有所需权限时能否适当的运行，因为系统大于等于6.0后用户可以在安装后剥夺dangerous权限。</p>
