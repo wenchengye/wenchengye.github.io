@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          Android Developer Guide中的Intent - World&#39;s End Tavern
+          Android Developer Guide中的其他话题 - World&#39;s End Tavern
         
     </title>
 
-    <link rel="canonical" href="http://blog.overspark.me/2017/07/26/android-developers-guide-note-app-components-intents/">
+    <link rel="canonical" href="http://blog.overspark.me/2017/08/21/android-developers-guide-note-app-components-others/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -93,11 +93,11 @@
                               <a class="tag" href="/tags/#Android" title="Android">Android</a>
                             
                         </div>
-                        <h1>Android Developer Guide中的Intent</h1>
-                        <h2 class="subheading">Android官方guide随笔 - App Components：Intent</h2>
+                        <h1>Android Developer Guide中的其他话题</h1>
+                        <h2 class="subheading">Android官方guide随笔 - App Components：Others</h2>
                         <span class="meta">
                             Posted by Overspark on
-                            2017-07-26
+                            2017-08-21
                         </span>
                     </div>
                 
@@ -215,62 +215,76 @@
                 post-container">
 
                 <h2 id="展开点"><a href="#展开点" class="headerlink" title="展开点"></a>展开点</h2><ul>
-<li>MIME Type &amp; URI结构。</li>
-<li>Intent Flags。</li>
-<li>CATEGORY_DEFAULT的意义。 </li>
-<li>如何根据content provider类型URI推断Intent Data的MIME Type，对Intent Resolve有什么影响。</li>
-<li>ClipData的用处。</li>
-<li>DocumentsProvider。</li>
+<li><a href="https://www.youtube.com/watch?v=vBjTXKpaFj8&amp;feature=youtu.be" target="_blank" rel="external">Background Optimizations</a>。</li>
+<li>foreground broadcast and receiver；FLAG_RECEIVER_FOREGROUND。</li>
+<li>custom permission的定义App和使用App的安装顺序；如果在permission还没定义时使用会发生什么。</li>
+<li>explicit intent with receiver。</li>
+<li>local broadcast and receiver。</li>
+<li><a href="https://developer.android.google.cn/topic/performance/scheduling.html" target="_blank" rel="external">Intelligent Job-Scheduling</a>。</li>
+<li>Resize App Widget。</li>
+<li>ViewStub。</li>
+<li>AppWidgetManager in Detail。</li>
+<li>orderedBroadcast。 </li>
+<li><a href="https://android.googlesource.com/platform/packages/apps/Launcher3/" target="_blank" rel="external">Launcher</a>。</li>
 </ul>
-<h2 id="Caution"><a href="#Caution" class="headerlink" title="Caution"></a>Caution</h2><ul>
-<li>不要为Service添加Intent filter，不要使用implicit intent启动Service。在5.0以上，使用implicit intent调用bindService()，系统会抛出异常。</li>
-<li>Intent的静态常量中定义了一些通用的action、category和extra key字符串；Settings的静态常量定义了一些打开Settings App界面的action。</li>
-<li>Intent的setData方法和setType方法会相互将对方置空（setData会置空mType，setType会置空mData，优秀的设计…）；同时set需要调用setDataAndType。</li>
-<li>在使用implicit intent时使用Intent.resolveActivity()检查有没有App响应这个Intent；如果没有Activity适合Intent的话，startActivity()会抛异常。</li>
-<li>（对于Activity而言）为了能收到implicit intent，在intent-filter中必须声明CATEGORY_DEFAULT，因为startActivity()和startActivityForResult()会默认添加CATEGORY_DEFAULT。</li>
+<h2 id="Cautions"><a href="#Cautions" class="headerlink" title="Cautions"></a>Cautions</h2><ul>
+<li>所有的系统Broadcast记录在Android SDK的BROADCAST_ACTIONS.TXT文件中。</li>
+<li>通过context注册的receivers的作用时间和context的生命周期一样长，例如Activity和Application。</li>
 </ul>
-<h2 id="Intents-and-Intent-Filters"><a href="#Intents-and-Intent-Filters" class="headerlink" title="Intents and Intent Filters"></a>Intents and Intent Filters</h2><p>Intent用于Component之间的交流、传递信息，依赖Intent的Component包括Activity、Servcie和Recevier（不包括Provider）。</p>
-<h3 id="Intent的分类"><a href="#Intent的分类" class="headerlink" title="Intent的分类"></a>Intent的分类</h3><p>Intent分为Explicit intents和Implicit intents两类，其区别就是Intent中是否包含ComponentName。</p>
-<h3 id="Intent组成"><a href="#Intent组成" class="headerlink" title="Intent组成"></a>Intent组成</h3><p>Intent中包含的主要成分如下：</p>
+<h2 id="Broadcasts"><a href="#Broadcasts" class="headerlink" title="Broadcasts"></a>Broadcasts</h2><h3 id="系统广播"><a href="#系统广播" class="headerlink" title="系统广播"></a>系统广播</h3><p>Android 7.0之后系统不再发ACTION_NEW_PICTURE和ACTION_NEW_VIDEO广播；CONNECTIVITY_ACTION只能用动态注册的receiver接受。</p>
+<h3 id="接收广播"><a href="#接收广播" class="headerlink" title="接收广播"></a>接收广播</h3><p>App通过manifest的<code>&lt;receiver&gt;</code>标签生命receiver，package manager会在app安装的时候注册receiver，receiver仅在onReceive执行时处于active状态。</p>
+<p>通过Context.registerReceiver方法动态注册receiver；也可以通过LocalBroadcastManager.registerReceiver动态注册local receiver。<br>local broadcast执行效率更高，无需跨越app的时候使用local broadcast。</p>
+<h4 id="goAsync"><a href="#goAsync" class="headerlink" title="goAsync()"></a>goAsync()</h4><p>调用goAsync()可以使receiver在onReceive返回之后仍处于active状态，处于active状态不会超过receiver的10秒限制，可以通过goAsync()返回的PendingResult对象的PendingResult.finish()方法终结receiver的active状态(在后台线程里)。</p>
+<h3 id="发送广播"><a href="#发送广播" class="headerlink" title="发送广播"></a>发送广播</h3><p>使用sendBroadcast(Intent)或者LocalBroadcastManager.sendBroadcast。<br>Android 4.0之后，通过Intent.setPackage()限制哪些应用可以收到这次广播。</p>
+<h3 id="最佳实践"><a href="#最佳实践" class="headerlink" title="最佳实践"></a>最佳实践</h3><ul>
+<li>无需跨app时使用local broadcast，执行效率更高。</li>
+<li>如果可以动态注册receiver就不要静态注册，以免拖慢系统。</li>
+<li>确保广播的action是unique的。</li>
+<li>不要在onReceiver里直接启动线程，除非使用goAsync()或者Service。</li>
+<li>不要通过receiver启动activity。</li>
+</ul>
+<h2 id="App-Widget"><a href="#App-Widget" class="headerlink" title="App Widget"></a>App Widget</h2><p>App Widget就是可以被嵌入其他应用中的一块View。</p>
+<h3 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h3><p>构建App Widget需要以下工作：</p>
 <ul>
-<li>Component name，区分Explicit intents和Implicit intents成分。Intent中的Component name属性是一个ComponentName对象。</li>
-<li>Action，表明Intent作希望执行的操作。Android系统有很多预定义的Action，同时Action通常也决定了Intent的结构(data、extra等)。</li>
-<li>Data，由URI和MIME type组成，做为Action的补充，代表Action的目标数据&amp;数据类型。如果URI是content: URI，MIME type往往可以由URI推断出。</li>
-<li>Category，表明希望哪些类型的Component响应Intent。</li>
-<li>Extras，extras是一个Bundle对象，传递额外数据。</li>
-<li>Flags，一些标志位用于告知Android系统如何使用这个Intent。</li>
+<li>AppWidgetProviderInfo，xml形式的metadata文件，用于配置AppWidget的属性。</li>
+<li>AppWidgetProvider的实现类。</li>
+<li>layout文件。</li>
+<li>AppWidget的configuration Activity，是AppWidet的可选组成部分。</li>
 </ul>
-<p>Component name、Action、Data和Category这四种成分会影响Intent Resolve。 </p>
-<p>借助Intent.createChooer()方法，可以在发送implicit intent时强制显示chooer dialog（尽管用户之前在chooer dialog选择了默认处理intent的App）。</p>
-<h3 id="接收implicit-intent"><a href="#接收implicit-intent" class="headerlink" title="接收implicit intent"></a>接收implicit intent</h3><p>组件通过在manifest文件中定义<code>&lt;intent-filter&gt;</code>来接收implicit intent，组件可以定义多个<code>&lt;intent-filter&gt;</code>。</p>
-<p>explicit intent将无视<code>&lt;intent-filter&gt;</code>以及由<code>&lt;intent-filter&gt;</code>定义的intent resolve规则。</p>
-<p><code>&lt;intent-filter&gt;</code>由三类标签组成：<code>&lt;action&gt;</code>、<code>&lt;data&gt;</code>、<code>&lt;category&gt;</code>。每类标签可以有一个或多个（或没有）。<br>当你定义多个<code>&lt;action&gt;</code>、<code>&lt;data&gt;</code>或<code>&lt;category&gt;</code>时，你所维护Component需要能够处理由这些标签任意组合而成的Intent；如果你只想处理特定组合，定义多个<code>&lt;intent-filter&gt;</code>。</p>
-<p>在manifest中Component的android:exported属性可以控制该Component是否能被其他App调用。当android:exported为false时，Component仅能被相同UID的App调用。没有Intent-filter的Activity的android:exported属性默认值是false。</p>
-<h3 id="使用PendingIntent"><a href="#使用PendingIntent" class="headerlink" title="使用PendingIntent"></a>使用PendingIntent</h3><blockquote>
-<p>The primary purpose of a PendingIntent is to grant permission to a foreign<br>application to use the contained Intent as if it were executed from your<br>app’s own process.</p>
-</blockquote>
-<h3 id="Intent-resovle规则"><a href="#Intent-resovle规则" class="headerlink" title="Intent resovle规则"></a>Intent resovle规则</h3><p>Intent若要通过Intent filter的检验，则需要通过Action检验、Data检验、Category检验三部分。</p>
+<h3 id="在Manifest中"><a href="#在Manifest中" class="headerlink" title="在Manifest中"></a>在Manifest中</h3><ul>
+<li><code>&lt;receiver&gt;</code>标签：AppWidgetProvider继承自receiver，在manifest文件中通过<code>&lt;receiver&gt;</code>标签来声明AppWidgetProvider。</li>
+<li><code>&lt;intent-filter&gt;</code>标签：<code>&lt;intent-filter&gt;</code>必须包含声明ACTION_APPWIDGET_UPDATE的<code>&lt;action&gt;</code>标签。</li>
+<li><code>&lt;meta-data&gt;</code>标签：用于声明AppWidgetProviderInfo，androidLname值为android.appwidget.provider，android:resource为metadata的xml文件的位置。</li>
+</ul>
+<h3 id="MetaData"><a href="#MetaData" class="headerlink" title="MetaData"></a>MetaData</h3><p>AppWidgetProviderInfo包含了AppWidget的配置信息，通过res/xml下包含单独<code>&lt;appwidget-provider&gt;</code>标签的xml文件定义。</p>
+<p><code>&lt;appwidget-provider&gt;</code>的属性：</p>
 <ul>
-<li>Action检验。<ul>
-<li>当Intent包含某个Intent filter中声明的action时可通过Action检验。</li>
-<li>如果Intent filter没有声明action，任何Intent都无法通过Action检验。</li>
-<li>如果Intent中不包含action，那么只要Intent filter声明了任意action，就可通过Acton检验。</li>
+<li>minWidth &amp; minHeight，描述widget占据的默认空间，系统会将其值近似到整cell。</li>
+<li>minResizeWidth &amp; minResizeHeight，配合Android 3.1的缩放widget功能，描述widget的最小尺寸。</li>
+<li>updatePeriodMillis，调用AppWidgetProvider.update()的时间间隔，“0”代表从不。</li>
+<li>initialLayout，layout文件。</li>
+<li>configure，configuration Activity。</li>
+<li>previewImage，预览图。</li>
+<li>resizeMode，缩放方式例如”vertical”、”horizental”、”none”。</li>
+<li>widgetCategory，widget的显示位置例如”home_screen”或”keyguard”；在5.0后不支持锁屏widget。</li>
 </ul>
-</li>
-<li>Category检验。<ul>
-<li>当Intent中定义的所有category都在Intent filter中被声明，可通过Category检验。</li>
+<p>Widget的update事件会将睡眠的设备唤醒，从而增加电量消耗。如果不需要再睡眠期间update widget可以使用AlarmMananger来代替（AlarmMananger不会唤醒设备）。</p>
+<h3 id="Widget布局文件"><a href="#Widget布局文件" class="headerlink" title="Widget布局文件"></a>Widget布局文件</h3><h4 id="设置margin"><a href="#设置margin" class="headerlink" title="设置margin"></a>设置margin</h4><p>widget需要和其他widget &amp; app icon有一些margin，不然很丑。<br>在Android 4.0之后会自动给widget加入margin，所以targetSdkVersion=14。<br>如果需要兼容旧系统，可以在layout中设置padding，padding值在大于等于14时为0即可。</p>
+<h3 id="实现AppWidgetProvider类"><a href="#实现AppWidgetProvider类" class="headerlink" title="实现AppWidgetProvider类"></a>实现AppWidgetProvider类</h3><p>需要实现的回调接口：</p>
+<ul>
+<li>onUpdate()，如果没有定义configuration activity，在第一次创建Widget的时候也会回调，所以需要负责setup工作。</li>
+<li>onAppWidgetOptionsChanged()，在widget实例第一次被放置或者widget被缩放时调用。</li>
+<li>onDeleted()，任意widget实例被删除时调用。</li>
+<li>onEnabled &amp; onDisabled，第一个widget实例被创建时 &amp; 最后一个widget实例被删除时调用。</li>
 </ul>
-</li>
-<li>Data检验。Data检验包括URI检验和MIME type检验；URI检验仅检验Intent filter中定义的部分。<ul>
-<li>如果Intent不包含URI和MIME type，仅在Intent filter没声明data条件时通过。</li>
-<li>如果Intent仅包含URI，仅在URI和Intent filter匹配，且Intent filter没声明type条件时通过。</li>
-<li>如果Intent仅包含MIME type，仅在type和Intent filter匹配，且Intent filter没声明URI条件时通过。</li>
-<li>如果Intent包含URI和MIME type，在URI和type均匹配时通过；或者在type匹配，Intent的URI为content:、file:类型，且Intent filter没有定义URI条件时通过。</li>
-</ul>
-</li>
-</ul>
-<h2 id="Common-Intents"><a href="#Common-Intents" class="headerlink" title="Common Intents"></a>Common Intents</h2><p>介绍一些Android系统预先定义的Action，以及相应的Intent结构和经由onActivityResult返回Intent的结构。</p>
-<h3 id="通过adb命令测试Intent"><a href="#通过adb命令测试Intent" class="headerlink" title="通过adb命令测试Intent"></a>通过adb命令测试Intent</h3><p>adb shell am start -a <code>&lt;ACTION&gt;</code> -t <code>&lt;MIME_TYPE&gt;</code> -d <code>&lt;DATA&gt;</code> -e <code>&lt;EXTRA_NAME&gt;</code> <code>&lt;EXTRA_VALUE&gt;</code> -n <code>&lt;ACTIVITY&gt;</code>。</p>
+<p>AppWidgetProvider仅仅是个工具类，开发者也可以直接继承receiver来辅助widget。</p>
+<h3 id="Configuration-Activity"><a href="#Configuration-Activity" class="headerlink" title="Configuration Activity"></a>Configuration Activity</h3><p>Configuration Activity会在Widget创建的时候被Widget host调用；Configuration Activity在manifest中必须包含action=ACTION_APPWIDGET_CONFIGURE的intent-filter。<br>Configuration Activity需要返回result；result和启动的Intent都需要包含<br>EXTRA_APPWIDGET_ID，代表widget id。</p>
+<p>tip：在启动时就setResult中加入RESULT_CANCELED和EXTRA_APPWIDGET_ID，以防activity通过其他逻辑分支退出。</p>
+<h3 id="预览图"><a href="#预览图" class="headerlink" title="预览图"></a>预览图</h3><p>Android模拟器包含应用”Widget Preview”，方便制作widget预览图。</p>
+<h3 id="AppWidget显示列表"><a href="#AppWidget显示列表" class="headerlink" title="AppWidget显示列表"></a>AppWidget显示列表</h3><p>//TODO:加入展开列表</p>
+<h2 id="App-Widget-Host"><a href="#App-Widget-Host" class="headerlink" title="App Widget Host"></a>App Widget Host</h2><p>//TODO:加入展开列表</p>
+<h2 id="Processes-and-Threads"><a href="#Processes-and-Threads" class="headerlink" title="Processes and Threads"></a>Processes and Threads</h2><p>默认情况下，同一个App的Component都是运行在同一个进程的主线程上。</p>
+<p>通过Component标签的android:process属性可以使得同一个App的Component运行在不同进程中，或者使不同App的Component运行在同一进程中。<br>借助<code>&lt;application&gt;</code>的android:process属性设置App的默认进程名。</p>
 
                 
 
@@ -279,12 +293,12 @@
                 <ul class="pager">
                     
                         <li class="previous">
-                            <a href="/2017/08/03/android-developers-guide-note-app-components-activity/" data-toggle="tooltip" data-placement="top" title="Android Developer Guide中的Activity">&larr; Previous Post</a>
+                            <a href="/2017/09/04/android-developers-guide-note-app-resources/" data-toggle="tooltip" data-placement="top" title="Android Developer Guide中的Resource">&larr; Previous Post</a>
                         </li>
                     
                     
                         <li class="next">
-                            <a href="/2017/07/18/android-developers-guide-note-introduction/" data-toggle="tooltip" data-placement="top" title="Android Developer Guide中的Android概览">Next Post &rarr;</a>
+                            <a href="/2017/08/21/android-developers-guide-note-app-components-content-provider/" data-toggle="tooltip" data-placement="top" title="Android Developer Guide中的ContentProvider">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -314,7 +328,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#展开点"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">展开点</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Caution"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Caution</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Intents-and-Intent-Filters"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">Intents and Intent Filters</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Intent的分类"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">Intent的分类</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Intent组成"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">Intent组成</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#接收implicit-intent"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">接收implicit intent</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#使用PendingIntent"><span class="toc-nav-number">3.4.</span> <span class="toc-nav-text">使用PendingIntent</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Intent-resovle规则"><span class="toc-nav-number">3.5.</span> <span class="toc-nav-text">Intent resovle规则</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Common-Intents"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">Common Intents</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#通过adb命令测试Intent"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">通过adb命令测试Intent</span></a></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#展开点"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">展开点</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Cautions"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Cautions</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Broadcasts"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">Broadcasts</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#系统广播"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">系统广播</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#接收广播"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">接收广播</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#goAsync"><span class="toc-nav-number">3.2.1.</span> <span class="toc-nav-text">goAsync()</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#发送广播"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">发送广播</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#最佳实践"><span class="toc-nav-number">3.4.</span> <span class="toc-nav-text">最佳实践</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#App-Widget"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">App Widget</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#基础"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">基础</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#在Manifest中"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">在Manifest中</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#MetaData"><span class="toc-nav-number">4.3.</span> <span class="toc-nav-text">MetaData</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Widget布局文件"><span class="toc-nav-number">4.4.</span> <span class="toc-nav-text">Widget布局文件</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#设置margin"><span class="toc-nav-number">4.4.1.</span> <span class="toc-nav-text">设置margin</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#实现AppWidgetProvider类"><span class="toc-nav-number">4.5.</span> <span class="toc-nav-text">实现AppWidgetProvider类</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Configuration-Activity"><span class="toc-nav-number">4.6.</span> <span class="toc-nav-text">Configuration Activity</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#预览图"><span class="toc-nav-number">4.7.</span> <span class="toc-nav-text">预览图</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#AppWidget显示列表"><span class="toc-nav-number">4.8.</span> <span class="toc-nav-text">AppWidget显示列表</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#App-Widget-Host"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">App Widget Host</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Processes-and-Threads"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">Processes and Threads</span></a></li></ol>
         
         </div>
       </aside>
@@ -361,8 +375,8 @@
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "your-disqus-ID";
-    var disqus_identifier = "http://blog.overspark.me/2017/07/26/android-developers-guide-note-app-components-intents/";
-    var disqus_url = "http://blog.overspark.me/2017/07/26/android-developers-guide-note-app-components-intents/";
+    var disqus_identifier = "http://blog.overspark.me/2017/08/21/android-developers-guide-note-app-components-others/";
+    var disqus_url = "http://blog.overspark.me/2017/08/21/android-developers-guide-note-app-components-others/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

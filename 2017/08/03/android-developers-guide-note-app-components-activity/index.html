@@ -151,14 +151,14 @@
 
                         
                         <li>
-                            <a href="/tags/">Tags</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/tags/">Tags</a>
                         </li>
                         
                     
@@ -247,7 +247,7 @@
 <h3 id="进程回收与Activity状态"><a href="#进程回收与Activity状态" class="headerlink" title="进程回收与Activity状态"></a>进程回收与Activity状态</h3><p>Android系统的资源回收是以进程为单位，不会单独作用于Activity。但是Activity状态回影响进程回收优先级，进程回收优先级从高到低为 Destroyed &gt; Stopped &gt; Pauseed &gt; Created &amp; Started &amp; Resumed。</p>
 <h3 id="启动其他Activity"><a href="#启动其他Activity" class="headerlink" title="启动其他Activity"></a>启动其他Activity</h3><p>onActivityResult的参数ResultCode可以使用RESULT_CANCELED、RESULT_OK以外的自定义值，自定义的ResultCode应当大于整型常量RESULT_FIRST_USER。</p>
 <p>当Activity A 启动 Activity B时，生命周期回调顺序如下：<br>Activity A的onPause() -&gt; Activity B的onCreate()、onStart()、onPause() -&gt; Activity A的onStop()。</p>
-<h3 id="保存和恢复Activity状态"><a href="#保存和恢复Activity状态" class="headerlink" title="保存和恢复Activity状态"></a>保存和恢复Activity状态</h3><p>如果Activity由于进程回收、configuration change等原因被销毁，系统会用一个Bundle对象（即SaveInstanceState）来保存Activity状态，以便再次进入Activity时通过这个Bundle对象恢复Activity状态。<br>依靠默认行为，Activity会保存和恢复View的状态。</p>
+<h3 id="保存和恢复Activity状态"><a href="#保存和恢复Activity状态" class="headerlink" title="保存和恢复Activity状态"></a>保存和恢复Activity状态</h3><p>系统会对Activity进行状态保存及恢复的情况有两种，因进程回收销毁Activity和因configuration变化销毁Activity。<br>当Activity的状态保存被触发时，系统会用一个Bundle对象（即SaveInstanceState）来保存Activity状态，以便再次进入Activity时通过这个Bundle对象恢复Activity状态。<br>依靠默认行为，Activity会保存和恢复View的状态。</p>
 <p>Activity通过onSaveInstanceState()方法保存状态，重写它时需要调用super，super方法里会进行保存View状态发生的工作。</p>
 <p>SaveInstanceState会作为参数传递给onCreate()和onRestoreInstanceState()。onRestoreInstanceState()的调用顺序在onStart()之后，重写它时需要调用super，和onSaveInstanceState()同理。</p>
 <p>onSaveInstanceState()大概是在onPause和onStop之间调用，onRestoreInstanceState()在onStart()之后被调用。</p>
