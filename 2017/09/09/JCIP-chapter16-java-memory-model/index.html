@@ -249,9 +249,9 @@
 <h3 id="安全发布"><a href="#安全发布" class="headerlink" title="安全发布"></a>安全发布</h3><p>happens-before规则是第三章中介绍的安全发布规则的基础，但是那些规则比happens-before规则看起来更直观。</p>
 <h3 id="安全构造的一种方式-单例"><a href="#安全构造的一种方式-单例" class="headerlink" title="安全构造的一种方式(单例)"></a>安全构造的一种方式(单例)</h3><p>JVM保证了静态初始化的线程安全，被静态代码构造的变量对所有线程都是可见的，但是单纯的静态构造不能满足使用时才初始化的要求(lazy)；单纯的加锁构造 &amp; 加锁访问也许会拖累线程。<br>借助class第一次被使用才会被JVM加载的规则，可以实现双赢(lazy、线程安全、不必每次都加锁)也较为优美的安全构造：</p>
 <blockquote>
-<p><code>@ThreadSafe</code><br><code>public class ResourceFactory {</code><br>&emsp;&emsp;<code>private static class ResourceHolder {</code><br>&emsp;&emsp;&emsp;&emsp;<code>public static Resource resource = new Resource();</code><br>&emsp;&emsp;<code>}</code><br>&emsp;&emsp;<code>public static Resource getResource() {</code><br>&emsp;&emsp;&emsp;&emsp;<code>return ResourceHolder.resource;</code><br>&emsp;&amp;emsp<code>;}</code><br><code>}</code></p>
+<p><code>@ThreadSafe</code><br><code>public class ResourceFactory {</code><br>&emsp;&emsp;<code>private static class ResourceHolder {</code><br>&emsp;&emsp;&emsp;&emsp;<code>public static Resource resource = new Resource();</code><br>&emsp;&emsp;<code>}</code><br>&emsp;&emsp;<code>public static Resource getResource() {</code><br>&emsp;&emsp;&emsp;&emsp;<code>return ResourceHolder.resource;</code><br>&emsp;&emsp;<code>}</code><br><code>}</code></p>
 </blockquote>
-<h3 id="批判-Double-checked单例构造"><a href="#批判-Double-checked单例构造" class="headerlink" title="(批判)Double-checked单例构造"></a>(批判)Double-checked单例构造</h3><p>Double-checked的单例构造经常出现于各种面试题中，然而它实际上不是线程安全的，也不优美。其线程不安全的原因是，在读取时没有可见性保证，所以可能会读取到未被其他线程构造完成的对象。尽管把对象的引用声明为volatile可以解决这个问题，但这个写法远不如static-holder方式(上一节所述)简洁明了。</p>
+<h3 id="批判-Double-checked单例构造"><a href="#批判-Double-checked单例构造" class="headerlink" title="(批判)Double-checked单例构造"></a>(批判)Double-checked单例构造</h3><p>Double-checked的单例构造经常出现于各种面试题中，然而它实际上不是线程安全的，也不优美。其线程不安全的原因是，在第一次判没有使用同步，所以没有安全构造的保证，可能返回未完全构造的对象。尽管把对象的引用声明为volatile可以解决这个问题(如果对象是不可变的也不会有问题)，但这个写法远不如static-holder方式(上一节所述)简洁明了。</p>
 <h3 id="Java构造安全规则"><a href="#Java构造安全规则" class="headerlink" title="Java构造安全规则"></a>Java构造安全规则</h3><p>Java构造安全规则描述了在对象的构造过程中，什么样的属性的构造过程对其他线程是保证可见的，事实上这个规则在第三章也被提起过。这个规则和final属性息息相关。</p>
 <p>当对象被正确构造时(对象没有在构造函数中逸出)，Java构造安全规则保证，其他线程能正确看到这个对象的所有final属性构造结果，并保证能正确看到由这些final属性可达的所有对象的构造结果。</p>
 <p>这个规则的一个直观效果：不可变对象(所有属性都是final的)一定会被安全构造。</p>
