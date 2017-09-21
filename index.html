@@ -143,14 +143,14 @@
 
                         
                         <li>
-                            <a href="/tags/">Tags</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/tags/">Tags</a>
                         </li>
                         
                     
@@ -210,6 +210,39 @@
             
                 <!-- Main Content -->
 
+
+<div class="post-preview">
+
+    <a href="/2017/09/21/JCIP-chapter15-atomic-variable-and-nonblocking-synchronization/">
+        <h2 class="post-title">
+            原子变量与非阻塞同步
+        </h2>
+        <h3 class="post-subtitle">
+            JCIP读书笔记第十五章
+        </h3>
+        <div class="post-content-preview">
+            Caution
+Float.floatToIntBits()/Double.doubleToLongBits()。
+AtomicFieldUpdater。
+
+前言java.util.concurrent中的一些线程安全类/同步工具类声称自己有更好的性能和伸缩性，这一章将介绍这种性能提升的基础——非阻塞同步。
+非阻塞同步算法的特点非阻塞同步基于硬件提供的一些原子指令(例如CAS)；非阻塞同步算......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Overspark on
+            2017-09-21
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Java" title="Java">Java</a>
+            
+        </div>
+    
+
+</div>
+<hr>
 
 <div class="post-preview">
 
@@ -517,43 +550,6 @@ ActivityManager.AppTa......
 </div>
 <hr>
 
-<div class="post-preview">
-
-    <a href="/2017/07/26/android-developers-guide-note-app-components-intents/">
-        <h2 class="post-title">
-            Android Developer Guide中的Intent
-        </h2>
-        <h3 class="post-subtitle">
-            Android官方guide随笔 - App Components：Intent
-        </h3>
-        <div class="post-content-preview">
-            展开点
-MIME Type &amp; URI结构。
-Intent Flags。
-CATEGORY_DEFAULT的意义。 
-如何根据content provider类型URI推断Intent Data的MIME Type，对Intent Resolve有什么影响。
-ClipData的用处。
-DocumentsProvider。
-
-Caution
-不要为Service添加Intent fil......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by Overspark on
-            2017-07-26
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#Android" title="Android">Android</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
 
 
 <!-- Pager -->
@@ -589,6 +585,8 @@ Caution
     <h5><a href="/tags/">FEATURED TAGS</a></h5>
     <div class="tags">
         
+            
+            <a href="/tags/#Java" title="Java" rel="2">Java</a>
             
         
             
@@ -647,6 +645,10 @@ Caution
     <ul>
       
         <li>
+          <a href="/2017/09/21/JCIP-chapter15-atomic-variable-and-nonblocking-synchronization/">原子变量与非阻塞同步</a>
+        </li>
+      
+        <li>
           <a href="/2017/09/10/tips-read-aosp-in-intellij/">使用Intellij/Android Studio阅读Android源码</a>
         </li>
       
@@ -662,10 +664,6 @@ Caution
           <a href="/2017/09/04/android-developers-guide-note-app-resources/">Android Developer Guide中的Resource</a>
         </li>
       
-        <li>
-          <a href="/2017/08/21/android-developers-guide-note-app-components-others/">Android Developer Guide中的其他话题</a>
-        </li>
-      
     </ul>
   </div>
 
@@ -675,7 +673,7 @@ Caution
 
     <h5>categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/经验/">经验</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/读书笔记/">读书笔记</a><span class="category-list-count">10</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/经验/">经验</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/读书笔记/">读书笔记</a><span class="category-list-count">11</span></li></ul>
     </div>
 
         <hr>
