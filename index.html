@@ -213,6 +213,36 @@
 
 <div class="post-preview">
 
+    <a href="/2017/09/29/JCIP-chapter13-explicit-locks/">
+        <h2 class="post-title">
+            显式锁
+        </h2>
+        <h3 class="post-subtitle">
+            JCIP读书笔记第十三章
+        </h3>
+        <div class="post-content-preview">
+            caution开头Java 5.0之前，Java只有内置锁和volatile；从Java 5.0开始，引入了显式锁来提供一些内置锁所不具备的功能。
+Lock和ReentrantLockLock是个接口，定义了显式锁的基本行为；ReentrantLock是Lock的常用实现，其同步语意和内置锁基本相同。
+ReentrantLock相对于内置锁提供了更多的功能：可中断的获取锁的方法、如果失败立即......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Overspark on
+            2017-09-29
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Java" title="Java">Java</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
     <a href="/2017/09/29/JCIP-chapter14-building-custom-synchronizers/">
         <h2 class="post-title">
             自定义同步工具类
@@ -508,42 +538,6 @@ Caution
 </div>
 <hr>
 
-<div class="post-preview">
-
-    <a href="/2017/08/04/android-developers-guide-note-app-components-fragment/">
-        <h2 class="post-title">
-            Android Developer Guide中的Fragment和Loader
-        </h2>
-        <h3 class="post-subtitle">
-            Android官方guide随笔 - App Components：Fragment & Loader
-        </h3>
-        <div class="post-content-preview">
-            展开点
-DialogFragment vs Dialog。
-FragmentManager in Detail。
-multiple fragments to the same container。 
-Fragment and Menus。
-Fragment lifecycle in Detail。
-
-Caution
-经过commit()方法提交Fragment更改应该发生在Activity进......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by Overspark on
-            2017-08-04
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#Android" title="Android">Android</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
 
 
 <!-- Pager -->
@@ -580,7 +574,7 @@ Caution
     <div class="tags">
         
             
-            <a href="/tags/#Java" title="Java" rel="3">Java</a>
+            <a href="/tags/#Java" title="Java" rel="4">Java</a>
             
         
             
@@ -639,6 +633,10 @@ Caution
     <ul>
       
         <li>
+          <a href="/2017/09/29/JCIP-chapter13-explicit-locks/">显式锁</a>
+        </li>
+      
+        <li>
           <a href="/2017/09/29/JCIP-chapter14-building-custom-synchronizers/">自定义同步工具类</a>
         </li>
       
@@ -654,10 +652,6 @@ Caution
           <a href="/2017/09/09/android-developers-guide-note-app-manifest/">Android Developer Guide中的Manifest</a>
         </li>
       
-        <li>
-          <a href="/2017/09/09/JCIP-chapter16-java-memory-model/">Java内存模型</a>
-        </li>
-      
     </ul>
   </div>
 
@@ -667,7 +661,7 @@ Caution
 
     <h5>categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/经验/">经验</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/读书笔记/">读书笔记</a><span class="category-list-count">12</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/经验/">经验</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/读书笔记/">读书笔记</a><span class="category-list-count">13</span></li></ul>
     </div>
 
         <hr>
