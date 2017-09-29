@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          Android Developer Guide中的Intent - World&#39;s End Tavern
+          自定义同步工具类 - World&#39;s End Tavern
         
     </title>
 
-    <link rel="canonical" href="http://blog.overspark.me/2017/07/26/android-developers-guide-note-app-components-intents/">
+    <link rel="canonical" href="http://blog.overspark.me/2017/09/29/JCIP-chapter14-building-custom-synchronizers/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -69,7 +69,7 @@
 <style type="text/css">
     header.intro-header{
         
-            background-image: url('/img/header_img/android-note-header.jpg')
+            background-image: url('/img/header_img/java-note-header.jpg')
             /*post*/
         
     }
@@ -90,14 +90,14 @@
                     <div class="post-heading">
                         <div class="tags">
                             
-                              <a class="tag" href="/tags/#Android" title="Android">Android</a>
+                              <a class="tag" href="/tags/#Java" title="Java">Java</a>
                             
                         </div>
-                        <h1>Android Developer Guide中的Intent</h1>
-                        <h2 class="subheading">Android官方guide随笔 - App Components：Intent</h2>
+                        <h1>自定义同步工具类</h1>
+                        <h2 class="subheading">JCIP读书笔记第十四章</h2>
                         <span class="meta">
                             Posted by Overspark on
-                            2017-07-26
+                            2017-09-29
                         </span>
                     </div>
                 
@@ -214,63 +214,39 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h2 id="展开点"><a href="#展开点" class="headerlink" title="展开点"></a>展开点</h2><ul>
-<li>MIME Type &amp; URI结构。</li>
-<li>Intent Flags。</li>
-<li>CATEGORY_DEFAULT的意义。 </li>
-<li>如何根据content provider类型URI推断Intent Data的MIME Type，对Intent Resolve有什么影响。</li>
-<li>ClipData的用处。</li>
-<li>DocumentsProvider。</li>
-</ul>
-<h2 id="Caution"><a href="#Caution" class="headerlink" title="Caution"></a>Caution</h2><ul>
-<li>不要为Service添加Intent filter，不要使用implicit intent启动Service。在5.0以上，使用implicit intent调用bindService()，系统会抛出异常。</li>
-<li>Intent的静态常量中定义了一些通用的action、category和extra key字符串；Settings的静态常量定义了一些打开Settings App界面的action。</li>
-<li>Intent的setData方法和setType方法会相互将对方置空（setData会置空mType，setType会置空mData，优秀的设计…）；同时set需要调用setDataAndType。</li>
-<li>在使用implicit intent时使用Intent.resolveActivity()检查有没有App响应这个Intent；如果没有Activity适合Intent的话，startActivity()会抛异常。</li>
-<li>（对于Activity而言）为了能收到implicit intent，在intent-filter中必须声明CATEGORY_DEFAULT，因为startActivity()和startActivityForResult()会默认添加CATEGORY_DEFAULT。</li>
-</ul>
-<h2 id="Intents-and-Intent-Filters"><a href="#Intents-and-Intent-Filters" class="headerlink" title="Intents and Intent Filters"></a>Intents and Intent Filters</h2><p>Intent用于Component之间的交流、传递信息，依赖Intent的Component包括Activity、Servcie和Recevier（不包括Provider）。</p>
-<h3 id="Intent的分类"><a href="#Intent的分类" class="headerlink" title="Intent的分类"></a>Intent的分类</h3><p>Intent分为Explicit intents和Implicit intents两类，其区别就是Intent中是否包含ComponentName。</p>
-<h3 id="Intent组成"><a href="#Intent组成" class="headerlink" title="Intent组成"></a>Intent组成</h3><p>Intent中包含的主要成分如下：</p>
+                <h2 id="caution"><a href="#caution" class="headerlink" title="caution"></a>caution</h2><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>自定义同步工具类最简单的方式就是基于已有的同步工具类；当然你也可以借助”内置Condition Queue”、”显示Condition Queue”以及AQS(AbstractQueuedSynchronizer)。</p>
+<h2 id="条件依赖操作与同步"><a href="#条件依赖操作与同步" class="headerlink" title="条件依赖操作与同步"></a>条件依赖操作与同步</h2><p>如果不借助Condition Queue，Blocking等待条件成立写起来往往很麻烦，比如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function">acquire lock on object state</span></div><div class="line"><span class="title">while</span> <span class="params">(precondition does not hold)</span> &#123;</div><div class="line">    release lock</div><div class="line">    wait until precondition might hold</div><div class="line">    optionally fail <span class="keyword">if</span> interrupted or timeout expires reacquire lock</div><div class="line">&#125;</div><div class="line">perform action release lock</div></pre></td></tr></table></figure>
+<p>在依赖条件不满足时，可以选择抛出异常、返回错误码、等待条件成立等不同策略。</p>
+<h3 id="当没有Condition-Queue"><a href="#当没有Condition-Queue" class="headerlink" title="当没有Condition Queue"></a>当没有Condition Queue</h3><p>这里在不使用Condition Queue的情况下，提供两个BlockingQueue的简单实现，并指出其不方便或没效率的缺点。</p>
+<h3 id="当有了Condition-Queue"><a href="#当有了Condition-Queue" class="headerlink" title="当有了Condition Queue"></a>当有了Condition Queue</h3><p>Condition Queue提供了“挂起线程，等待条件成立”和“提醒等待线程条件成立”的一组操作。所以在Condition Queue这个概念中，Queue中的元素是等待的线程。</p>
+<p>就如同Object可以作为内置锁一样，Object也可以作为内置的Condition Queue，并提供了wait()、notify()、notifyAll等API。<br>同时内置锁和内置CQ有紧密的联系，在调用内置CQ的API时必须持有同一个对象的内置锁。<br>在调用wait()之后，当前线程自动释放了相同对象的内置锁，并要求操作系统挂起当前线程；当从wait()返回时，回自动获取相同对象的内置锁。</p>
+<p>使用CQ实现Blocking可以获得更高的效率、更快的响应速度；使用fair CQ还可以获得额外的调度策略。</p>
+<h2 id="CQ的使用"><a href="#CQ的使用" class="headerlink" title="CQ的使用"></a>CQ的使用</h2><p>这一章介绍一些使用CQ的模式和准则，以防止开发者错误的使用CQ。</p>
+<h3 id="等待条件"><a href="#等待条件" class="headerlink" title="等待条件"></a>等待条件</h3><p>CQ往往是在等待某个条件成立，为了正确使用CQ，应当用文档(注释)记录与CQ相关的条件，以及会影响这些条件(使条件成立)的操作。<br>CQ和等待条件与锁紧密相关，在执行wait()时必须持有相关的锁，而这个锁往往是用来保护等待条件中的变量的。</p>
+<h3 id="CQ被反复唤醒"><a href="#CQ被反复唤醒" class="headerlink" title="CQ被反复唤醒"></a>CQ被反复唤醒</h3><p>与一个CQ关联的等待条件可能有多个，所以CQ被唤醒(并重新活得锁)不意味着等待条件一定成立。等待CQ的经典写法如下:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">stateDependentMethod</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</div><div class="line">    <span class="comment">// condition predicate must be guarded by lock</span></div><div class="line">    <span class="keyword">synchronized</span>(lock) &#123;</div><div class="line">        <span class="keyword">while</span> (!conditionPredicate())</div><div class="line">            lock.wait();</div><div class="line">        <span class="comment">// object is now in desired state</span></div><div class="line">    &#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在编写等待CQ的代码注意如下条件:</p>
 <ul>
-<li>Component name，区分Explicit intents和Implicit intents成分。Intent中的Component name属性是一个ComponentName对象。</li>
-<li>Action，表明Intent作希望执行的操作。Android系统有很多预定义的Action，同时Action通常也决定了Intent的结构(data、extra等)。</li>
-<li>Data，由URI和MIME type组成，做为Action的补充，代表Action的目标数据&amp;数据类型。如果URI是content: URI，MIME type往往可以由URI推断出。</li>
-<li>Category，表明希望哪些类型的Component响应Intent。</li>
-<li>Extras，extras是一个Bundle对象，传递额外数据。</li>
-<li>Flags，一些标志位用于告知Android系统如何使用这个Intent。</li>
+<li>一定要拥有一个等待条件。</li>
+<li>CQ每次被唤醒时需要检查等待条件。</li>
+<li>将等待操作和条件检查置于循环中。</li>
+<li>确保保护等待条件的锁和CQ关联的锁是同一个。</li>
+<li>在调用CQ相关API时必须持有CQ关联的锁。</li>
 </ul>
-<p>Component name、Action、Data和Category这四种成分会影响Intent Resolve。 </p>
-<p>借助Intent.createChooer()方法，可以在发送implicit intent时强制显示chooer dialog（尽管用户之前在chooer dialog选择了默认处理intent的App）。</p>
-<h3 id="接收implicit-intent"><a href="#接收implicit-intent" class="headerlink" title="接收implicit intent"></a>接收implicit intent</h3><p>组件通过在manifest文件中定义<code>&lt;intent-filter&gt;</code>来接收implicit intent，组件可以定义多个<code>&lt;intent-filter&gt;</code>。</p>
-<p>explicit intent将无视<code>&lt;intent-filter&gt;</code>以及由<code>&lt;intent-filter&gt;</code>定义的intent resolve规则。</p>
-<p><code>&lt;intent-filter&gt;</code>由三类标签组成：<code>&lt;action&gt;</code>、<code>&lt;data&gt;</code>、<code>&lt;category&gt;</code>。每类标签可以有一个或多个（或没有）。<br>当你定义多个<code>&lt;action&gt;</code>、<code>&lt;data&gt;</code>或<code>&lt;category&gt;</code>时，你所维护Component需要能够处理由这些标签任意组合而成的Intent；如果你只想处理特定组合，定义多个<code>&lt;intent-filter&gt;</code>。</p>
-<p>在manifest中Component的android:exported属性可以控制该Component是否能被其他App调用。当android:exported为false时，Component仅能被相同UID的App调用。没有Intent-filter的Activity的android:exported属性默认值是false。</p>
-<h3 id="使用PendingIntent"><a href="#使用PendingIntent" class="headerlink" title="使用PendingIntent"></a>使用PendingIntent</h3><blockquote>
-<p>The primary purpose of a PendingIntent is to grant permission to a foreign<br>application to use the contained Intent as if it were executed from your<br>app’s own process.</p>
-</blockquote>
-<h3 id="Intent-resovle规则"><a href="#Intent-resovle规则" class="headerlink" title="Intent resovle规则"></a>Intent resovle规则</h3><p>Intent若要通过Intent filter的检验，则需要通过Action检验、Data检验、Category检验三部分。</p>
+<h3 id="唤醒CQ"><a href="#唤醒CQ" class="headerlink" title="唤醒CQ"></a>唤醒CQ</h3><p>当某个操作会让CQ的一个等待条件变为成立时，记得在操作的同时唤醒CQ。(在开发中，这件事情似乎很容易发生疏漏)<br>notify()会选择唤醒一个等待线程；notifyAll会唤醒全部的等待线程。<br>使用notify()时容易出错，例如当CQ关联多个等待条件时，条件A发出的提醒可能唤醒等待条件B的线程，而等待条件A的线程会错过这次提醒。所以使用notify()而不是notifyAll()时要格外谨慎，以下是使用notify()的准则：</p>
 <ul>
-<li>Action检验。<ul>
-<li>当Intent包含某个Intent filter中声明的action时可通过Action检验。</li>
-<li>如果Intent filter没有声明action，任何Intent都无法通过Action检验。</li>
-<li>如果Intent中不包含action，那么只要Intent filter声明了任意action，就可通过Acton检验。</li>
+<li>CQ仅仅关联一个等待条件，并且等待线程都执行相同的操作。</li>
+<li>每次提醒能且仅能满足一个等待线程完成操作。</li>
 </ul>
-</li>
-<li>Category检验。<ul>
-<li>当Intent中定义的所有category都在Intent filter中被声明，可通过Category检验。</li>
-</ul>
-</li>
-<li>Data检验。Data检验包括URI检验和MIME type检验；URI检验仅检验Intent filter中定义的部分。<ul>
-<li>如果Intent不包含URI和MIME type，仅在Intent filter没声明data条件时通过。</li>
-<li>如果Intent仅包含URI，仅在URI和Intent filter匹配，且Intent filter没声明type条件时通过。</li>
-<li>如果Intent仅包含MIME type，仅在type和Intent filter匹配，且Intent filter没声明URI条件时通过。</li>
-<li>如果Intent包含URI和MIME type，在URI和type均匹配时通过；或者在type匹配，Intent的URI为content:、file:类型，且Intent filter没有定义URI条件时通过。</li>
-</ul>
-</li>
-</ul>
-<h2 id="Common-Intents"><a href="#Common-Intents" class="headerlink" title="Common Intents"></a>Common Intents</h2><p>介绍一些Android系统预先定义的Action，以及相应的Intent结构和经由onActivityResult返回Intent的结构。</p>
-<h3 id="通过adb命令测试Intent"><a href="#通过adb命令测试Intent" class="headerlink" title="通过adb命令测试Intent"></a>通过adb命令测试Intent</h3><p>adb shell am start -a <code>&lt;ACTION&gt;</code> -t <code>&lt;MIME_TYPE&gt;</code> -d <code>&lt;DATA&gt;</code> -e <code>&lt;EXTRA_NAME&gt;</code> <code>&lt;EXTRA_VALUE&gt;</code> -n <code>&lt;ACTIVITY&gt;</code>。</p>
+<h3 id="继承和CQ-封装和CQ"><a href="#继承和CQ-封装和CQ" class="headerlink" title="继承和CQ/封装和CQ"></a>继承和CQ/封装和CQ</h3><p>当继承发生在使用CQ的类上时有两种选择：父类将等待策略(等待条件、提醒策略)和相关对象(CQ对象、锁对象、状态对象)完整的暴露给子类，并提供足够的文档(注释)；或者可以选择，禁止继承/对子类隐藏所有和相关对象(CQ对象、锁对象、状态对象)。</p>
+<p>和继承同理，使用CQ的类应该将CQ相关对象封装在类内部，以防止类的使用者干扰等待策略。</p>
+<h2 id="显式的CQ对象"><a href="#显式的CQ对象" class="headerlink" title="显式的CQ对象"></a>显式的CQ对象</h2><p>内置CQ的一个缺陷是，一个内置锁只能关联一个内置CQ，这样导致了一个CQ关联多个等待条件的情况十分常见，也就难以满足使用notify()的条件。<br>显式CQ被称为Condition，它与一个显式锁Lock相关联；Condition可以通过Lock.newCondition()方法创建，一个Lock可以关联多个Condition；Condition的公平性与其关联锁的公平性一致(公平锁创建的Condition也是公平的)。</p>
+<p><strong>注意：不要误用Condition对象自身的内置CQ。</strong></p>
+<p>这一节还给出了一个用显式CQ实现的BlockingQueue的例子，可以发现当有等待条件时Condition比内置CQ有更好的可读性，切更容易使用单一提醒来提升效率。</p>
+<h2 id="AQS-AbstractQueuedSynchronizer"><a href="#AQS-AbstractQueuedSynchronizer" class="headerlink" title="AQS(AbstractQueuedSynchronizer)"></a>AQS(AbstractQueuedSynchronizer)</h2><p>AQS是大多同步工具类的基础组件，通过继承AQS来实现同步工具。<br>在AQS内部存在一个整数变了，用于表示同步工具的状态；AQS提供了一组方法，包括原子读写状态、原子CAS状态用于修改状态，线程独占或线程共享的Acquire/Release方法用于提供安全方法；开发者需要继承tryAcquire/tryAcquireShared和tryRelease/tryReleaseShared来决定同步工具的具体行为。</p>
+<p>本章没有展开介绍AQS的使用细节，如果想深入了解的话，参考<code>java.util.concurrent</code>包中同步工具类的实现。</p>
+<h2 id="在Java标准库中的AQS"><a href="#在Java标准库中的AQS" class="headerlink" title="在Java标准库中的AQS"></a>在Java标准库中的AQS</h2><p>本章介绍了一些<code>java.util.concurrent</code>中类的实现，这些类是基于AQS的。</p>
 
                 
 
@@ -278,13 +254,9 @@
                 <!-- Pager -->
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/2017/08/03/android-developers-guide-note-app-components-activity/" data-toggle="tooltip" data-placement="top" title="Android Developer Guide中的Activity">&larr; Previous Post</a>
-                        </li>
-                    
                     
                         <li class="next">
-                            <a href="/2017/07/18/android-developers-guide-note-introduction/" data-toggle="tooltip" data-placement="top" title="Android Developer Guide中的Android概览">Next Post &rarr;</a>
+                            <a href="/2017/09/21/JCIP-chapter15-atomic-variable-and-nonblocking-synchronization/" data-toggle="tooltip" data-placement="top" title="原子变量与非阻塞同步">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -314,7 +286,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#展开点"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">展开点</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Caution"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Caution</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Intents-and-Intent-Filters"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">Intents and Intent Filters</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Intent的分类"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">Intent的分类</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Intent组成"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">Intent组成</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#接收implicit-intent"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">接收implicit intent</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#使用PendingIntent"><span class="toc-nav-number">3.4.</span> <span class="toc-nav-text">使用PendingIntent</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Intent-resovle规则"><span class="toc-nav-number">3.5.</span> <span class="toc-nav-text">Intent resovle规则</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Common-Intents"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">Common Intents</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#通过adb命令测试Intent"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">通过adb命令测试Intent</span></a></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#caution"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">caution</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#概述"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">概述</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#条件依赖操作与同步"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">条件依赖操作与同步</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#当没有Condition-Queue"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">当没有Condition Queue</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#当有了Condition-Queue"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">当有了Condition Queue</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#CQ的使用"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">CQ的使用</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#等待条件"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">等待条件</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#CQ被反复唤醒"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">CQ被反复唤醒</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#唤醒CQ"><span class="toc-nav-number">4.3.</span> <span class="toc-nav-text">唤醒CQ</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#继承和CQ-封装和CQ"><span class="toc-nav-number">4.4.</span> <span class="toc-nav-text">继承和CQ/封装和CQ</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#显式的CQ对象"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">显式的CQ对象</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#AQS-AbstractQueuedSynchronizer"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">AQS(AbstractQueuedSynchronizer)</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#在Java标准库中的AQS"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">在Java标准库中的AQS</span></a></li></ol>
         
         </div>
       </aside>
@@ -334,7 +306,7 @@
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/tags/#Android" title="Android">Android</a>
+                          <a class="tag" href="/tags/#Java" title="Java">Java</a>
                         
                     </div>
                 </section>
@@ -361,8 +333,8 @@
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "your-disqus-ID";
-    var disqus_identifier = "http://blog.overspark.me/2017/07/26/android-developers-guide-note-app-components-intents/";
-    var disqus_url = "http://blog.overspark.me/2017/07/26/android-developers-guide-note-app-components-intents/";
+    var disqus_identifier = "http://blog.overspark.me/2017/09/29/JCIP-chapter14-building-custom-synchronizers/";
+    var disqus_url = "http://blog.overspark.me/2017/09/29/JCIP-chapter14-building-custom-synchronizers/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

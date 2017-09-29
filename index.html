@@ -143,14 +143,14 @@
 
                         
                         <li>
-                            <a href="/tags/">Tags</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/tags/">Tags</a>
                         </li>
                         
                     
@@ -210,6 +210,36 @@
             
                 <!-- Main Content -->
 
+
+<div class="post-preview">
+
+    <a href="/2017/09/29/JCIP-chapter14-building-custom-synchronizers/">
+        <h2 class="post-title">
+            自定义同步工具类
+        </h2>
+        <h3 class="post-subtitle">
+            JCIP读书笔记第十四章
+        </h3>
+        <div class="post-content-preview">
+            caution概述自定义同步工具类最简单的方式就是基于已有的同步工具类；当然你也可以借助”内置Condition Queue”、”显示Condition Queue”以及AQS(AbstractQueuedSynchronizer)。
+条件依赖操作与同步如果不借助Condition Queue，Blocking等待条件成立写起来往往很麻烦，比如：
+1234567acquire lock on......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Overspark on
+            2017-09-29
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Java" title="Java">Java</a>
+            
+        </div>
+    
+
+</div>
+<hr>
 
 <div class="post-preview">
 
@@ -514,42 +544,6 @@ Caution
 </div>
 <hr>
 
-<div class="post-preview">
-
-    <a href="/2017/08/03/android-developers-guide-note-app-components-activity/">
-        <h2 class="post-title">
-            Android Developer Guide中的Activity
-        </h2>
-        <h3 class="post-subtitle">
-            Android官方guide随笔 - App Components：Activity
-        </h3>
-        <div class="post-content-preview">
-            展开点
-Things That Cannot Change。
-AsyncQueryHandler。
-Multitasking the Android Way。
-Activity‘s Task in Detail。
-allowTaskReparenting的应用场景。
-Parcel in Detail。
-Document-centric model。
-ActivityManager.AppTa......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by Overspark on
-            2017-08-03
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#Android" title="Android">Android</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
 
 
 <!-- Pager -->
@@ -586,7 +580,7 @@ ActivityManager.AppTa......
     <div class="tags">
         
             
-            <a href="/tags/#Java" title="Java" rel="2">Java</a>
+            <a href="/tags/#Java" title="Java" rel="3">Java</a>
             
         
             
@@ -645,6 +639,10 @@ ActivityManager.AppTa......
     <ul>
       
         <li>
+          <a href="/2017/09/29/JCIP-chapter14-building-custom-synchronizers/">自定义同步工具类</a>
+        </li>
+      
+        <li>
           <a href="/2017/09/21/JCIP-chapter15-atomic-variable-and-nonblocking-synchronization/">原子变量与非阻塞同步</a>
         </li>
       
@@ -660,10 +658,6 @@ ActivityManager.AppTa......
           <a href="/2017/09/09/JCIP-chapter16-java-memory-model/">Java内存模型</a>
         </li>
       
-        <li>
-          <a href="/2017/09/04/android-developers-guide-note-app-resources/">Android Developer Guide中的Resource</a>
-        </li>
-      
     </ul>
   </div>
 
@@ -673,7 +667,7 @@ ActivityManager.AppTa......
 
     <h5>categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/经验/">经验</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/读书笔记/">读书笔记</a><span class="category-list-count">11</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/经验/">经验</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/读书笔记/">读书笔记</a><span class="category-list-count">12</span></li></ul>
     </div>
 
         <hr>
