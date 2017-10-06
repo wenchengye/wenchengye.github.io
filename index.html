@@ -213,6 +213,68 @@
 
 <div class="post-preview">
 
+    <a href="/2017/10/06/JCIP-chapter12-testing-concurrent-programs/">
+        <h2 class="post-title">
+            测试并发程序
+        </h2>
+        <h3 class="post-subtitle">
+            JCIP读书笔记第十二章
+        </h3>
+        <div class="post-content-preview">
+            展开点
+aspect-oriented programming (AOP) 。
+
+概述并发相关的测试通常可以归类为线程安全测试和线程活跃性测试。线程安全测试通常需要验证变量的一致性，所以测试代码本身也需要时线程安全的；但有时候加入这样的测试代码之后会隐藏原有的线程安全类bug。线程活跃性测试的难点在于，如何界定活跃性问题(例如死锁)真的发生了和程序运行效率低之间的区别。并发相关的性能测试包含......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Overspark on
+            2017-10-06
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Java" title="Java">Java</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2017/10/05/JCIP-chapter10-avoiding-liveness-hazards/">
+        <h2 class="post-title">
+            活跃性问题
+        </h2>
+        <h3 class="post-subtitle">
+            JCIP读书笔记第十章
+        </h3>
+        <div class="post-content-preview">
+            死锁再来一次五哲学家用筷子吃饭的例子，解释什么是死锁。数据库系统采用如下方法来避免死锁，在互相死锁的事务中挑选牺牲者并中止该事务。
+加锁顺序造成的死锁当线程需要同时获取多个锁时，有可能会发生加锁顺序造成的死锁；如果所有线程，都依照一个全局固定的顺序来依次获取多个锁，那么就可以避免加锁顺序造成的死锁。
+要保持全局的加锁顺序固定，看起来是相当脆弱易出错的协议，尤其有动态的锁对象的时候。
+动态的加......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Overspark on
+            2017-10-05
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Java" title="Java">Java</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
     <a href="/2017/09/29/JCIP-chapter13-explicit-locks/">
         <h2 class="post-title">
             显式锁
@@ -469,75 +531,6 @@ local broadcas......
 </div>
 <hr>
 
-<div class="post-preview">
-
-    <a href="/2017/08/21/android-developers-guide-note-app-components-content-provider/">
-        <h2 class="post-title">
-            Android Developer Guide中的ContentProvider
-        </h2>
-        <h3 class="post-subtitle">
-            Android官方guide随笔 - App Components：ContentProvider
-        </h3>
-        <div class="post-content-preview">
-            展开点
-AbstractThreadedSyncAdapter。
-search framework &amp; Search Suggestions with ContentProvider；SearchRecentSuggestionsProvider。
-ContentProviderOperation &amp; ContentProvider Batch Access。
-LevelDB......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by Overspark on
-            2017-08-21
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#Android" title="Android">Android</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2017/08/04/android-developers-guide-note-app-components-service/">
-        <h2 class="post-title">
-            Android Developer Guide中的Service
-        </h2>
-        <h3 class="post-subtitle">
-            Android官方guide随笔 - App Components：Service
-        </h3>
-        <div class="post-content-preview">
-            展开点
-在进程回收之后，系统什么情况下会重启Service。
-onRebind()的应用场景。
-客户端服务端AIDL冲突的情况。
-Binder in Detail。
-对象经过IPC方法传递后，是否还是同一个对象。
-
-Caution
-如果不想Service被其他App使用，应该在Manifast里面将android:exported属性声明为false。
-用户可以主动终止正在运行的Servic......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by Overspark on
-            2017-08-04
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#Android" title="Android">Android</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
 
 
 <!-- Pager -->
@@ -574,11 +567,11 @@ Caution
     <div class="tags">
         
             
-            <a href="/tags/#Java" title="Java" rel="4">Java</a>
+            <a href="/tags/#Android" title="Android" rel="10">Android</a>
             
         
             
-            <a href="/tags/#Android" title="Android" rel="10">Android</a>
+            <a href="/tags/#Java" title="Java" rel="6">Java</a>
             
         
     </div>
@@ -633,6 +626,14 @@ Caution
     <ul>
       
         <li>
+          <a href="/2017/10/06/JCIP-chapter12-testing-concurrent-programs/">测试并发程序</a>
+        </li>
+      
+        <li>
+          <a href="/2017/10/05/JCIP-chapter10-avoiding-liveness-hazards/">活跃性问题</a>
+        </li>
+      
+        <li>
           <a href="/2017/09/29/JCIP-chapter13-explicit-locks/">显式锁</a>
         </li>
       
@@ -644,14 +645,6 @@ Caution
           <a href="/2017/09/21/JCIP-chapter15-atomic-variable-and-nonblocking-synchronization/">原子变量与非阻塞同步</a>
         </li>
       
-        <li>
-          <a href="/2017/09/10/tips-read-aosp-in-intellij/">使用Intellij/Android Studio阅读Android源码</a>
-        </li>
-      
-        <li>
-          <a href="/2017/09/09/android-developers-guide-note-app-manifest/">Android Developer Guide中的Manifest</a>
-        </li>
-      
     </ul>
   </div>
 
@@ -661,7 +654,7 @@ Caution
 
     <h5>categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/经验/">经验</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/读书笔记/">读书笔记</a><span class="category-list-count">13</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/经验/">经验</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/读书笔记/">读书笔记</a><span class="category-list-count">15</span></li></ul>
     </div>
 
         <hr>

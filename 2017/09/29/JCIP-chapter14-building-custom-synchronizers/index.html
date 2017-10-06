@@ -241,7 +241,7 @@
 </ul>
 <h3 id="继承和CQ-封装和CQ"><a href="#继承和CQ-封装和CQ" class="headerlink" title="继承和CQ/封装和CQ"></a>继承和CQ/封装和CQ</h3><p>当继承发生在使用CQ的类上时有两种选择：父类将等待策略(等待条件、提醒策略)和相关对象(CQ对象、锁对象、状态对象)完整的暴露给子类，并提供足够的文档(注释)；或者可以选择，禁止继承/对子类隐藏所有和相关对象(CQ对象、锁对象、状态对象)。</p>
 <p>和继承同理，使用CQ的类应该将CQ相关对象封装在类内部，以防止类的使用者干扰等待策略。</p>
-<h2 id="显式的CQ对象"><a href="#显式的CQ对象" class="headerlink" title="显式的CQ对象"></a>显式的CQ对象</h2><p>内置CQ的一个缺陷是，一个内置锁只能关联一个内置CQ，这样导致了一个CQ关联多个等待条件的情况十分常见，也就难以满足使用notify()的条件。<br>显式CQ被称为Condition，它与一个显式锁Lock相关联；Condition可以通过Lock.newCondition()方法创建，一个Lock可以关联多个Condition；Condition的公平性与其关联锁的公平性一致(公平锁创建的Condition也是公平的)。</p>
+<h2 id="显式的CQ对象"><a href="#显式的CQ对象" class="headerlink" title="显式的CQ对象"></a>显式的CQ对象</h2><p>内置CQ的一个缺陷是一个内置锁只能关联一个内置CQ，这样导致了一个CQ关联多个等待条件的情况十分常见，也就难以满足使用notify()的条件。<br>显式CQ被称为Condition，它与一个显式锁Lock相关联；Condition可以通过Lock.newCondition()方法创建，一个Lock可以关联多个Condition；Condition的公平性与其关联锁的公平性一致(公平锁创建的Condition也是公平的)。</p>
 <p><strong>注意：不要误用Condition对象自身的内置CQ。</strong></p>
 <p>这一节还给出了一个用显式CQ实现的BlockingQueue的例子，可以发现当有等待条件时Condition比内置CQ有更好的可读性，切更容易使用单一提醒来提升效率。</p>
 <h2 id="AQS-AbstractQueuedSynchronizer"><a href="#AQS-AbstractQueuedSynchronizer" class="headerlink" title="AQS(AbstractQueuedSynchronizer)"></a>AQS(AbstractQueuedSynchronizer)</h2><p>AQS是大多同步工具类的基础组件，通过继承AQS来实现同步工具。<br>在AQS内部存在一个整数变了，用于表示同步工具的状态；AQS提供了一组方法，包括原子读写状态、原子CAS状态用于修改状态，线程独占或线程共享的Acquire/Release方法用于提供安全方法；开发者需要继承tryAcquire/tryAcquireShared和tryRelease/tryReleaseShared来决定同步工具的具体行为。</p>

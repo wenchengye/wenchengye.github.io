@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          显式锁 - World&#39;s End Tavern
+          活跃性问题 - World&#39;s End Tavern
         
     </title>
 
-    <link rel="canonical" href="http://blog.overspark.me/2017/09/29/JCIP-chapter13-explicit-locks/">
+    <link rel="canonical" href="http://blog.overspark.me/2017/10/05/JCIP-chapter10-avoiding-liveness-hazards/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -93,11 +93,11 @@
                               <a class="tag" href="/tags/#Java" title="Java">Java</a>
                             
                         </div>
-                        <h1>显式锁</h1>
-                        <h2 class="subheading">JCIP读书笔记第十三章</h2>
+                        <h1>活跃性问题</h1>
+                        <h2 class="subheading">JCIP读书笔记第十章</h2>
                         <span class="meta">
                             Posted by Overspark on
-                            2017-09-29
+                            2017-10-05
                         </span>
                     </div>
                 
@@ -214,17 +214,18 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h2 id="caution"><a href="#caution" class="headerlink" title="caution"></a>caution</h2><h2 id="开头"><a href="#开头" class="headerlink" title="开头"></a>开头</h2><p>Java 5.0之前，Java只有内置锁和volatile；从Java 5.0开始，引入了显式锁来提供一些内置锁所不具备的功能。</p>
-<h2 id="Lock和ReentrantLock"><a href="#Lock和ReentrantLock" class="headerlink" title="Lock和ReentrantLock"></a>Lock和ReentrantLock</h2><p>Lock是个接口，定义了显式锁的基本行为；ReentrantLock是Lock的常用实现，其同步语意和内置锁基本相同。</p>
-<p>ReentrantLock相对于内置锁提供了更多的功能：可中断的获取锁的方法、如果失败立即返回(或超时返回)的获取锁的方法；可以在代码的任意部分释放锁，而不用局限在synchronized代码块中。<br>由于显式锁必须显示释放，所以绝大多数情况下，unlock()方法要写在finally代码块中以保证安全；如果不这样做，由于某种原因造成没有执行unlock()的错误，将十分难以追查。</p>
-<p>Lock接口如下:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Lock</span> </span>&#123; </div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">lock</span><span class="params">()</span></span>;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">lockInterruptibly</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException</span>; <span class="function"><span class="keyword">boolean</span> <span class="title">tryLock</span><span class="params">()</span></span>;</div><div class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">tryLock</span><span class="params">(<span class="keyword">long</span> timeout, TimeUnit unit)</span></span></div><div class="line">        <span class="keyword">throws</span> InterruptedException; </div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">unlock</span><span class="params">()</span></span>;</div><div class="line">    <span class="function">Condition <span class="title">newCondition</span><span class="params">()</span></span>; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="性能对比"><a href="#性能对比" class="headerlink" title="性能对比"></a>性能对比</h2><p>在Java 5.0时，ReentrantLock的性能比内置锁好很多；但从Java 6.0内置锁的性能被改进之后，ReentrantLock和内置锁就没有明显的性能差异了。</p>
-<h2 id="公平性"><a href="#公平性" class="headerlink" title="公平性"></a>公平性</h2><p>ReentrantLock提供了公平锁和非公平锁的功能选择。<br>公平锁会将请求锁的线程排队，然后实行先到先得方案；非公平锁在某个线程请求锁时会插队尝试是否能直接获取成功，只有请求不成功时才会将线程排队。(即便是公平锁，在使用tryLock()操作时也会插队)<br>。<br>在竞争较多时公平锁的性能远差于非公平锁；公平锁更适用于持有锁和获取锁时间都很长的情况。</p>
-<h2 id="内置锁还是ReentrantLock"><a href="#内置锁还是ReentrantLock" class="headerlink" title="内置锁还是ReentrantLock"></a>内置锁还是ReentrantLock</h2><p>除非需要使用ReentrantLock提供能附加功能(响应中断、公平性等等)，那么请选择内置锁。</p>
-<h2 id="读写锁"><a href="#读写锁" class="headerlink" title="读写锁"></a>读写锁</h2><p>读写锁允许多个线程同时持有“读锁”，但仅有一个线程持有”写锁“(当然持有”写锁”时其他线程也不能获取”读锁”)。其接口定义如下:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ReadWriteLock</span> </span>&#123; </div><div class="line">    <span class="function">Lock <span class="title">readLock</span><span class="params">()</span></span>;</div><div class="line">    <span class="function">Lock <span class="title">writeLock</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>ReentrantReadWriteLock是读写锁的一个实现。<br>读写锁的使用是出于性能考虑，在读操作明显多于写操作、读操作执行时间较长的情况下，读写锁的性能优于独占锁；在其他情况下，读写锁的性能不及独占锁。当然，使用读写锁能否提升性能，还得看profiling的结果。</p>
+                <h2 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h2><p>再来一次五哲学家用筷子吃饭的例子，解释什么是死锁。数据库系统采用如下方法来避免死锁，在互相死锁的事务中挑选牺牲者并中止该事务。</p>
+<h3 id="加锁顺序造成的死锁"><a href="#加锁顺序造成的死锁" class="headerlink" title="加锁顺序造成的死锁"></a>加锁顺序造成的死锁</h3><p>当线程需要同时获取多个锁时，有可能会发生加锁顺序造成的死锁；如果所有线程，都依照一个全局固定的顺序来依次获取多个锁，那么就可以避免加锁顺序造成的死锁。</p>
+<p>要保持全局的加锁顺序固定，看起来是相当脆弱易出错的协议，尤其有动态的锁对象的时候。</p>
+<h3 id="动态的加锁顺序造成的锁死"><a href="#动态的加锁顺序造成的锁死" class="headerlink" title="动态的加锁顺序造成的锁死"></a>动态的加锁顺序造成的锁死</h3><p>当锁对象是动态的–例如将锁对象作为参数传入函数–就很容易发生难以察觉的加锁顺序锁死。<br>一种方式是用hashCode来定义动态锁对象的加锁；当锁对象的hashCode一致时使用额外的一个锁(被称为tie锁)在获取锁序列最外层加锁，使整个序列的获取过程变成互斥的。</p>
+<h3 id="当多锁获取发生在不同对象的不同方法中"><a href="#当多锁获取发生在不同对象的不同方法中" class="headerlink" title="当多锁获取发生在不同对象的不同方法中"></a>当多锁获取发生在不同对象的不同方法中</h3><p>多锁获取可能不是发生在同一个方法中，而是由多层调用栈造成，在这种情况下就很难注意到多锁获取的发生，更不用说保持顺序。</p>
+<p>在持有锁的情况下调用外部方法，很容易发生活跃性问题。外部方法可能会去获取另一个锁，从而诱发加锁顺序死锁；外部方法可能会很久才返回，导致持有锁的时间过长。</p>
+<h3 id="Open-call"><a href="#Open-call" class="headerlink" title="Open call"></a>Open call</h3><p>当在调用外部方法时不持有锁，这次调用被称为Open call。尽量使用Open call可以减少死锁发生的风险，并在死锁发生的时候使得问题变得容易被分析。</p>
+<h3 id="资源死锁"><a href="#资源死锁" class="headerlink" title="资源死锁"></a>资源死锁</h3><h2 id="避免和诊断死锁"><a href="#避免和诊断死锁" class="headerlink" title="避免和诊断死锁"></a>避免和诊断死锁</h2><p>同时最多持有一个锁的代码不会发生死锁，虽然有时这样做无法满足需求。如果需要同时持有多个锁，那么需要先定位这些多锁获取场景，然后应用全局加锁顺序；全部使用Open Call有利于这些多锁获取场景的定位。</p>
+<h3 id="限时获取锁"><a href="#限时获取锁" class="headerlink" title="限时获取锁"></a>限时获取锁</h3><p>使用tryLock可以让程序从死锁中恢复过来。</p>
+<h3 id="使用Thread-Dump分析死锁"><a href="#使用Thread-Dump分析死锁" class="headerlink" title="使用Thread Dump分析死锁"></a>使用Thread Dump分析死锁</h3><p>Thread Dump可以输出JVM中所有线程持有锁的情况和等待锁的情况，包括锁是在那个stack frame获取的，如果有死锁存在还是提示死锁信息。在Java5.0中，Thread Dump无法输出显式锁的信息；Java6.0中Thread Dump包含了显示锁的信息，但无法准确定位显示锁获取的stack frame。</p>
+<h2 id="其他活跃性问题"><a href="#其他活跃性问题" class="headerlink" title="其他活跃性问题"></a>其他活跃性问题</h2><h3 id="Starvation"><a href="#Starvation" class="headerlink" title="Starvation"></a>Starvation</h3><p>当一个线程理论上可以获取所需资源，但在实际情况下它永远不可能获得所需资源，就发生了Starvation；例如不合理的设置线程优先级，可能造成某些线程永远无法使用Cpu。<br>Java的线程API定义了10个线程优先级，在执行时这些线程优先级会被映射为系统线程优先级；在不同平台上设置线程优先级会有不同的效果，有些平台的系统线程优先级可能不足10个。<br>因为线程优先级的效果具有平台依赖性，所以非必要情况下不要调整线程优先级；UI线程和后台线程是一个适合使用线程优先级的场景。</p>
+<h3 id="活锁"><a href="#活锁" class="headerlink" title="活锁"></a>活锁</h3><p>活锁通常是由某种死循环逻辑，或者几个线程由于不良设计处于永久的逻辑冲突造成的。假设两个线程在同时请求某种资源时发生逻辑冲突，并且两个线程冲突后等待重试的时间相同，那么这两个线程就发生了活锁。</p>
 
                 
 
@@ -233,12 +234,12 @@
                 <ul class="pager">
                     
                         <li class="previous">
-                            <a href="/2017/10/05/JCIP-chapter10-avoiding-liveness-hazards/" data-toggle="tooltip" data-placement="top" title="活跃性问题">&larr; Previous Post</a>
+                            <a href="/2017/10/06/JCIP-chapter12-testing-concurrent-programs/" data-toggle="tooltip" data-placement="top" title="测试并发程序">&larr; Previous Post</a>
                         </li>
                     
                     
                         <li class="next">
-                            <a href="/2017/09/29/JCIP-chapter14-building-custom-synchronizers/" data-toggle="tooltip" data-placement="top" title="自定义同步工具类">Next Post &rarr;</a>
+                            <a href="/2017/09/29/JCIP-chapter13-explicit-locks/" data-toggle="tooltip" data-placement="top" title="显式锁">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -268,7 +269,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#caution"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">caution</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#开头"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">开头</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Lock和ReentrantLock"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">Lock和ReentrantLock</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#性能对比"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">性能对比</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#公平性"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">公平性</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#内置锁还是ReentrantLock"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">内置锁还是ReentrantLock</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#读写锁"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">读写锁</span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#死锁"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">死锁</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#加锁顺序造成的死锁"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">加锁顺序造成的死锁</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#动态的加锁顺序造成的锁死"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">动态的加锁顺序造成的锁死</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#当多锁获取发生在不同对象的不同方法中"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">当多锁获取发生在不同对象的不同方法中</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Open-call"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">Open call</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#资源死锁"><span class="toc-nav-number">1.5.</span> <span class="toc-nav-text">资源死锁</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#避免和诊断死锁"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">避免和诊断死锁</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#限时获取锁"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">限时获取锁</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#使用Thread-Dump分析死锁"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">使用Thread Dump分析死锁</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#其他活跃性问题"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">其他活跃性问题</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Starvation"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">Starvation</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#活锁"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">活锁</span></a></li></ol></li></ol>
         
         </div>
       </aside>
@@ -315,8 +316,8 @@
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "your-disqus-ID";
-    var disqus_identifier = "http://blog.overspark.me/2017/09/29/JCIP-chapter13-explicit-locks/";
-    var disqus_url = "http://blog.overspark.me/2017/09/29/JCIP-chapter13-explicit-locks/";
+    var disqus_identifier = "http://blog.overspark.me/2017/10/05/JCIP-chapter10-avoiding-liveness-hazards/";
+    var disqus_url = "http://blog.overspark.me/2017/10/05/JCIP-chapter10-avoiding-liveness-hazards/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
