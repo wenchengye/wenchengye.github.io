@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="null">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          Android Developer Guide中的Activity - World&#39;s End Tavern
+        
+    </title>
+
+    <link rel="canonical" href="http://blog.overspark.me/2017/08/03/android-developers-guide-note-app-components-activity/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/img/header_img/android-note-header.jpg')
+            /*post*/
+        
+    }
+    
+    #signature{
+        background-image: url('/undefined');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#Android" title="Android">Android</a>
+                            
+                        </div>
+                        <h1>Android Developer Guide中的Activity</h1>
+                        <h2 class="subheading">Android官方guide随笔 - App Components：Activity</h2>
+                        <span class="meta">
+                            Posted by Overspark on
+                            2017-08-03
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">World&#39;s End Tavern</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h2 id="展开点"><a href="#展开点" class="headerlink" title="展开点"></a>展开点</h2><ul>
+<li><a href="https://android-developers.googleblog.com/2011/06/things-that-cannot-change.html" target="_blank" rel="external">Things That Cannot Change</a>。</li>
+<li>AsyncQueryHandler。</li>
+<li><a href="https://android-developers.googleblog.com/2010/04/multitasking-android-way.html" target="_blank" rel="external">Multitasking the Android Way</a>。</li>
+<li>Activity‘s Task in Detail。</li>
+<li>allowTaskReparenting的应用场景。</li>
+<li>Parcel in Detail。</li>
+<li><a href="https://plus.google.com/+DianneHackborn/posts/4QWEQgkB1v2" target="_blank" rel="external">Document-centric model</a>。</li>
+<li>ActivityManager.AppTask。</li>
+</ul>
+<h2 id="Caution"><a href="#Caution" class="headerlink" title="Caution"></a>Caution</h2><ul>
+<li>Activity的android:name一旦被声明之后，再后续更新中不应改变，否则一些功能例如shortcut会出错。详见<a href="https://android-developers.googleblog.com/2011/06/things-that-cannot-change.html" target="_blank" rel="external">Things That Cannot Change</a>。</li>
+<li>Activity.isFinish()可以用来判断finish()方法是否被调用过（例如在onPause、onStop这些callback里面）。</li>
+<li>如果startActivityForResult()启动的Activity异常退出，发出请求的Activity会收到RESULT_CANCELED。</li>
+<li>由Intent指定的launchMode的优先级高于（会覆盖）在manifest中声明的launchMode。</li>
+<li>7.0以上的系统中，通过Intent传递的数据过大会抛出TransactionTooLargeException异常；7.0以下仅在logcat中输出警告。这个限制的根源是，Binder transaction buffer通常有1MB左右的大小限制，每个进程有单独的Binder transaction buffer，buffer被进程内的所有binder transactions共享。</li>
+</ul>
+<h2 id="Introduction-to-Activities"><a href="#Introduction-to-Activities" class="headerlink" title="Introduction to Activities"></a>Introduction to Activities</h2><p>这一节介绍了Activity的概念，给初学者关于Activity大致的印象。并对如何在Manifest中声明Activity进行说明，并简述了Activity的生命周期。</p>
+<h3 id="Activity的概念"><a href="#Activity的概念" class="headerlink" title="Activity的概念"></a>Activity的概念</h3><p>Activity是什么我们都是知道的。</p>
+<h3 id="在Manifest中声明Activity"><a href="#在Manifest中声明Activity" class="headerlink" title="在Manifest中声明Activity"></a>在Manifest中声明Activity</h3><p>通过在Manifest中声明<code>&lt;activity&gt;</code>标签来声明Activity。<code>&lt;activity&gt;</code>标签中唯一的必填属性是android:name；<code>&lt;activity&gt;</code>可以包含<code>&lt;intent-filter&gt;</code>标签；可以通过<code>&lt;activity&gt;</code>标签的android:permission属性来声明使用activity所需的权限。</p>
+<h2 id="The-Activity-Lifecycle"><a href="#The-Activity-Lifecycle" class="headerlink" title="The Activity Lifecycle"></a>The Activity Lifecycle</h2><p>管理Activity生命周期的关键，是在正确的生命周期回调中作正确的事。</p>
+<p>本节介绍了Activity生命周期的概念、各个生命周期回调、提及了Activity状态和系统杀进程间的关系、以及保存Activity状态的方法。</p>
+<h3 id="Activity生命周期的概念"><a href="#Activity生命周期的概念" class="headerlink" title="Activity生命周期的概念"></a>Activity生命周期的概念</h3><p>Activity生命周期包括了Activity的状态转移和6个核心回调：onCreate()、onStart()、onResume()、onPause()、onStop()、onDestroy()。</p>
+<p>家喻户晓的Activity状态转移图：<br><img src="https://developer.android.google.cn/guide/components/images/activity_lifecycle.png" alt="Activity状态转移图"> </p>
+<h3 id="生命周期回调"><a href="#生命周期回调" class="headerlink" title="生命周期回调"></a>生命周期回调</h3><p><strong>onCreate</strong><br>当Activity进入<em>Created</em>状态之后，onCreate被回调。savedInstanceState会做为参数传入onCreate中，和传入onRestoreInstanceState()的savedInstanceState是同一个Bundle对象。<br>在onCreate中，适宜做一些初始化工作（初始化变量、启动线程、初始化UI对象）以及调用setContentView()。</p>
+<p><strong>onStart</strong><br>当Activity进入<em>Started</em>状态之后（进入可视范围），onStart被回调。<br>在onStart中，适宜注册各类监听（listener和Receiver）、同步UI；重建在onStop中释放的对象。</p>
+<p><strong>onResume</strong><br>当Activity进入<em>Resumed</em>状态之后，即成为当前活跃的Activity之后，onResume被回调。<br>在onResume中，适宜启动动画，以及Activity进入活跃状态才开启的工作；重建在onPause中释放的对象。</p>
+<p><strong>onPause</strong><br>当Activity进入<em>Paused</em>状态，即离开活跃状态，onPause被回调。<br>在onPause中应该停止动画、暂停音视频播放等；同时释放在Paused状态下不需要的资源（例如sensors）以节约耗电。</p>
+<p><strong>onStop</strong><br>当Activity进入<em>Stopped</em>状态，即完全不可见状态，onStop被回调。<br>在onStop中应该释放所有可能造成内存泄露的资源，因为在进程被系统回收时onDestroy不保证被调用；同时在onStop中适宜进行结束前的持久化工作。 </p>
+<p><strong>onDestroy</strong><br>在Activity被销毁之前回调，在这里可以释放在onStop没被释放的资源（那些不会泄露的资源）。</p>
+<h3 id="进程回收与Activity状态"><a href="#进程回收与Activity状态" class="headerlink" title="进程回收与Activity状态"></a>进程回收与Activity状态</h3><p>Android系统的资源回收是以进程为单位，不会单独作用于Activity。但是Activity状态回影响进程回收优先级，进程回收优先级从高到低为 Destroyed &gt; Stopped &gt; Pauseed &gt; Created &amp; Started &amp; Resumed。</p>
+<h3 id="启动其他Activity"><a href="#启动其他Activity" class="headerlink" title="启动其他Activity"></a>启动其他Activity</h3><p>onActivityResult的参数ResultCode可以使用RESULT_CANCELED、RESULT_OK以外的自定义值，自定义的ResultCode应当大于整型常量RESULT_FIRST_USER。</p>
+<p>当Activity A 启动 Activity B时，生命周期回调顺序如下：<br>Activity A的onPause() -&gt; Activity B的onCreate()、onStart()、onPause() -&gt; Activity A的onStop()。</p>
+<h3 id="保存和恢复Activity状态"><a href="#保存和恢复Activity状态" class="headerlink" title="保存和恢复Activity状态"></a>保存和恢复Activity状态</h3><p>系统会对Activity进行状态保存及恢复的情况有两种，因进程回收销毁Activity和因configuration变化销毁Activity。<br>当Activity的状态保存被触发时，系统会用一个Bundle对象（即SaveInstanceState）来保存Activity状态，以便再次进入Activity时通过这个Bundle对象恢复Activity状态。<br>依靠默认行为，Activity会保存和恢复View的状态。</p>
+<p>Activity通过onSaveInstanceState()方法保存状态，重写它时需要调用super，super方法里会进行保存View状态发生的工作。</p>
+<p>SaveInstanceState会作为参数传递给onCreate()和onRestoreInstanceState()。onRestoreInstanceState()的调用顺序在onStart()之后，重写它时需要调用super，和onSaveInstanceState()同理。</p>
+<p>onSaveInstanceState()大概是在onPause和onStop之间调用，onRestoreInstanceState()在onStart()之后被调用。</p>
+<h2 id="Activity-State-Changes"><a href="#Activity-State-Changes" class="headerlink" title="Activity State Changes"></a>Activity State Changes</h2><p>本节列出了一些会造成Activity状态发生改变的情况。</p>
+<ul>
+<li>Configuration change，会引发Activity的销毁和重建，为了应对Configuration change应该实现onSaveInstanceState()来保存恢复状态。</li>
+<li>7.0以上推出的multi-window模式。</li>
+<li>新的Activity或Dialog被激活。</li>
+<li>用户按下Back按键，按照默认行为会销毁当前Activity（如果没有Fragment从中作梗）。</li>
+</ul>
+<h2 id="Tasks-and-Back-Stack"><a href="#Tasks-and-Back-Stack" class="headerlink" title="Tasks and Back Stack"></a>Tasks and Back Stack</h2><p>本节讲解Task的概念，以及一些通过Manifest和Intent Flag变更Task和Back Stack默认行为方法。</p>
+<h3 id="定义Launch-Mode"><a href="#定义Launch-Mode" class="headerlink" title="定义Launch Mode"></a>定义Launch Mode</h3><p>定义Activity的Launch Mode的方式有两种，在Manifest中或通过Intent Flag。在Intent Flag中定义的Launch Mode会覆盖Manifest中的定义。</p>
+<p>Manifest中<code>&lt;activity&gt;</code>标签的launchMode属性可以定义著名的四种launchMode：</p>
+<ul>
+<li>standard，就如同Android系统的默认行为，也是launchMode的默认值。</li>
+<li>singleTop，Activity如果在当前Task的顶部，则不会新建Activity而是调用已有Activity的onNewIntent()。</li>
+<li>singleTask，Activity会被创建在一个新的Task中，但如果Activity已经存在于某个Task中则不会新建Activity而是调用已有Activity的onNewIntent()。同一时间singleTask的Activity仅会有一个实例。</li>
+<li>singleInstance，跟singleTask一样除了Activity会独占Task。</li>
+</ul>
+<p>通过Intent Flag中可以定义如下Launch Mode：   </p>
+<ul>
+<li>FLAG_ACTIVITY_NEW_TASK，和singleTask一致。</li>
+<li>FLAG_ACTIVITY_SINGLE_TOP，和singleTop一致。</li>
+<li>FLAG_ACTIVITY_CLEAR_TOP，如果Activity存在于当前Task则不会新建，并且销毁所有在Back Stack中位于其之上的Activity，常与FLAG_ACTIVITY_NEW_TASK一起使用。如果Activity的launchMode是standard的，那么Activity会在Back Stack的原位置上销毁并重建。</li>
+</ul>
+<h3 id="affinity"><a href="#affinity" class="headerlink" title="affinity"></a>affinity</h3><p>affinity代表Activity倾向于存在的Task，默认情况下同一个App的所有Activity的affinity相同。<br>开发者可以通过<code>&lt;activity&gt;</code>标签中的taskAffinity的属性来修改affinity，Activity的affinity的默认值为包名。</p>
+<p>affinity发生作用的两个场景：   </p>
+<ul>
+<li>当以 FLAG_ACTIVITY_NEW_TASK 启动Activity时，Activity会在一个“新”Task中启动。实际情况是，如果已经存在一个和Activity具有相同affinity的Task存在，那么Activity会在那个Task中启动；否则才会新建一个Task。</li>
+<li>当Activity的 allowTaskReparenting 属性被设为true时，如果Activity原本不存在于其affinity Task中，当它的affinity Task激活时，Activity会被移动到affinity Task中。</li>
+</ul>
+<h3 id="清理Back-Stack"><a href="#清理Back-Stack" class="headerlink" title="清理Back Stack"></a>清理Back Stack</h3><p>当Task太久没被激活时，系统会清理除了Task Root以外的所有Activity（真的吗？），有一下几个标志位可以控制清理Back Stack的行为。</p>
+<ul>
+<li>alwaysRetainTaskState，当Task的root Actvity包含该标志位时，默认的清理Back Stack行为不会发生。</li>
+<li>clearTaskOnLaunch，和 alwaysRetainTaskState 刚好相反，当Task的root Actvity包含该标志位时，一旦用户离开这个Task，默认的清理Back Stack行为马上发生。</li>
+<li>finishOnTaskLaunch，该标志作用于单个Activity，当用户离开Task之后，Task中包含该标志位的Activity会从Back Stack中移除。</li>
+</ul>
+<h2 id="Processes-and-Application-Lifecycle"><a href="#Processes-and-Application-Lifecycle" class="headerlink" title="Processes and Application Lifecycle"></a>Processes and Application Lifecycle</h2><p>本节介绍进程回收时，系统判定不同进程的优先级。</p>
+<p>进程重要程度降序如下：</p>
+<ul>
+<li>前台进程(foreground process)，包括处于Resumed(Created、Started)状态的Activity；生命周期回调正在执行的Activity、Service；onReceive()正在执行的BroadcastReceiver。</li>
+<li>可见进程(visible process)，包括处于Paused状态的Activity；由Service.startForeground()启动的Service等。</li>
+<li>服务进程(service proces)，通过startService()启动的Service。当Service运行超过30分钟之后，服务进程可能会被降级成缓存进程(cached process)。</li>
+<li>缓存进程(cached process)，包括处于Stopped状态的Activity。缓存进程由LRU列表管理，随时可能会被杀死。</li>
+<li>空进程(empty process)。</li>
+</ul>
+<h2 id="Parcelables-and-Bundles"><a href="#Parcelables-and-Bundles" class="headerlink" title="Parcelables and Bundles"></a>Parcelables and Bundles</h2><p>Parcelable对象和Bundle是设计用于在进程间传递信息的数据结构，Android的进程间通信是通过Binder transaction完成。</p>
+<h2 id="Recents-Screen"><a href="#Recents-Screen" class="headerlink" title="Recents Screen"></a>Recents Screen</h2><p>TODO。</p>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2017/08/04/android-developers-guide-note-app-components-fragment/" data-toggle="tooltip" data-placement="top" title="Android Developer Guide中的Fragment和Loader">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2017/07/26/android-developers-guide-note-app-components-intents/" data-toggle="tooltip" data-placement="top" title="Android Developer Guide中的Intent">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                    <div class="comment">
+                        <div id="disqus_thread" class="disqus-thread"></div>
+                    </div>
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#展开点"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">展开点</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Caution"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Caution</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Introduction-to-Activities"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">Introduction to Activities</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Activity的概念"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">Activity的概念</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#在Manifest中声明Activity"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">在Manifest中声明Activity</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#The-Activity-Lifecycle"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">The Activity Lifecycle</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Activity生命周期的概念"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">Activity生命周期的概念</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#生命周期回调"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">生命周期回调</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#进程回收与Activity状态"><span class="toc-nav-number">4.3.</span> <span class="toc-nav-text">进程回收与Activity状态</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#启动其他Activity"><span class="toc-nav-number">4.4.</span> <span class="toc-nav-text">启动其他Activity</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#保存和恢复Activity状态"><span class="toc-nav-number">4.5.</span> <span class="toc-nav-text">保存和恢复Activity状态</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Activity-State-Changes"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">Activity State Changes</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Tasks-and-Back-Stack"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">Tasks and Back Stack</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#定义Launch-Mode"><span class="toc-nav-number">6.1.</span> <span class="toc-nav-text">定义Launch Mode</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#affinity"><span class="toc-nav-number">6.2.</span> <span class="toc-nav-text">affinity</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#清理Back-Stack"><span class="toc-nav-number">6.3.</span> <span class="toc-nav-text">清理Back Stack</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Processes-and-Application-Lifecycle"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">Processes and Application Lifecycle</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Parcelables-and-Bundles"><span class="toc-nav-number">8.</span> <span class="toc-nav-text">Parcelables and Bundles</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Recents-Screen"><span class="toc-nav-number">9.</span> <span class="toc-nav-text">Recents Screen</span></a></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Android" title="Android">Android</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus embedded js code start (one page only need to embed once) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "your-disqus-ID";
+    var disqus_identifier = "http://blog.overspark.me/2017/08/03/android-developers-guide-note-app-components-activity/";
+    var disqus_url = "http://blog.overspark.me/2017/08/03/android-developers-guide-note-app-components-activity/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus embedded js code start end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/wenchengye">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Overspark 2017 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    re-Ported by <a href="http://beantech.org">BeanTech</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=YenYuHsuan&repo=hexo-theme-beantech&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://blog.overspark.me/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="http://blog.overspark.me/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

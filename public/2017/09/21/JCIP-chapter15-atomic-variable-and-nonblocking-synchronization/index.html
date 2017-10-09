@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="null">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          原子变量与非阻塞同步 - World&#39;s End Tavern
+        
+    </title>
+
+    <link rel="canonical" href="http://blog.overspark.me/2017/09/21/JCIP-chapter15-atomic-variable-and-nonblocking-synchronization/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/img/header_img/java-note-header.jpg')
+            /*post*/
+        
+    }
+    
+    #signature{
+        background-image: url('/undefined');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#Java" title="Java">Java</a>
+                            
+                        </div>
+                        <h1>原子变量与非阻塞同步</h1>
+                        <h2 class="subheading">JCIP读书笔记第十五章</h2>
+                        <span class="meta">
+                            Posted by Overspark on
+                            2017-09-21
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">World&#39;s End Tavern</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h2 id="Caution"><a href="#Caution" class="headerlink" title="Caution"></a>Caution</h2><ul>
+<li>Float.floatToIntBits()/Double.doubleToLongBits()。</li>
+<li>AtomicFieldUpdater。</li>
+</ul>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><code>java.util.concurrent</code>中的一些线程安全类/同步工具类声称自己有更好的性能和伸缩性，这一章将介绍这种性能提升的基础——非阻塞同步。</p>
+<p><strong>非阻塞同步算法的特点</strong><br>非阻塞同步基于硬件提供的一些原子指令(例如CAS)；非阻塞同步算法在操作系统、JVM这种高端大气的项目中很常见；非阻塞同步算法往往很难设计。</p>
+<p><strong>非阻塞同步算法的好处</strong><br>没有锁，没有阻塞，大幅减少性能消耗；对死锁以及很多活跃性问题天然免疫。</p>
+<h2 id="锁的缺陷"><a href="#锁的缺陷" class="headerlink" title="锁的缺陷"></a>锁的缺陷</h2><p><strong>用锁同步可能会加重负载</strong>。当获取锁失败后，线程会被挂起并在之后再恢复，当竞争严重时会反复的挂起与恢复，这中间涉及到了大量的中断和与性能消耗。对容器加锁时这种状况很容易出现。<br><strong>线程在等待锁时无法进行任何事</strong>。同时因为等待锁的原因，线程的优先级也无法得到保证：高优先级的线程会因为低优先级的线程长时间持有锁而被挂起。<br><strong>volatile不提供原子性</strong>。volatile变量没有过高的性能消耗，但是它不能保证原子性，例如<code>++i</code>对于<code>volatile i</code>就不是原子操作。</p>
+<h2 id="非阻塞同步的硬件支持"><a href="#非阻塞同步的硬件支持" class="headerlink" title="非阻塞同步的硬件支持"></a>非阻塞同步的硬件支持</h2><p>如果说互斥锁是一种“悲观的”的技术：确保独占内存之后再去读写内存；那么非阻塞相关的指令就是“乐观的”技术：先去尝试修改内存，发生冲突再退回重试。<br>现代处理器提供了一些原子指令，例如CAS、load-linked/store-conditional，帮助实现非阻塞同步。</p>
+<h3 id="CAS"><a href="#CAS" class="headerlink" title="CAS"></a>CAS</h3><p>就是CAS。</p>
+<h3 id="一个非阻塞计数器"><a href="#一个非阻塞计数器" class="headerlink" title="一个非阻塞计数器"></a>一个非阻塞计数器</h3><p>这一节用仿造的CAS操作实现了一个非阻塞的递增计数器，并强调虽然写法复杂其实际性能比加锁递增好很多。当然在实际应用中无需这样写，使用Atomic变量就行了。<br>CAS的劣势是要求开发者自己处理冲突(重试、等待还是放弃)；实际上CAS最大的缺点是很难正确编写。</p>
+<h2 id="原子变量"><a href="#原子变量" class="headerlink" title="原子变量"></a>原子变量</h2><p>原子变量为开发者提供了非阻塞同步的基本工具，基于CAS的原理，原子变量提供了更好的性能，在无竞争情况下原子变量不差于加锁，在中等竞争时原子变量明显优于加锁。</p>
+<p>由于Atomic变量只提供了AtomicInteger、AtomicLong、AtomicBoolean，如果要使用浮点型的原子变量需要借助floatToIntBits()／floatToIntBits()等方法。</p>
+<h3 id="原子变量是更好的volatile"><a href="#原子变量是更好的volatile" class="headerlink" title="原子变量是更好的volatile"></a>原子变量是更好的volatile</h3><p>因为原子变量提供了很多原子性接口，基于之前状态的符合操作(例如++i)，在使用原子变量时其原子性才能实现；仅仅使用volatile而不加锁无法实现原子性的复合操作。</p>
+<h3 id="锁和原子变量的性能对比"><a href="#锁和原子变量的性能对比" class="headerlink" title="锁和原子变量的性能对比"></a>锁和原子变量的性能对比</h3><p>结论：在低竞争和中等竞争的情况下，原子变量的性能远好于锁；在竞争极高的情况下锁的戏能，锁的性能会优于原子变量。在高竞争情况下，锁的挂起线程机制会比使用CAS的CPU自旋机制性能更好。</p>
+<h2 id="非阻塞算法"><a href="#非阻塞算法" class="headerlink" title="非阻塞算法"></a>非阻塞算法</h2><p>非阻塞同步不会造成诸如死锁的活跃性问题，也不会造成线程优先级反转…文章开头说过了。<br>非阻塞同步算法常见于各种数据结构中，这一章介绍了一些非阻塞同步的例子。</p>
+<h3 id="非阻塞栈"><a href="#非阻塞栈" class="headerlink" title="非阻塞栈"></a>非阻塞栈</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@ThreadSafe</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcurrentStack</span> &lt;<span class="title">E</span>&gt; </span>&#123;</div><div class="line">  AtomicReference&lt;Node&lt;E&gt;&gt; top = <span class="keyword">new</span> AtomicReference&lt;Node&lt;E&gt;&gt;();</div><div class="line">   </div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">push</span><span class="params">(E item)</span> </span>&#123;</div><div class="line">    Node&lt;E&gt; newHead = <span class="keyword">new</span> Node&lt;E&gt;(item); Node&lt;E&gt; oldHead;</div><div class="line">    <span class="keyword">do</span> &#123;</div><div class="line">      oldHead = top.get();</div><div class="line">      newHead.next = oldHead;</div><div class="line">    &#125; <span class="keyword">while</span> (!top.compareAndSet(oldHead, newHead));</div><div class="line">  &#125;</div><div class="line">    </div><div class="line">  <span class="function"><span class="keyword">public</span> E <span class="title">pop</span><span class="params">()</span> </span>&#123;</div><div class="line">    Node&lt;E&gt; oldHead;</div><div class="line">    Node&lt;E&gt; newHead;</div><div class="line">    <span class="keyword">do</span> &#123;</div><div class="line">      oldHead = top.get(); <span class="keyword">if</span> (oldHead == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">      newHead = oldHead.next;</div><div class="line">    &#125; <span class="keyword">while</span> (!top.compareAndSet(oldHead, newHead)); <span class="keyword">return</span> oldHead.item;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span> &lt;<span class="title">E</span>&gt; </span>&#123; </div><div class="line">    <span class="keyword">public</span> <span class="keyword">final</span> E item;</div><div class="line">    <span class="keyword">public</span> Node&lt;E&gt; next;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Node</span><span class="params">(E item)</span> </span>&#123;</div><div class="line">      <span class="keyword">this</span>.item = item;</div><div class="line">    &#125; </div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="非阻塞链表"><a href="#非阻塞链表" class="headerlink" title="非阻塞链表"></a>非阻塞链表</h3><p>果然很难写，充满了trick，关键需要理清需一次操作要更新哪些Atomic变量，并保持对多个Atomic更新的一致性。如果下面算法看不懂，可以回去阅读原文的解释。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@ThreadSafe</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LinkedQueue</span> &lt;<span class="title">E</span>&gt; </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span> &lt;<span class="title">E</span>&gt; </span>&#123; </div><div class="line">        <span class="keyword">final</span> E item;</div><div class="line">        <span class="keyword">final</span> AtomicReference&lt;Node&lt;E&gt;&gt; next;</div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Node</span><span class="params">(E item, Node&lt;E&gt; next)</span> </span>&#123;</div><div class="line">            <span class="keyword">this</span>.item = item;</div><div class="line">            <span class="keyword">this</span>.next = <span class="keyword">new</span> AtomicReference&lt;Node&lt;E&gt;&gt;(next);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Node&lt;E&gt; dummy = <span class="keyword">new</span> Node&lt;E&gt;(<span class="keyword">null</span>, <span class="keyword">null</span>); </div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> AtomicReference&lt;Node&lt;E&gt;&gt; head = <span class="keyword">new</span> AtomicReference&lt;Node&lt;E&gt;&gt;(dummy);</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> AtomicReference&lt;Node&lt;E&gt;&gt; tail = <span class="keyword">new</span> AtomicReference&lt;Node&lt;E&gt;&gt;(dummy);</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">put</span><span class="params">(E item)</span> </span>&#123;</div><div class="line">        Node&lt;E&gt; newNode = <span class="keyword">new</span> Node&lt;E&gt;(item, <span class="keyword">null</span>); </div><div class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</div><div class="line">            Node&lt;E&gt; curTail = tail.get();</div><div class="line">            Node&lt;E&gt; tailNext = curTail.next.get(); </div><div class="line">            <span class="keyword">if</span> (curTail == tail.get()) &#123;</div><div class="line">                <span class="keyword">if</span> (tailNext != <span class="keyword">null</span>) &#123;  </div><div class="line">                    <span class="comment">// Queue in intermediate state, advance tail </span></div><div class="line">                    tail.compareAndSet(curTail, tailNext); </div><div class="line">                &#125; <span class="keyword">else</span> &#123;</div><div class="line">                    <span class="comment">// In quiescent state, try inserting new node</span></div><div class="line">                    <span class="keyword">if</span> (curTail.next.compareAndSet(<span class="keyword">null</span>, newNode)) &#123;</div><div class="line">                        <span class="comment">// Insertion succeeded, try advancing tail</span></div><div class="line">                        tail.compareAndSet(curTail, newNode);</div><div class="line">                        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Atomic-field-updater"><a href="#Atomic-field-updater" class="headerlink" title="Atomic field updater"></a>Atomic field updater</h3><p>AtomicFieldUpdater作为一个“Helper类”，可以为一般的volatile变量提供CAS操作。<br>与上一节的实现不同，在Java库中的非阻塞链表的实现里，Node类的next字段是一个volatile引用，并使用AtomicFieldUpdater更新；因为Node类对象会频繁的创建和销毁，这样做可以避免创建Atomic对象的消耗。</p>
+<h3 id="ABA错误"><a href="#ABA错误" class="headerlink" title="ABA错误"></a>ABA错误</h3><p>在CAS类操作中出现的ABA错误可以描述如下：从变量中取出值位A -&gt; 变量值从A变为B又变回A -&gt; 通过CAS并没有发现变量经历的变化。在一些情况下只要变量值保持不变，就可以认为变量没有发生变化；但在另一些情况下，需要观察到这个变化。<br>比如说，想象一下在使用对象池的时候，对象地址虽然没变但可能在逻辑上已经是一个新的对象了。<br>通常解决方案就是在对象引用里加入一个tag，以标记引用是否经历过改变，<code>AtomicStampedReference</code>就提供了这个功能。</p>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2017/09/29/JCIP-chapter14-building-custom-synchronizers/" data-toggle="tooltip" data-placement="top" title="自定义同步工具类">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2017/09/10/tips-read-aosp-in-intellij/" data-toggle="tooltip" data-placement="top" title="使用Intellij/Android Studio阅读Android源码">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                    <div class="comment">
+                        <div id="disqus_thread" class="disqus-thread"></div>
+                    </div>
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Caution"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Caution</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#前言"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">前言</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#锁的缺陷"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">锁的缺陷</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#非阻塞同步的硬件支持"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">非阻塞同步的硬件支持</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#CAS"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">CAS</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#一个非阻塞计数器"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">一个非阻塞计数器</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#原子变量"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">原子变量</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#原子变量是更好的volatile"><span class="toc-nav-number">5.1.</span> <span class="toc-nav-text">原子变量是更好的volatile</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#锁和原子变量的性能对比"><span class="toc-nav-number">5.2.</span> <span class="toc-nav-text">锁和原子变量的性能对比</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#非阻塞算法"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">非阻塞算法</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#非阻塞栈"><span class="toc-nav-number">6.1.</span> <span class="toc-nav-text">非阻塞栈</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#非阻塞链表"><span class="toc-nav-number">6.2.</span> <span class="toc-nav-text">非阻塞链表</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Atomic-field-updater"><span class="toc-nav-number">6.3.</span> <span class="toc-nav-text">Atomic field updater</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#ABA错误"><span class="toc-nav-number">6.4.</span> <span class="toc-nav-text">ABA错误</span></a></li></ol></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Java" title="Java">Java</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus embedded js code start (one page only need to embed once) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "your-disqus-ID";
+    var disqus_identifier = "http://blog.overspark.me/2017/09/21/JCIP-chapter15-atomic-variable-and-nonblocking-synchronization/";
+    var disqus_url = "http://blog.overspark.me/2017/09/21/JCIP-chapter15-atomic-variable-and-nonblocking-synchronization/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus embedded js code start end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/wenchengye">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Overspark 2017 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    re-Ported by <a href="http://beantech.org">BeanTech</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=YenYuHsuan&repo=hexo-theme-beantech&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://blog.overspark.me/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="http://blog.overspark.me/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

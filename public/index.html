@@ -14,7 +14,7 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          Overspark的博客
+          World&#39;s End Tavern
         
     </title>
 
@@ -69,13 +69,13 @@
 <style type="text/css">
     header.intro-header{
         
-            background-image: url('/img/header_img/home-bg-2-dark.png') 
+            background-image: url('/img/header_img/home-header.jpg') 
             /*config*/
         
     }
     
     #signature{
-        background-image: url('/img/signature/BeanTechSign-white.png');
+        background-image: url('/undefined');
     }
     
 </style>
@@ -88,9 +88,9 @@
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 
                     <div class="site-heading">
-                        <h1>Overspark</h1>
+                        <h1>World&#39;s End Tavern</h1>
                         <!--<hr class="small">-->
-                        <span class="subheading">Overspark的博客</span>
+                        <span class="subheading">Lower City, Shattrath</span>
                     </div>
                 
 
@@ -113,7 +113,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">Overspark</a>
+            <a class="navbar-brand" href="/">World&#39;s End Tavern</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -213,24 +213,307 @@
 
 <div class="post-preview">
 
-    <a href="/2017/07/04/hello-world/">
+    <a href="/2017/10/09/JCIP-chapter5-building-blocks/">
         <h2 class="post-title">
-            Hello World
+            Java库中的线程安全类
         </h2>
         <h3 class="post-subtitle">
-            
+            JCIP读书笔记第五章
         </h3>
         <div class="post-content-preview">
-            Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Qu......
+            概览最稳定的实现线程安全类的方式，就是借助已有的线程安全类。这一章将介绍Java库中的线程安全类，包括一些线程安全容器类和同步工具类。
+同步容器Java库中的同步容器包括Vector、Hashtable以及Collections.synchronized*系列容器，这些容器都采用内置锁来执行同步操作。
+同步容器的问题client-side锁如果需要同步的组合操作(例如取得容器长度，然后删除最......
         </div>
     </a>
     
         <p class="post-meta" style="margin: 10px 0;">
             Posted by Overspark on
-            2017-07-04
+            2017-10-09
         </p>
         <div class="tags">
+            
+              <a href="/tags/#Java" title="Java">Java</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2017/10/09/JCIP-chapter7-cancellation-and-shutdown/">
+        <h2 class="post-title">
+            中止线程
+        </h2>
+        <h3 class="post-subtitle">
+            JCIP读书笔记第七章
+        </h3>
+        <div class="post-content-preview">
+            概述中止线程比启动线程要复杂，Java没有提供之间中止线程的机制(初期的中止线程方法被弃用)，而是提供了interruption机制提醒线程自己进行中止。用interruption机制来代替中止线程的原因是，如果线程被类似stop()的方法立即中止可能会打断正在进行的操作，而使变量处于非法的状态。
+任务中止中止任务的需求有很多，例如用户请求、任务时限、发生错误、服务关闭等情况。没有主动中止任......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Overspark on
+            2017-10-09
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Java" title="Java">Java</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2017/10/06/JCIP-chapter12-testing-concurrent-programs/">
+        <h2 class="post-title">
+            测试并发程序
+        </h2>
+        <h3 class="post-subtitle">
+            JCIP读书笔记第十二章
+        </h3>
+        <div class="post-content-preview">
+            展开点
+aspect-oriented programming (AOP) 。
+
+概述并发相关的测试通常可以归类为线程安全测试和线程活跃性测试。线程安全测试通常需要验证变量的一致性，所以测试代码本身也需要时线程安全的；但有时候加入这样的测试代码之后会隐藏原有的线程安全类bug。线程活跃性测试的难点在于，如何界定活跃性问题(例如死锁)真的发生了和程序运行效率低之间的区别。并发相关的性能测试包含......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Overspark on
+            2017-10-06
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Java" title="Java">Java</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2017/10/05/JCIP-chapter10-avoiding-liveness-hazards/">
+        <h2 class="post-title">
+            活跃性问题
+        </h2>
+        <h3 class="post-subtitle">
+            JCIP读书笔记第十章
+        </h3>
+        <div class="post-content-preview">
+            死锁再来一次五哲学家用筷子吃饭的例子，解释什么是死锁。数据库系统采用如下方法来避免死锁，在互相死锁的事务中挑选牺牲者并中止该事务。
+加锁顺序造成的死锁当线程需要同时获取多个锁时，有可能会发生加锁顺序造成的死锁；如果所有线程，都依照一个全局固定的顺序来依次获取多个锁，那么就可以避免加锁顺序造成的死锁。
+要保持全局的加锁顺序固定，看起来是相当脆弱易出错的协议，尤其有动态的锁对象的时候。
+动态的加......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Overspark on
+            2017-10-05
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Java" title="Java">Java</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2017/09/29/JCIP-chapter13-explicit-locks/">
+        <h2 class="post-title">
+            显式锁
+        </h2>
+        <h3 class="post-subtitle">
+            JCIP读书笔记第十三章
+        </h3>
+        <div class="post-content-preview">
+            caution开头Java 5.0之前，Java只有内置锁和volatile；从Java 5.0开始，引入了显式锁来提供一些内置锁所不具备的功能。
+Lock和ReentrantLockLock是个接口，定义了显式锁的基本行为；ReentrantLock是Lock的常用实现，其同步语意和内置锁基本相同。
+ReentrantLock相对于内置锁提供了更多的功能：可中断的获取锁的方法、如果失败立即......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Overspark on
+            2017-09-29
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Java" title="Java">Java</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2017/09/29/JCIP-chapter14-building-custom-synchronizers/">
+        <h2 class="post-title">
+            自定义同步工具类
+        </h2>
+        <h3 class="post-subtitle">
+            JCIP读书笔记第十四章
+        </h3>
+        <div class="post-content-preview">
+            caution概述自定义同步工具类最简单的方式就是基于已有的同步工具类；当然你也可以借助”内置Condition Queue”、”显示Condition Queue”以及AQS(AbstractQueuedSynchronizer)。
+条件依赖操作与同步如果不借助Condition Queue，Blocking等待条件成立写起来往往很麻烦，比如：
+1234567acquire lock on......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Overspark on
+            2017-09-29
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Java" title="Java">Java</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2017/09/21/JCIP-chapter15-atomic-variable-and-nonblocking-synchronization/">
+        <h2 class="post-title">
+            原子变量与非阻塞同步
+        </h2>
+        <h3 class="post-subtitle">
+            JCIP读书笔记第十五章
+        </h3>
+        <div class="post-content-preview">
+            Caution
+Float.floatToIntBits()/Double.doubleToLongBits()。
+AtomicFieldUpdater。
+
+前言java.util.concurrent中的一些线程安全类/同步工具类声称自己有更好的性能和伸缩性，这一章将介绍这种性能提升的基础——非阻塞同步。
+非阻塞同步算法的特点非阻塞同步基于硬件提供的一些原子指令(例如CAS)；非阻塞同步算......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Overspark on
+            2017-09-21
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Java" title="Java">Java</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2017/09/10/tips-read-aosp-in-intellij/">
+        <h2 class="post-title">
+            使用Intellij/Android Studio阅读Android源码
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            最近想看看AOSP，对于Java／Android开发者来说，最习惯的方式就是在Intellij／Android Studio中阅读源码了，记录一下折腾的过程。
+硬件准备移动硬盘因为使用256G的MBP，硬盘空间常年吃紧，把AOSP直接下载到硬盘实在太奢侈了。所以准备了一块移动硬盘来放代码，这样大概会拖慢编译/IDE读工程的速度，但随后证明我这个决定是正确的。
+需要留多少硬盘空间因为需要作大小......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Overspark on
+            2017-09-10
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Android" title="Android">Android</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2017/09/09/android-developers-guide-note-app-manifest/">
+        <h2 class="post-title">
+            Android Developer Guide中的Manifest
+        </h2>
+        <h3 class="post-subtitle">
+            Android官方guide随笔 - Manifest
+        </h3>
+        <div class="post-content-preview">
+            展开点
+&lt;activity-alias&gt;。
+&lt;instrumentation&gt;。
+Google Cloud（backend）。
+App自身组件声明的permission对本app是否有限制作用；App自己定义的permission对本app是否有限制作用。
+
+App ManifestManifest文件包含了App向系统注册的信息，相当于系统如何使用这个App的参考手......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Overspark on
+            2017-09-09
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Android" title="Android">Android</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2017/09/09/JCIP-chapter16-java-memory-model/">
+        <h2 class="post-title">
+            Java内存模型
+        </h2>
+        <h3 class="post-subtitle">
+            JCIP读书笔记第十六章
+        </h3>
+        <div class="post-content-preview">
+            Caution
+现代系统中，volatile变量读操作和普通变量读操作的代价几乎一样。
+
+整本JCIP都在避免直接讲述Java内存模型，但是线程安全机制是以内存模型为基础的，所以了解一些内存模型的知识有利于明白线程安全规则为何要那样规定。
+Java内存模型概述(JMM)什么是Java内存模型为什需要Java内存模型？因为现代CPU的复杂优化，导致仅仅在单一线程上保证变量(抽象内存位置)的可见......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Overspark on
+            2017-09-09
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Java" title="Java">Java</a>
             
         </div>
     
@@ -244,6 +527,10 @@ Qu......
 
 <ul class="pager">
     
+    
+        <li class="next">
+            <a href="/page/2/">Older Posts &rarr;</a>
+        </li>
     
 </ul>
 
@@ -269,6 +556,14 @@ Qu......
     <h5><a href="/tags/">FEATURED TAGS</a></h5>
     <div class="tags">
         
+            
+            <a href="/tags/#Android" title="Android" rel="10">Android</a>
+            
+        
+            
+            <a href="/tags/#Java" title="Java" rel="8">Java</a>
+            
+        
     </div>
 </section>
 
@@ -280,11 +575,11 @@ Qu......
     <div class="short-about">
 
         
-            <img id = "avatar_pic" src="/img/ironman-draw.png" />
+            <img id = "avatar_pic" src="/img/overspark-img.jpeg" />
         
 
         
-            <p>Hi, i&#39;m John Doe</p>
+            <p>Fear cuts deeper than swords.</p>
         
 
         <!-- SNS Link -->
@@ -296,19 +591,10 @@ Qu......
             
 
             
-                <li>
-                    <a target="_blank" href="https://www.facebook.com/YenYuHsuan">
-                        <span class="fa-stack fa-lg">
-                            <i class="fa fa-circle fa-stack-2x"></i>
-                            <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
-                        </span>
-                    </a>
-                </li>
-            
 
             
                 <li>
-                    <a target="_blank"  href="https://github.com/YenYuHsuan">
+                    <a target="_blank"  href="https://github.com/wenchengye">
                         <span class="fa-stack fa-lg">
                             <i class="fa fa-circle fa-stack-2x"></i>
                             <i class="fa fa-github fa-stack-1x fa-inverse"></i>
@@ -318,15 +604,6 @@ Qu......
             
             
             
-            
-                <li>
-                    <a target="_blank"  href="https://www.linkedin.com/in/yu-hsuan-yen">
-                        <span class="fa-stack fa-lg">
-                            <i class="fa fa-circle fa-stack-2x"></i>
-                            <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
-                        </span>
-                    </a>
-                </li>
             
         </ul>
     </div>
@@ -339,7 +616,23 @@ Qu......
     <ul>
       
         <li>
-          <a href="/2017/07/04/hello-world/">Hello World</a>
+          <a href="/2017/10/09/JCIP-chapter5-building-blocks/">Java库中的线程安全类</a>
+        </li>
+      
+        <li>
+          <a href="/2017/10/09/JCIP-chapter7-cancellation-and-shutdown/">中止线程</a>
+        </li>
+      
+        <li>
+          <a href="/2017/10/06/JCIP-chapter12-testing-concurrent-programs/">测试并发程序</a>
+        </li>
+      
+        <li>
+          <a href="/2017/10/05/JCIP-chapter10-avoiding-liveness-hazards/">活跃性问题</a>
+        </li>
+      
+        <li>
+          <a href="/2017/09/29/JCIP-chapter13-explicit-locks/">显式锁</a>
         </li>
       
     </ul>
@@ -347,21 +640,12 @@ Qu......
 
         <hr>
     
-        <!-- Friends Blog -->
+        <!-- Categories -->
 
-<h5>FRIENDS</h5>
-<ul class="list-inline">
-
-    
-        <li><a href="http://beantech.org" target="_blank">Bean Tech</a></li>
-    
-        <li><a href="http://blog.kaijun.rocks" target="_blank">Kaijun&#39;s Blog</a></li>
-    
-        <li><a href="http://huangxuan.me" target="_blank">Hux Blog</a></li>
-    
-        <li><a href="#" target="_blank">It Helps SEO</a></li>
-    
-</ul>
+    <h5>categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/经验/">经验</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/读书笔记/">读书笔记</a><span class="category-list-count">17</span></li></ul>
+    </div>
 
         <hr>
     
@@ -386,19 +670,10 @@ Qu......
                 
 
                 
-                    <li>
-                        <a target="_blank" href="https://www.facebook.com/YenYuHsuan">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </li>
-                
 
                 
                     <li>
-                        <a target="_blank"  href="https://github.com/YenYuHsuan">
+                        <a target="_blank"  href="https://github.com/wenchengye">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-github fa-stack-1x fa-inverse"></i>
@@ -407,15 +682,6 @@ Qu......
                     </li>
                 
 
-                
-                    <li>
-                        <a target="_blank"  href="https://www.linkedin.com/in/yu-hsuan-yen">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </li>
                 
 
                 </ul>

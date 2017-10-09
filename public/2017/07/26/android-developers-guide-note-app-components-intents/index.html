@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="null">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          Android Developer Guide中的Intent - World&#39;s End Tavern
+        
+    </title>
+
+    <link rel="canonical" href="http://blog.overspark.me/2017/07/26/android-developers-guide-note-app-components-intents/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/img/header_img/android-note-header.jpg')
+            /*post*/
+        
+    }
+    
+    #signature{
+        background-image: url('/undefined');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#Android" title="Android">Android</a>
+                            
+                        </div>
+                        <h1>Android Developer Guide中的Intent</h1>
+                        <h2 class="subheading">Android官方guide随笔 - App Components：Intent</h2>
+                        <span class="meta">
+                            Posted by Overspark on
+                            2017-07-26
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">World&#39;s End Tavern</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h2 id="展开点"><a href="#展开点" class="headerlink" title="展开点"></a>展开点</h2><ul>
+<li>MIME Type &amp; URI结构。</li>
+<li>Intent Flags。</li>
+<li>CATEGORY_DEFAULT的意义。 </li>
+<li>如何根据content provider类型URI推断Intent Data的MIME Type，对Intent Resolve有什么影响。</li>
+<li>ClipData的用处。</li>
+<li>DocumentsProvider。</li>
+</ul>
+<h2 id="Caution"><a href="#Caution" class="headerlink" title="Caution"></a>Caution</h2><ul>
+<li>不要为Service添加Intent filter，不要使用implicit intent启动Service。在5.0以上，使用implicit intent调用bindService()，系统会抛出异常。</li>
+<li>Intent的静态常量中定义了一些通用的action、category和extra key字符串；Settings的静态常量定义了一些打开Settings App界面的action。</li>
+<li>Intent的setData方法和setType方法会相互将对方置空（setData会置空mType，setType会置空mData，优秀的设计…）；同时set需要调用setDataAndType。</li>
+<li>在使用implicit intent时使用Intent.resolveActivity()检查有没有App响应这个Intent；如果没有Activity适合Intent的话，startActivity()会抛异常。</li>
+<li>（对于Activity而言）为了能收到implicit intent，在intent-filter中必须声明CATEGORY_DEFAULT，因为startActivity()和startActivityForResult()会默认添加CATEGORY_DEFAULT。</li>
+</ul>
+<h2 id="Intents-and-Intent-Filters"><a href="#Intents-and-Intent-Filters" class="headerlink" title="Intents and Intent Filters"></a>Intents and Intent Filters</h2><p>Intent用于Component之间的交流、传递信息，依赖Intent的Component包括Activity、Servcie和Recevier（不包括Provider）。</p>
+<h3 id="Intent的分类"><a href="#Intent的分类" class="headerlink" title="Intent的分类"></a>Intent的分类</h3><p>Intent分为Explicit intents和Implicit intents两类，其区别就是Intent中是否包含ComponentName。</p>
+<h3 id="Intent组成"><a href="#Intent组成" class="headerlink" title="Intent组成"></a>Intent组成</h3><p>Intent中包含的主要成分如下：</p>
+<ul>
+<li>Component name，区分Explicit intents和Implicit intents成分。Intent中的Component name属性是一个ComponentName对象。</li>
+<li>Action，表明Intent作希望执行的操作。Android系统有很多预定义的Action，同时Action通常也决定了Intent的结构(data、extra等)。</li>
+<li>Data，由URI和MIME type组成，做为Action的补充，代表Action的目标数据&amp;数据类型。如果URI是content: URI，MIME type往往可以由URI推断出。</li>
+<li>Category，表明希望哪些类型的Component响应Intent。</li>
+<li>Extras，extras是一个Bundle对象，传递额外数据。</li>
+<li>Flags，一些标志位用于告知Android系统如何使用这个Intent。</li>
+</ul>
+<p>Component name、Action、Data和Category这四种成分会影响Intent Resolve。 </p>
+<p>借助Intent.createChooer()方法，可以在发送implicit intent时强制显示chooer dialog（尽管用户之前在chooer dialog选择了默认处理intent的App）。</p>
+<h3 id="接收implicit-intent"><a href="#接收implicit-intent" class="headerlink" title="接收implicit intent"></a>接收implicit intent</h3><p>组件通过在manifest文件中定义<code>&lt;intent-filter&gt;</code>来接收implicit intent，组件可以定义多个<code>&lt;intent-filter&gt;</code>。</p>
+<p>explicit intent将无视<code>&lt;intent-filter&gt;</code>以及由<code>&lt;intent-filter&gt;</code>定义的intent resolve规则。</p>
+<p><code>&lt;intent-filter&gt;</code>由三类标签组成：<code>&lt;action&gt;</code>、<code>&lt;data&gt;</code>、<code>&lt;category&gt;</code>。每类标签可以有一个或多个（或没有）。<br>当你定义多个<code>&lt;action&gt;</code>、<code>&lt;data&gt;</code>或<code>&lt;category&gt;</code>时，你所维护Component需要能够处理由这些标签任意组合而成的Intent；如果你只想处理特定组合，定义多个<code>&lt;intent-filter&gt;</code>。</p>
+<p>在manifest中Component的android:exported属性可以控制该Component是否能被其他App调用。当android:exported为false时，Component仅能被相同UID的App调用。没有Intent-filter的Activity的android:exported属性默认值是false。</p>
+<h3 id="使用PendingIntent"><a href="#使用PendingIntent" class="headerlink" title="使用PendingIntent"></a>使用PendingIntent</h3><blockquote>
+<p>The primary purpose of a PendingIntent is to grant permission to a foreign<br>application to use the contained Intent as if it were executed from your<br>app’s own process.</p>
+</blockquote>
+<h3 id="Intent-resovle规则"><a href="#Intent-resovle规则" class="headerlink" title="Intent resovle规则"></a>Intent resovle规则</h3><p>Intent若要通过Intent filter的检验，则需要通过Action检验、Data检验、Category检验三部分。</p>
+<ul>
+<li>Action检验。<ul>
+<li>当Intent包含某个Intent filter中声明的action时可通过Action检验。</li>
+<li>如果Intent filter没有声明action，任何Intent都无法通过Action检验。</li>
+<li>如果Intent中不包含action，那么只要Intent filter声明了任意action，就可通过Acton检验。</li>
+</ul>
+</li>
+<li>Category检验。<ul>
+<li>当Intent中定义的所有category都在Intent filter中被声明，可通过Category检验。</li>
+</ul>
+</li>
+<li>Data检验。Data检验包括URI检验和MIME type检验；URI检验仅检验Intent filter中定义的部分。<ul>
+<li>如果Intent不包含URI和MIME type，仅在Intent filter没声明data条件时通过。</li>
+<li>如果Intent仅包含URI，仅在URI和Intent filter匹配，且Intent filter没声明type条件时通过。</li>
+<li>如果Intent仅包含MIME type，仅在type和Intent filter匹配，且Intent filter没声明URI条件时通过。</li>
+<li>如果Intent包含URI和MIME type，在URI和type均匹配时通过；或者在type匹配，Intent的URI为content:、file:类型，且Intent filter没有定义URI条件时通过。</li>
+</ul>
+</li>
+</ul>
+<h2 id="Common-Intents"><a href="#Common-Intents" class="headerlink" title="Common Intents"></a>Common Intents</h2><p>介绍一些Android系统预先定义的Action，以及相应的Intent结构和经由onActivityResult返回Intent的结构。</p>
+<h3 id="通过adb命令测试Intent"><a href="#通过adb命令测试Intent" class="headerlink" title="通过adb命令测试Intent"></a>通过adb命令测试Intent</h3><p>adb shell am start -a <code>&lt;ACTION&gt;</code> -t <code>&lt;MIME_TYPE&gt;</code> -d <code>&lt;DATA&gt;</code> -e <code>&lt;EXTRA_NAME&gt;</code> <code>&lt;EXTRA_VALUE&gt;</code> -n <code>&lt;ACTIVITY&gt;</code>。</p>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2017/08/03/android-developers-guide-note-app-components-activity/" data-toggle="tooltip" data-placement="top" title="Android Developer Guide中的Activity">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2017/07/18/android-developers-guide-note-introduction/" data-toggle="tooltip" data-placement="top" title="Android Developer Guide中的Android概览">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                    <div class="comment">
+                        <div id="disqus_thread" class="disqus-thread"></div>
+                    </div>
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#展开点"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">展开点</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Caution"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Caution</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Intents-and-Intent-Filters"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">Intents and Intent Filters</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Intent的分类"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">Intent的分类</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Intent组成"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">Intent组成</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#接收implicit-intent"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">接收implicit intent</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#使用PendingIntent"><span class="toc-nav-number">3.4.</span> <span class="toc-nav-text">使用PendingIntent</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Intent-resovle规则"><span class="toc-nav-number">3.5.</span> <span class="toc-nav-text">Intent resovle规则</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Common-Intents"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">Common Intents</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#通过adb命令测试Intent"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">通过adb命令测试Intent</span></a></li></ol></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Android" title="Android">Android</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus embedded js code start (one page only need to embed once) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "your-disqus-ID";
+    var disqus_identifier = "http://blog.overspark.me/2017/07/26/android-developers-guide-note-app-components-intents/";
+    var disqus_url = "http://blog.overspark.me/2017/07/26/android-developers-guide-note-app-components-intents/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus embedded js code start end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/wenchengye">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Overspark 2017 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    re-Ported by <a href="http://beantech.org">BeanTech</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=YenYuHsuan&repo=hexo-theme-beantech&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://blog.overspark.me/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="http://blog.overspark.me/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
