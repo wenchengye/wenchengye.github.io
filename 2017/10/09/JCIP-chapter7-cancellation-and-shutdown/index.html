@@ -221,7 +221,7 @@
 <p>Java库中对interruption的响应方式是将interrupted置回false，并抛出InterruptedException。</p>
 <h3 id="中断策略"><a href="#中断策略" class="headerlink" title="中断策略"></a>中断策略</h3><p>通常来说，任务执行代码不应该假设其被执行的线程的中断策略，因为任务执行代码很可能在线程池的worker线程中被执行；所以在任务处理中断并中止任务后，应当保留当前线程的被中断状态(抛出InterruptedException或者保留interrupted为true)。</p>
 <p>线程的持有者应当将任务中止操作封装为类似cancel方法；与此同时非线程持有者在中止任务时应当调用封装方法，而不是直接Thread.interrupt();</p>
-<h3 id="响应中断"><a href="#响应中断" class="headerlink" title="响应中断"></a>响应中断</h3><p>处理InterruptedException的方法有两种，将InterruptedException抛出；或者将interrupted置为true。<br>只有线程的拥有者，才有权中止interrupted状态的传播；其他任务或者工具代码在处理中断时都应继续传播中断状态。</p>
+<h3 id="响应中断"><a href="#响应中断" class="headerlink" title="响应中断"></a>响应中断</h3><p>处理InterruptedException的方法有两种，将InterruptedException抛出；或者将interrupted置为true。永远不要仅仅捕获InterruptedException并什么都不做。<br>线程拥有者通常是创建线程的对象，它通常还会继承Thread对象。只有线程的拥有者，才有权中止interrupted状态的传播；其他任务或者工具代码在处理中断时都应继续传播中断状态。</p>
 <h3 id="使用Future提供的中止任务的功能"><a href="#使用Future提供的中止任务的功能" class="headerlink" title="使用Future提供的中止任务的功能"></a>使用Future提供的中止任务的功能</h3><p>Future.canel(boolean)可以用于中止任务，其包含布尔型参数mayInterruptIfRunning代表cancel方法是否会中断worker线程。</p>
 <h3 id="处理不可中断的阻塞"><a href="#处理不可中断的阻塞" class="headerlink" title="处理不可中断的阻塞"></a>处理不可中断的阻塞</h3><p>有一些阻塞的操作不响应中断，需要采用其他的方法来中止这些操作：</p>
 <ul>
@@ -262,6 +262,10 @@
                 <hr>
                 <!-- Pager -->
                 <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2017/10/09/JCIP-chapter5-building-blocks/" data-toggle="tooltip" data-placement="top" title="Java库中的线程安全类">&larr; Previous Post</a>
+                        </li>
                     
                     
                         <li class="next">
