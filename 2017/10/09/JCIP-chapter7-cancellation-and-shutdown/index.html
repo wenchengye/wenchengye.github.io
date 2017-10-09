@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="null">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          中止线程 - World&#39;s End Tavern
+        
+    </title>
+
+    <link rel="canonical" href="http://blog.overspark.me/2017/10/09/JCIP-chapter7-cancellation-and-shutdown/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/img/header_img/java-note-header.jpg')
+            /*post*/
+        
+    }
+    
+    #signature{
+        background-image: url('/undefined');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#Java" title="Java">Java</a>
+                            
+                        </div>
+                        <h1>中止线程</h1>
+                        <h2 class="subheading">JCIP读书笔记第七章</h2>
+                        <span class="meta">
+                            Posted by Overspark on
+                            2017-10-09
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">World&#39;s End Tavern</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>中止线程比启动线程要复杂，Java没有提供之间中止线程的机制(初期的中止线程方法被弃用)，而是提供了interruption机制提醒线程自己进行中止。用interruption机制来代替中止线程的原因是，如果线程被类似stop()的方法立即中止可能会打断正在进行的操作，而使变量处于非法的状态。</p>
+<h2 id="任务中止"><a href="#任务中止" class="headerlink" title="任务中止"></a>任务中止</h2><p>中止任务的需求有很多，例如用户请求、任务时限、发生错误、服务关闭等情况。没有主动中止任务方法情况下–就像Java–可以通过设置中止标志位，并由任务代码自身定期检查中止标志来执行中止；interruption机制正是使用了类似中止标志位的协议。</p>
+<h3 id="中断-Interruption"><a href="#中断-Interruption" class="headerlink" title="中断(Interruption)"></a>中断(Interruption)</h3><p>Interruption是一个线程通过Interrupted标志位通知另一个线程的一种线程间交流机制，Interruption不一定要和中止线程的语意绑定，然而在实践中Interruption通常只用于中止线程的场景；将Interruption用于中止线程以外的场景，都被证明会使程序变得脆弱且难以维护。</p>
+<p>每个线程都有一个interrupted标志位，interrupt某个线程就是将其interrupted置为true。Thread.interrupt()、Thread.isInterrupted()、Thread.interrupted()是与Interruption机制相关的三个方法。<br>其中Thread.interrupted()容易使人迷惑，他会返回interrupted标志位<strong>并将其置为false</strong>，这也是唯一将interrupted标志位置回false的方法。</p>
+<p>Java库中对interruption的响应方式是将interrupted置回false，并抛出InterruptedException。</p>
+<h3 id="中断策略"><a href="#中断策略" class="headerlink" title="中断策略"></a>中断策略</h3><p>通常来说，任务执行代码不应该假设其被执行的线程的中断策略，因为任务执行代码很可能在线程池的worker线程中被执行；所以在任务处理中断并中止任务后，应当保留当前线程的被中断状态(抛出InterruptedException或者保留interrupted为true)。</p>
+<p>线程的持有者应当将任务中止操作封装为类似cancel方法；与此同时非线程持有者在中止任务时应当调用封装方法，而不是直接Thread.interrupt();</p>
+<h3 id="响应中断"><a href="#响应中断" class="headerlink" title="响应中断"></a>响应中断</h3><p>处理InterruptedException的方法有两种，将InterruptedException抛出；或者将interrupted置为true。<br>只有线程的拥有者，才有权中止interrupted状态的传播；其他任务或者工具代码在处理中断时都应继续传播中断状态。</p>
+<h3 id="使用Future提供的中止任务的功能"><a href="#使用Future提供的中止任务的功能" class="headerlink" title="使用Future提供的中止任务的功能"></a>使用Future提供的中止任务的功能</h3><p>Future.canel(boolean)可以用于中止任务，其包含布尔型参数mayInterruptIfRunning代表cancel方法是否会中断worker线程。</p>
+<h3 id="处理不可中断的阻塞"><a href="#处理不可中断的阻塞" class="headerlink" title="处理不可中断的阻塞"></a>处理不可中断的阻塞</h3><p>有一些阻塞的操作不响应中断，需要采用其他的方法来中止这些操作：</p>
+<ul>
+<li>同步的IO操作，基于Socket的阻塞IO可以通过关闭Socket使其抛出SocketException来中止。</li>
+<li>等待获取内置锁，等待内置锁的阻塞是无解的，如果有中止的需求可以改用显式锁。</li>
+</ul>
+<h3 id="重写ThreadPoolExecutor的newTaskFor方法"><a href="#重写ThreadPoolExecutor的newTaskFor方法" class="headerlink" title="重写ThreadPoolExecutor的newTaskFor方法"></a>重写ThreadPoolExecutor的newTaskFor方法</h3><p>通过重写ThreadPoolExecutor的newTaskFor方法，可以返回自定义的FutureTask类；通过重写返回的FutureTask的cancel方法，可以hook中止任务的过程(例如加入关闭IO的操作)。</p>
+<h2 id="关闭服务-包含线程的服务"><a href="#关闭服务-包含线程的服务" class="headerlink" title="关闭服务(包含线程的服务)"></a>关闭服务(包含线程的服务)</h2><p>通常应用程序都会使用一些包含线程的服务(例如任务系统、线程池)，这些服务通常都是常驻内存的，所以在应用结束之前应当使用适当的方法来关闭这些服务，以防止线程泄漏。<br>中止线程的工作应该有线程的拥有者，也就是服务本身来完成，所以类似这些服务通常应该提供shutdown方法。ExecutorService就定义了shutdown和shutdownNow两个关闭方法。</p>
+<h3 id="一个Log服务"><a href="#一个Log服务" class="headerlink" title="一个Log服务"></a>一个Log服务</h3><p>本章将以一个使用单独线程的Log服务作例子，讲解关闭服务的方式。</p>
+<p>在实现关闭服务操作时，需要留意几个问题：</p>
+<ul>
+<li>是将现在正在排队的任务处理完再关闭服务(暂且称为安全关闭)，还是立即关闭服务。</li>
+<li>如何在关闭服务过程中，处理外部程序调用服务功能。</li>
+<li>在关闭服务时清理状态。</li>
+</ul>
+<p>在这一节，给出了一个利用请求计数实现安全关闭例子。</p>
+<h3 id="ExecutorService的关闭方法"><a href="#ExecutorService的关闭方法" class="headerlink" title="ExecutorService的关闭方法"></a>ExecutorService的关闭方法</h3><p>ExecutorService的showdown方法提供了安全关闭；showdownNow方法提供了立即关闭。</p>
+<p>这一节借助ExecutorService重写了Log服务，并利用ExecutorService的shutdown方法实现了安全关闭。</p>
+<h3 id="Poison-Pills"><a href="#Poison-Pills" class="headerlink" title="Poison Pills"></a>Poison Pills</h3><p>用于生产者消费者关系中的一种关闭方式，生产者在关闭之后将poison pill加入队列，消费者在获取到poison pill之后关闭自己。<br>poison pill方式只能用于生产者数量和消费者数量都确定的情况。</p>
+<h3 id="使用非常驻的ExecutorService"><a href="#使用非常驻的ExecutorService" class="headerlink" title="使用非常驻的ExecutorService"></a>使用非常驻的ExecutorService</h3><p>借助局部的ExecutorService，将所有任务submit之后执行shutdown和awaitTermination，可以达到等待所有任务完成之后再返回的效果。</p>
+<h3 id="showdownNow-立即关闭-的局限性"><a href="#showdownNow-立即关闭-的局限性" class="headerlink" title="showdownNow(立即关闭)的局限性"></a>showdownNow(立即关闭)的局限性</h3><p>ExecutorService的showdownNow方法会返回所有未完成任务的列表(Runnable的list)，但是无法区分哪些是还未开始的任务、哪些是执行到一半中止的任务。</p>
+<h2 id="处理线程的异常结束"><a href="#处理线程的异常结束" class="headerlink" title="处理线程的异常结束"></a>处理线程的异常结束</h2><p>线程可能会因为抛出异常(通常是RuntimeException)而提前结束，这种异常结束不易被其他线程发现(也许仅仅在控制台输出了异常栈)，从而产生了线程泄漏。</p>
+<p>一种简单处理方式，在worker线程中捕获类似Runnable.run()方法抛出的unchecked Exception、结束线程、并通知worker线程的拥有者(通常是某种Service)线程异常结束的消息；尽管这种捕获unchecked Exception方法的安全性存在争议。</p>
+<h3 id="Uncaught-exception-handler"><a href="#Uncaught-exception-handler" class="headerlink" title="Uncaught exception handler"></a>Uncaught exception handler</h3><p>Thread提供了UncaughtExceptionHandler相关的API，可以发现从线程中抛出的未捕获的异常。</p>
+<p>最好为所有常驻线程添加UncaughtExceptionHandler。</p>
+<h2 id="关闭JVM"><a href="#关闭JVM" class="headerlink" title="关闭JVM"></a>关闭JVM</h2><p>JVM有两种关闭方式：orderly或abrupt。<br>当JVM中最后一个非守护线程结束、System.exit或者其他关闭JVM的方法被调用时，触发orderly关闭；当Runtime.halt被调用或者关闭JVM进程时，触发abrupt关闭。</p>
+<p>在orderly关闭过程中，JVM首先会执行所有的Shutdown hook；然后可能会执行对象的finalizer；然后关闭JVM。orderly关闭发生时，JVM不会去中断任何正在执行的线程，这些线程运行直到JVM关闭时停止。<br>在abrupt关闭过程中，JVM直接停止其他什么都不做。</p>
+<h3 id="Shutdown-hook"><a href="#Shutdown-hook" class="headerlink" title="Shutdown hook"></a>Shutdown hook</h3><p>Shutdown hook时通过Runtime.addShutdownHook注册的；Shutdown hook运行在单独的线程中，所以需要是线程安全的。</p>
+<p>一种相对轻松的使用Shutdown hook方式是，整个应用仅使用一个Shutdown hook，将所有的关闭工作在这个Shutdown hook中按某种顺序执行。</p>
+<h3 id="守护线程"><a href="#守护线程" class="headerlink" title="守护线程"></a>守护线程</h3><p>JVM中的线程可以被分为两类，普通线程和守护线程，如果不想让某些常驻线程阻止JVM关闭，可以将这些线程设为守护线程；除了主线程之外，JVM启动时创建的所有线程都是守护线程。</p>
+<p>当线程被创建时，其守护属性默认继承创建它的线程的守护属性，所以普通线程创建的线程默认是普通线程，守护线程创建的线程默认是守护线程。</p>
+<p>守护线程可能在任何时刻突然停止，如果在守护线程中执行IO操作，那么就可能没有机会清理IO。所以，<strong>任务类服务中的work线程不适合被创建成守护线程</strong>，守护线程适合做一些没有生命周期属性的工作。</p>
+<h3 id="finalizer"><a href="#finalizer" class="headerlink" title="finalizer"></a>finalizer</h3><p>finalizer被JVM在单独上执行，所以需要是线程安全的；其被执行的时间、和是否会被执行都不确定。基于finalizer要求线程安全，重载finalizer的类会增加额外的同步，从而影响性能；同时finalizer很难被正确的编写；所以<strong>尽量避免使用finalizer</strong></p>
+<p>一个使用finalizer的例外是，在finalizer中检查对象是否已经释放其持有的资源，否则输出错误提示。</p>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/2017/10/06/JCIP-chapter12-testing-concurrent-programs/" data-toggle="tooltip" data-placement="top" title="测试并发程序">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                    <div class="comment">
+                        <div id="disqus_thread" class="disqus-thread"></div>
+                    </div>
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#概述"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">概述</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#任务中止"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">任务中止</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#中断-Interruption"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">中断(Interruption)</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#中断策略"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">中断策略</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#响应中断"><span class="toc-nav-number">2.3.</span> <span class="toc-nav-text">响应中断</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#使用Future提供的中止任务的功能"><span class="toc-nav-number">2.4.</span> <span class="toc-nav-text">使用Future提供的中止任务的功能</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#处理不可中断的阻塞"><span class="toc-nav-number">2.5.</span> <span class="toc-nav-text">处理不可中断的阻塞</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#重写ThreadPoolExecutor的newTaskFor方法"><span class="toc-nav-number">2.6.</span> <span class="toc-nav-text">重写ThreadPoolExecutor的newTaskFor方法</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#关闭服务-包含线程的服务"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">关闭服务(包含线程的服务)</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#一个Log服务"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">一个Log服务</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#ExecutorService的关闭方法"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">ExecutorService的关闭方法</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Poison-Pills"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">Poison Pills</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#使用非常驻的ExecutorService"><span class="toc-nav-number">3.4.</span> <span class="toc-nav-text">使用非常驻的ExecutorService</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#showdownNow-立即关闭-的局限性"><span class="toc-nav-number">3.5.</span> <span class="toc-nav-text">showdownNow(立即关闭)的局限性</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#处理线程的异常结束"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">处理线程的异常结束</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Uncaught-exception-handler"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">Uncaught exception handler</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#关闭JVM"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">关闭JVM</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Shutdown-hook"><span class="toc-nav-number">5.1.</span> <span class="toc-nav-text">Shutdown hook</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#守护线程"><span class="toc-nav-number">5.2.</span> <span class="toc-nav-text">守护线程</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#finalizer"><span class="toc-nav-number">5.3.</span> <span class="toc-nav-text">finalizer</span></a></li></ol></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Java" title="Java">Java</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus embedded js code start (one page only need to embed once) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "your-disqus-ID";
+    var disqus_identifier = "http://blog.overspark.me/2017/10/09/JCIP-chapter7-cancellation-and-shutdown/";
+    var disqus_url = "http://blog.overspark.me/2017/10/09/JCIP-chapter7-cancellation-and-shutdown/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus embedded js code start end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/wenchengye">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Overspark 2017 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    re-Ported by <a href="http://beantech.org">BeanTech</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=YenYuHsuan&repo=hexo-theme-beantech&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://blog.overspark.me/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="http://blog.overspark.me/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
