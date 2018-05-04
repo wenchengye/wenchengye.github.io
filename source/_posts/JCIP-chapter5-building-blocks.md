@@ -60,7 +60,7 @@ CopyOnWriteArrayList线程安全依赖于不可变对象一定是线程安全的
 
 ## 阻塞方法和可中断方法
 
-见[中止线程](2017/10/09/JCIP-chapter7-cancellation-and-shutdown/)。
+见[中止线程](http://blog.overspark.me/2017/10/09/JCIP-chapter7-cancellation-and-shutdown/)。
 
 ## 同步工具类
 

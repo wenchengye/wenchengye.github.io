@@ -89,7 +89,7 @@ Android系统的资源回收是以进程为单位，不会单独作用于Activit
 onActivityResult的参数ResultCode可以使用RESULT_CANCELED、RESULT_OK以外的自定义值，自定义的ResultCode应当大于整型常量RESULT_FIRST_USER。
 
 当Activity A 启动 Activity B时，生命周期回调顺序如下：   
-Activity A的onPause() -> Activity B的onCreate()、onStart()、onPause() -> Activity A的onStop()。
+Activity A的onPause() -> Activity B的onCreate()、onStart()、onResume() -> Activity A的onStop()。
 
 ### 保存和恢复Activity状态
 

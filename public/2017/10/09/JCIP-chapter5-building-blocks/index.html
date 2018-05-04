@@ -151,14 +151,14 @@
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/tags/">Tags</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/tags/">Tags</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
@@ -226,7 +226,7 @@
 <h3 id="CopyOnWriteArrayList"><a href="#CopyOnWriteArrayList" class="headerlink" title="CopyOnWriteArrayList"></a>CopyOnWriteArrayList</h3><p>CopyOnWriteArrayList线程安全依赖于不可变对象一定是线程安全的。人如其名，在每次发生写入时进行拷贝。</p>
 <h3 id="更多的原子操作"><a href="#更多的原子操作" class="headerlink" title="更多的原子操作"></a>更多的原子操作</h3><p>由于并发容器不能使用client-side锁，所以并发容器提供了一系列的原子操作(例如put-if-absent等)。</p>
 <h2 id="阻塞队列和生产者消费者模式"><a href="#阻塞队列和生产者消费者模式" class="headerlink" title="阻塞队列和生产者消费者模式"></a>阻塞队列和生产者消费者模式</h2><p>略</p>
-<h2 id="阻塞方法和可中断方法"><a href="#阻塞方法和可中断方法" class="headerlink" title="阻塞方法和可中断方法"></a>阻塞方法和可中断方法</h2><p>见<a href="2017/10/09/JCIP-chapter7-cancellation-and-shutdown/">中止线程</a>。</p>
+<h2 id="阻塞方法和可中断方法"><a href="#阻塞方法和可中断方法" class="headerlink" title="阻塞方法和可中断方法"></a>阻塞方法和可中断方法</h2><p>见<a href="http://blog.overspark.me/2017/10/09/JCIP-chapter7-cancellation-and-shutdown/">中止线程</a>。</p>
 <h2 id="同步工具类"><a href="#同步工具类" class="headerlink" title="同步工具类"></a>同步工具类</h2><p>同步工具类是基于一些状态控制线程执行流程的工具类，它们通常都持有某种状态，并基于这个状态决定允许线程执行或阻塞线程。BlockingQueue是线程安全容器的同时，也可以视为同步工具。</p>
 <p>同步工具还包括：Latch、FutureTask、Semaphore、Barrier等。</p>
 
@@ -235,6 +235,10 @@
                 <hr>
                 <!-- Pager -->
                 <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2018/05/04/tips-decompile-android-rom/" data-toggle="tooltip" data-placement="top" title="反编译Android厂商的ROM">&larr; Previous Post</a>
+                        </li>
                     
                     
                         <li class="next">
@@ -395,7 +399,7 @@
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; Overspark 2017 
+                    Copyright &copy; Overspark 2018 
                     <br>
                     Theme by <a href="http://huangxuan.me">Hux</a> 
                     <span style="display: inline-block; margin: 0 5px;">
