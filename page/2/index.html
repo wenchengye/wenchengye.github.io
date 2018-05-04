@@ -143,14 +143,14 @@
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/tags/">Tags</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/tags/">Tags</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
@@ -210,6 +210,38 @@
             
                 <!-- Main Content -->
 
+
+<div class="post-preview">
+
+    <a href="/2017/09/09/JCIP-chapter16-java-memory-model/">
+        <h2 class="post-title">
+            Java内存模型
+        </h2>
+        <h3 class="post-subtitle">
+            JCIP读书笔记第十六章
+        </h3>
+        <div class="post-content-preview">
+            Caution
+现代系统中，volatile变量读操作和普通变量读操作的代价几乎一样。
+
+整本JCIP都在避免直接讲述Java内存模型，但是线程安全机制是以内存模型为基础的，所以了解一些内存模型的知识有利于明白线程安全规则为何要那样规定。
+Java内存模型概述(JMM)什么是Java内存模型为什需要Java内存模型？因为现代CPU的复杂优化，导致仅仅在单一线程上保证变量(抽象内存位置)的可见......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Overspark on
+            2017-09-09
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Java" title="Java">Java</a>
+            
+        </div>
+    
+
+</div>
+<hr>
 
 <div class="post-preview">
 
@@ -526,11 +558,13 @@ JobScheduler、JobScheduler......
     <div class="tags">
         
             
-            <a href="/tags/#Android" title="Android" rel="10">Android</a>
+            <a href="/tags/#Android" title="Android" rel="11">Android</a>
             
         
             
             <a href="/tags/#Java" title="Java" rel="8">Java</a>
+            
+        
             
         
     </div>
@@ -585,6 +619,10 @@ JobScheduler、JobScheduler......
     <ul>
       
         <li>
+          <a href="/2018/05/04/tips-decompile-android-rom/">反编译Android厂商的ROM</a>
+        </li>
+      
+        <li>
           <a href="/2017/10/09/JCIP-chapter5-building-blocks/">Java库中的线程安全类</a>
         </li>
       
@@ -600,10 +638,6 @@ JobScheduler、JobScheduler......
           <a href="/2017/10/05/JCIP-chapter10-avoiding-liveness-hazards/">活跃性问题</a>
         </li>
       
-        <li>
-          <a href="/2017/09/29/JCIP-chapter13-explicit-locks/">显式锁</a>
-        </li>
-      
     </ul>
   </div>
 
@@ -613,7 +647,7 @@ JobScheduler、JobScheduler......
 
     <h5>categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/经验/">经验</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/读书笔记/">读书笔记</a><span class="category-list-count">17</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/经验/">经验</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/读书笔记/">读书笔记</a><span class="category-list-count">17</span></li></ul>
     </div>
 
         <hr>
@@ -655,7 +689,7 @@ JobScheduler、JobScheduler......
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; Overspark 2017 
+                    Copyright &copy; Overspark 2018 
                     <br>
                     Theme by <a href="http://huangxuan.me">Hux</a> 
                     <span style="display: inline-block; margin: 0 5px;">

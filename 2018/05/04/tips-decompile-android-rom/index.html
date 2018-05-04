@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          活跃性问题 - World&#39;s End Tavern
+          反编译Android厂商的ROM - World&#39;s End Tavern
         
     </title>
 
-    <link rel="canonical" href="http://blog.overspark.me/2017/10/05/JCIP-chapter10-avoiding-liveness-hazards/">
+    <link rel="canonical" href="http://blog.overspark.me/2018/05/04/tips-decompile-android-rom/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -69,7 +69,7 @@
 <style type="text/css">
     header.intro-header{
         
-            background-image: url('/img/header_img/java-note-header.jpg')
+            background-image: url('/img/header_img/tips-header.jpg')
             /*post*/
         
     }
@@ -90,14 +90,14 @@
                     <div class="post-heading">
                         <div class="tags">
                             
-                              <a class="tag" href="/tags/#Java" title="Java">Java</a>
+                              <a class="tag" href="/tags/#Android" title="Android">Android</a>
                             
                         </div>
-                        <h1>活跃性问题</h1>
-                        <h2 class="subheading">JCIP读书笔记第十章</h2>
+                        <h1>反编译Android厂商的ROM</h1>
+                        <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by Overspark on
-                            2017-10-05
+                            2018-05-04
                         </span>
                     </div>
                 
@@ -214,18 +214,15 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h2 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h2><p>再来一次五哲学家用筷子吃饭的例子，解释什么是死锁。数据库系统采用如下方法来避免死锁，在互相死锁的事务中挑选牺牲者并中止该事务。</p>
-<h3 id="加锁顺序造成的死锁"><a href="#加锁顺序造成的死锁" class="headerlink" title="加锁顺序造成的死锁"></a>加锁顺序造成的死锁</h3><p>当线程需要同时获取多个锁时，有可能会发生加锁顺序造成的死锁；如果所有线程，都依照一个全局固定的顺序来依次获取多个锁，那么就可以避免加锁顺序造成的死锁。</p>
-<p>要保持全局的加锁顺序固定，看起来是相当脆弱易出错的协议，尤其有动态的锁对象的时候。</p>
-<h3 id="动态的加锁顺序造成的锁死"><a href="#动态的加锁顺序造成的锁死" class="headerlink" title="动态的加锁顺序造成的锁死"></a>动态的加锁顺序造成的锁死</h3><p>当锁对象是动态的–例如将锁对象作为参数传入函数–就很容易发生难以察觉的加锁顺序锁死。<br>一种方式是用hashCode来定义动态锁对象的加锁；当锁对象的hashCode一致时使用额外的一个锁(被称为tie锁)在获取锁序列最外层加锁，使整个序列的获取过程变成互斥的。</p>
-<h3 id="当多锁获取发生在不同对象的不同方法中"><a href="#当多锁获取发生在不同对象的不同方法中" class="headerlink" title="当多锁获取发生在不同对象的不同方法中"></a>当多锁获取发生在不同对象的不同方法中</h3><p>多锁获取可能不是发生在同一个方法中，而是由多层调用栈造成，在这种情况下就很难注意到多锁获取的发生，更不用说保持顺序。</p>
-<p>在持有锁的情况下调用外部方法，很容易发生活跃性问题。外部方法可能会去获取另一个锁，从而诱发加锁顺序死锁；外部方法可能会很久才返回，导致持有锁的时间过长。</p>
-<h3 id="Open-call"><a href="#Open-call" class="headerlink" title="Open call"></a>Open call</h3><p>当在调用外部方法时不持有锁，这次调用被称为Open call。尽量使用Open call可以减少死锁发生的风险，并在死锁发生的时候使得问题变得容易被分析。</p>
-<h3 id="资源死锁"><a href="#资源死锁" class="headerlink" title="资源死锁"></a>资源死锁</h3><h2 id="避免和诊断死锁"><a href="#避免和诊断死锁" class="headerlink" title="避免和诊断死锁"></a>避免和诊断死锁</h2><p>同时最多持有一个锁的代码不会发生死锁，虽然有时这样做无法满足需求。如果需要同时持有多个锁，那么需要先定位这些多锁获取场景，然后应用全局加锁顺序；全部使用Open Call有利于这些多锁获取场景的定位。</p>
-<h3 id="限时获取锁"><a href="#限时获取锁" class="headerlink" title="限时获取锁"></a>限时获取锁</h3><p>使用tryLock可以让程序从死锁中恢复过来。</p>
-<h3 id="使用Thread-Dump分析死锁"><a href="#使用Thread-Dump分析死锁" class="headerlink" title="使用Thread Dump分析死锁"></a>使用Thread Dump分析死锁</h3><p>Thread Dump可以输出JVM中所有线程持有锁的情况和等待锁的情况，包括锁是在那个stack frame获取的，如果有死锁存在还是提示死锁信息。在Java5.0中，Thread Dump无法输出显式锁的信息；Java6.0中Thread Dump包含了显示锁的信息，但无法准确定位显示锁获取的stack frame。</p>
-<h2 id="其他活跃性问题"><a href="#其他活跃性问题" class="headerlink" title="其他活跃性问题"></a>其他活跃性问题</h2><h3 id="Starvation"><a href="#Starvation" class="headerlink" title="Starvation"></a>Starvation</h3><p>当一个线程理论上可以获取所需资源，但在实际情况下它永远不可能获得所需资源，就发生了Starvation；例如不合理的设置线程优先级，可能造成某些线程永远无法使用Cpu。<br>Java的线程API定义了10个线程优先级，在执行时这些线程优先级会被映射为系统线程优先级；在不同平台上设置线程优先级会有不同的效果，有些平台的系统线程优先级可能不足10个。<br>因为线程优先级的效果具有平台依赖性，所以非必要情况下不要调整线程优先级；UI线程和后台线程是一个适合使用线程优先级的场景。</p>
-<h3 id="活锁"><a href="#活锁" class="headerlink" title="活锁"></a>活锁</h3><p>活锁通常是由某种死循环逻辑，或者几个线程由于不良设计处于永久的逻辑冲突造成的。假设两个线程在同时请求某种资源时发生逻辑冲突，并且两个线程冲突后等待重试的时间相同，那么这两个线程就发生了活锁。</p>
+                <p>为了解释某些厂商ROM反直觉的现象，或者绕过厂商ROM埋的坑，有时反编译ROM源码是一条不错的途径。</p>
+<h3 id="获取Rom包"><a href="#获取Rom包" class="headerlink" title="获取Rom包"></a>获取Rom包</h3><p>google 搜索 + 下载；也许需要百度网盘。</p>
+<h3 id="解压System-img文件"><a href="#解压System-img文件" class="headerlink" title="解压System.img文件"></a>解压System.img文件</h3><p>参考<a href="https://www.jianshu.com/p/db70835d41c8" target="_blank" rel="external">解压 Android 系统中的 system.img</a></p>
+<p>如果Rom包中不包含system.img文件，而是有system.new.dat、system.patch.dat、system.transfer.list三个文件，需要使用<a href="https://github.com/xpirt/sdat2img" target="_blank" rel="external">sdat2img工具</a>生成system.img。</p>
+<p>使用file命令确定system.img文件的文件类型，如果是“Linux rev 1.0 ext4 filesystem data”文件可以使用<a href="https://github.com/gerard/ext4fuse" target="_blank" rel="external">ext4fuse工具</a>在MacOS上挂载。</p>
+<p>成功挂载之后就可以读取system.img中的文件了。</p>
+<h3 id="在System-img中寻找代码文件"><a href="#在System-img中寻找代码文件" class="headerlink" title="在System.img中寻找代码文件"></a>在System.img中寻找代码文件</h3><p>不同rom的system.img中的文件布局各异，以vivo X9S为例，代码文件通常是在/framework目录下的.odex文件或.oat文件。</p>
+<h3 id="反编译-odex或-oat文件成-jar文件"><a href="#反编译-odex或-oat文件成-jar文件" class="headerlink" title="反编译.odex或.oat文件成.jar文件"></a>反编译.odex或.oat文件成.jar文件</h3><p>.odex&amp;.oat -&gt; .smali -&gt; .dex ：使用<a href="https://bitbucket.org/JesusFreke/smali/overview" target="_blank" rel="external">smail工具</a>，baksmali.jar可以将.odex&amp;.oat转成.smali，smali.jar可以将.smali转成.dex。<br>.dex -&gt; .jar：dex2jar工具。</p>
+<p>有了.jar文件之后就可以开心的看厂商ROM都留了哪些坑了。</p>
 
                 
 
@@ -233,13 +230,9 @@
                 <!-- Pager -->
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/2017/10/06/JCIP-chapter12-testing-concurrent-programs/" data-toggle="tooltip" data-placement="top" title="测试并发程序">&larr; Previous Post</a>
-                        </li>
-                    
                     
                         <li class="next">
-                            <a href="/2017/09/29/JCIP-chapter13-explicit-locks/" data-toggle="tooltip" data-placement="top" title="显式锁">Next Post &rarr;</a>
+                            <a href="/2017/10/09/JCIP-chapter5-building-blocks/" data-toggle="tooltip" data-placement="top" title="Java库中的线程安全类">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -269,7 +262,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#死锁"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">死锁</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#加锁顺序造成的死锁"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">加锁顺序造成的死锁</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#动态的加锁顺序造成的锁死"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">动态的加锁顺序造成的锁死</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#当多锁获取发生在不同对象的不同方法中"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">当多锁获取发生在不同对象的不同方法中</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Open-call"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">Open call</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#资源死锁"><span class="toc-nav-number">1.5.</span> <span class="toc-nav-text">资源死锁</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#避免和诊断死锁"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">避免和诊断死锁</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#限时获取锁"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">限时获取锁</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#使用Thread-Dump分析死锁"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">使用Thread Dump分析死锁</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#其他活跃性问题"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">其他活跃性问题</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Starvation"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">Starvation</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#活锁"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">活锁</span></a></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#获取Rom包"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">获取Rom包</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#解压System-img文件"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">解压System.img文件</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#在System-img中寻找代码文件"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">在System.img中寻找代码文件</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#反编译-odex或-oat文件成-jar文件"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">反编译.odex或.oat文件成.jar文件</span></a></li></ol>
         
         </div>
       </aside>
@@ -289,7 +282,7 @@
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/tags/#Java" title="Java">Java</a>
+                          <a class="tag" href="/tags/#Android" title="Android">Android</a>
                         
                     </div>
                 </section>
@@ -316,8 +309,8 @@
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "your-disqus-ID";
-    var disqus_identifier = "http://blog.overspark.me/2017/10/05/JCIP-chapter10-avoiding-liveness-hazards/";
-    var disqus_url = "http://blog.overspark.me/2017/10/05/JCIP-chapter10-avoiding-liveness-hazards/";
+    var disqus_identifier = "http://blog.overspark.me/2018/05/04/tips-decompile-android-rom/";
+    var disqus_url = "http://blog.overspark.me/2018/05/04/tips-decompile-android-rom/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
