@@ -1,12 +1,15 @@
 ---
 title: 在迁移 Git 仓库时保留历史
 catalog: true
-categories:
-  - 经验
 header-img: /img/header_img/tips-header.jpg
 tags:
   - Git
+categories:
+  - 经验
+date: 2021-06-17 15:41:39
+subtitle:
 ---
+
 
 
 公司做“组件化”的时候热爱新建 Git 仓库，但是有些代码被搬来搬去之后丢掉了 Git 历史，导致不好追溯代码是怎么被写残的。所以在这里简短的存档一下文明有爱的迁移步骤。

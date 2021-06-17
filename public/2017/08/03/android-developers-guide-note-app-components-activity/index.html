@@ -21,21 +21,35 @@
     <link rel="canonical" href="http://blog.overspark.me/2017/08/03/android-developers-guide-note-app-components-activity/">
 
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
 
     <!-- Custom CSS --> 
-    <link rel="stylesheet" href="/css/beantech.min.css">
+    
+<link rel="stylesheet" href="/css/beantech.min.css">
+
     
     <!-- Pygments Highlight CSS -->
-    <link rel="stylesheet" href="/css/highlight.css">
+    
+<link rel="stylesheet" href="/css/highlight.css">
 
-    <link rel="stylesheet" href="/css/widget.css">
 
-    <link rel="stylesheet" href="/css/rocket.css">
+    
+<link rel="stylesheet" href="/css/widget.css">
 
-    <link rel="stylesheet" href="/css/signature.css">
 
-    <link rel="stylesheet" href="/css/toc.css">
+    
+<link rel="stylesheet" href="/css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="/css/signature.css">
+
+
+    
+<link rel="stylesheet" href="/css/toc.css">
+
 
     <!-- Custom Fonts -->
     <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
@@ -59,7 +73,7 @@
 
     <!-- ga & ba script hoook -->
     <script></script>
-</head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 
 <!-- hack iOS CSS :active style -->
@@ -144,14 +158,14 @@
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -215,17 +229,17 @@
                 post-container">
 
                 <h2 id="展开点"><a href="#展开点" class="headerlink" title="展开点"></a>展开点</h2><ul>
-<li><a href="https://android-developers.googleblog.com/2011/06/things-that-cannot-change.html" target="_blank" rel="external">Things That Cannot Change</a>。</li>
+<li><a target="_blank" rel="noopener" href="https://android-developers.googleblog.com/2011/06/things-that-cannot-change.html">Things That Cannot Change</a>。</li>
 <li>AsyncQueryHandler。</li>
-<li><a href="https://android-developers.googleblog.com/2010/04/multitasking-android-way.html" target="_blank" rel="external">Multitasking the Android Way</a>。</li>
+<li><a target="_blank" rel="noopener" href="https://android-developers.googleblog.com/2010/04/multitasking-android-way.html">Multitasking the Android Way</a>。</li>
 <li>Activity‘s Task in Detail。</li>
 <li>allowTaskReparenting的应用场景。</li>
 <li>Parcel in Detail。</li>
-<li><a href="https://plus.google.com/+DianneHackborn/posts/4QWEQgkB1v2" target="_blank" rel="external">Document-centric model</a>。</li>
+<li><a target="_blank" rel="noopener" href="https://plus.google.com/+DianneHackborn/posts/4QWEQgkB1v2">Document-centric model</a>。</li>
 <li>ActivityManager.AppTask。</li>
 </ul>
 <h2 id="Caution"><a href="#Caution" class="headerlink" title="Caution"></a>Caution</h2><ul>
-<li>Activity的android:name一旦被声明之后，再后续更新中不应改变，否则一些功能例如shortcut会出错。详见<a href="https://android-developers.googleblog.com/2011/06/things-that-cannot-change.html" target="_blank" rel="external">Things That Cannot Change</a>。</li>
+<li>Activity的android:name一旦被声明之后，再后续更新中不应改变，否则一些功能例如shortcut会出错。详见<a target="_blank" rel="noopener" href="https://android-developers.googleblog.com/2011/06/things-that-cannot-change.html">Things That Cannot Change</a>。</li>
 <li>Activity.isFinish()可以用来判断finish()方法是否被调用过（例如在onPause、onStop这些callback里面）。</li>
 <li>如果startActivityForResult()启动的Activity异常退出，发出请求的Activity会收到RESULT_CANCELED。</li>
 <li>由Intent指定的launchMode的优先级高于（会覆盖）在manifest中声明的launchMode。</li>
@@ -339,7 +353,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#展开点"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">展开点</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Caution"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Caution</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Introduction-to-Activities"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">Introduction to Activities</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Activity的概念"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">Activity的概念</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#在Manifest中声明Activity"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">在Manifest中声明Activity</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#The-Activity-Lifecycle"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">The Activity Lifecycle</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Activity生命周期的概念"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">Activity生命周期的概念</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#生命周期回调"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">生命周期回调</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#进程回收与Activity状态"><span class="toc-nav-number">4.3.</span> <span class="toc-nav-text">进程回收与Activity状态</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#启动其他Activity"><span class="toc-nav-number">4.4.</span> <span class="toc-nav-text">启动其他Activity</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#保存和恢复Activity状态"><span class="toc-nav-number">4.5.</span> <span class="toc-nav-text">保存和恢复Activity状态</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Activity-State-Changes"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">Activity State Changes</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Tasks-and-Back-Stack"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">Tasks and Back Stack</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#定义Launch-Mode"><span class="toc-nav-number">6.1.</span> <span class="toc-nav-text">定义Launch Mode</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#affinity"><span class="toc-nav-number">6.2.</span> <span class="toc-nav-text">affinity</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#清理Back-Stack"><span class="toc-nav-number">6.3.</span> <span class="toc-nav-text">清理Back Stack</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Processes-and-Application-Lifecycle"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">Processes and Application Lifecycle</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Parcelables-and-Bundles"><span class="toc-nav-number">8.</span> <span class="toc-nav-text">Parcelables and Bundles</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Recents-Screen"><span class="toc-nav-number">9.</span> <span class="toc-nav-text">Recents Screen</span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E5%B1%95%E5%BC%80%E7%82%B9"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">展开点</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Caution"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Caution</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Introduction-to-Activities"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">Introduction to Activities</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Activity%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">Activity的概念</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%9C%A8Manifest%E4%B8%AD%E5%A3%B0%E6%98%8EActivity"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">在Manifest中声明Activity</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#The-Activity-Lifecycle"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">The Activity Lifecycle</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Activity%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">Activity生命周期的概念</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%9B%9E%E8%B0%83"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">生命周期回调</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E8%BF%9B%E7%A8%8B%E5%9B%9E%E6%94%B6%E4%B8%8EActivity%E7%8A%B6%E6%80%81"><span class="toc-nav-number">4.3.</span> <span class="toc-nav-text">进程回收与Activity状态</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%90%AF%E5%8A%A8%E5%85%B6%E4%BB%96Activity"><span class="toc-nav-number">4.4.</span> <span class="toc-nav-text">启动其他Activity</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E4%BF%9D%E5%AD%98%E5%92%8C%E6%81%A2%E5%A4%8DActivity%E7%8A%B6%E6%80%81"><span class="toc-nav-number">4.5.</span> <span class="toc-nav-text">保存和恢复Activity状态</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Activity-State-Changes"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">Activity State Changes</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Tasks-and-Back-Stack"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">Tasks and Back Stack</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%AE%9A%E4%B9%89Launch-Mode"><span class="toc-nav-number">6.1.</span> <span class="toc-nav-text">定义Launch Mode</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#affinity"><span class="toc-nav-number">6.2.</span> <span class="toc-nav-text">affinity</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E6%B8%85%E7%90%86Back-Stack"><span class="toc-nav-number">6.3.</span> <span class="toc-nav-text">清理Back Stack</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Processes-and-Application-Lifecycle"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">Processes and Application Lifecycle</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Parcelables-and-Bundles"><span class="toc-nav-number">8.</span> <span class="toc-nav-text">Parcelables and Bundles</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Recents-Screen"><span class="toc-nav-number">9.</span> <span class="toc-nav-text">Recents Screen</span></a></li></ol>
         
         </div>
       </aside>
@@ -466,13 +480,13 @@
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; Overspark 2018 
+                    Copyright &copy; Overspark 2021 
                     <br>
-                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    Theme by <a target="_blank" rel="noopener" href="http://huangxuan.me">Hux</a> 
                     <span style="display: inline-block; margin: 0 5px;">
                         <i class="fa fa-heart"></i>
                     </span> 
-                    re-Ported by <a href="http://beantech.org">BeanTech</a> | 
+                    re-Ported by <a target="_blank" rel="noopener" href="http://beantech.org">BeanTech</a> | 
                     <iframe
                         style="margin-left: 2px; margin-bottom:-5px;"
                         frameborder="0" scrolling="0" width="91px" height="20px"
@@ -485,13 +499,19 @@
 </footer>
 
 <!-- jQuery -->
+
 <script src="/js/jquery.min.js"></script>
 
+
 <!-- Bootstrap Core JavaScript -->
+
 <script src="/js/bootstrap.min.js"></script>
 
+
 <!-- Custom Theme JavaScript -->
+
 <script src="/js/hux-blog.min.js"></script>
+
 
 
 <!-- async load function -->
