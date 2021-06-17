@@ -21,21 +21,35 @@
     <link rel="canonical" href="http://blog.overspark.me/2017/09/29/JCIP-chapter13-explicit-locks/">
 
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
 
     <!-- Custom CSS --> 
-    <link rel="stylesheet" href="/css/beantech.min.css">
+    
+<link rel="stylesheet" href="/css/beantech.min.css">
+
     
     <!-- Pygments Highlight CSS -->
-    <link rel="stylesheet" href="/css/highlight.css">
+    
+<link rel="stylesheet" href="/css/highlight.css">
 
-    <link rel="stylesheet" href="/css/widget.css">
 
-    <link rel="stylesheet" href="/css/rocket.css">
+    
+<link rel="stylesheet" href="/css/widget.css">
 
-    <link rel="stylesheet" href="/css/signature.css">
 
-    <link rel="stylesheet" href="/css/toc.css">
+    
+<link rel="stylesheet" href="/css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="/css/signature.css">
+
+
+    
+<link rel="stylesheet" href="/css/toc.css">
+
 
     <!-- Custom Fonts -->
     <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
@@ -59,7 +73,7 @@
 
     <!-- ga & ba script hoook -->
     <script></script>
-</head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 
 <!-- hack iOS CSS :active style -->
@@ -144,14 +158,14 @@
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -218,12 +232,12 @@
 <h2 id="Lock和ReentrantLock"><a href="#Lock和ReentrantLock" class="headerlink" title="Lock和ReentrantLock"></a>Lock和ReentrantLock</h2><p>Lock是个接口，定义了显式锁的基本行为；ReentrantLock是Lock的常用实现，其同步语意和内置锁基本相同。</p>
 <p>ReentrantLock相对于内置锁提供了更多的功能：可中断的获取锁的方法、如果失败立即返回(或超时返回)的获取锁的方法；可以在代码的任意部分释放锁，而不用局限在synchronized代码块中。<br>由于显式锁必须显示释放，所以绝大多数情况下，unlock()方法要写在finally代码块中以保证安全；如果不这样做，由于某种原因造成没有执行unlock()的错误，将十分难以追查。</p>
 <p>Lock接口如下:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Lock</span> </span>&#123; </div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">lock</span><span class="params">()</span></span>;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">lockInterruptibly</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException</span>; <span class="function"><span class="keyword">boolean</span> <span class="title">tryLock</span><span class="params">()</span></span>;</div><div class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">tryLock</span><span class="params">(<span class="keyword">long</span> timeout, TimeUnit unit)</span></span></div><div class="line">        <span class="keyword">throws</span> InterruptedException; </div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">unlock</span><span class="params">()</span></span>;</div><div class="line">    <span class="function">Condition <span class="title">newCondition</span><span class="params">()</span></span>; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Lock</span> </span>&#123; </span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">lock</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">lockInterruptibly</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException</span>; <span class="function"><span class="keyword">boolean</span> <span class="title">tryLock</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">tryLock</span><span class="params">(<span class="keyword">long</span> timeout, TimeUnit unit)</span></span></span><br><span class="line"><span class="function">        <span class="keyword">throws</span> InterruptedException</span>; </span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">unlock</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function">Condition <span class="title">newCondition</span><span class="params">()</span></span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="性能对比"><a href="#性能对比" class="headerlink" title="性能对比"></a>性能对比</h2><p>在Java 5.0时，ReentrantLock的性能比内置锁好很多；但从Java 6.0内置锁的性能被改进之后，ReentrantLock和内置锁就没有明显的性能差异了。</p>
 <h2 id="公平性"><a href="#公平性" class="headerlink" title="公平性"></a>公平性</h2><p>ReentrantLock提供了公平锁和非公平锁的功能选择。<br>公平锁会将请求锁的线程排队，然后实行先到先得方案；非公平锁在某个线程请求锁时会插队尝试是否能直接获取成功，只有请求不成功时才会将线程排队。(即便是公平锁，在使用tryLock()操作时也会插队)<br>。<br>在竞争较多时公平锁的性能远差于非公平锁；公平锁更适用于持有锁和获取锁时间都很长的情况。</p>
 <h2 id="内置锁还是ReentrantLock"><a href="#内置锁还是ReentrantLock" class="headerlink" title="内置锁还是ReentrantLock"></a>内置锁还是ReentrantLock</h2><p>除非需要使用ReentrantLock提供能附加功能(响应中断、公平性等等)，那么请选择内置锁。</p>
 <h2 id="读写锁"><a href="#读写锁" class="headerlink" title="读写锁"></a>读写锁</h2><p>读写锁允许多个线程同时持有“读锁”，但仅有一个线程持有”写锁“(当然持有”写锁”时其他线程也不能获取”读锁”)。其接口定义如下:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ReadWriteLock</span> </span>&#123; </div><div class="line">    <span class="function">Lock <span class="title">readLock</span><span class="params">()</span></span>;</div><div class="line">    <span class="function">Lock <span class="title">writeLock</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ReadWriteLock</span> </span>&#123; </span><br><span class="line">    <span class="function">Lock <span class="title">readLock</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function">Lock <span class="title">writeLock</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>ReentrantReadWriteLock是读写锁的一个实现。<br>读写锁的使用是出于性能考虑，在读操作明显多于写操作、读操作执行时间较长的情况下，读写锁的性能优于独占锁；在其他情况下，读写锁的性能不及独占锁。当然，使用读写锁能否提升性能，还得看profiling的结果。</p>
 
                 
@@ -268,7 +282,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#caution"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">caution</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#开头"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">开头</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Lock和ReentrantLock"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">Lock和ReentrantLock</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#性能对比"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">性能对比</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#公平性"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">公平性</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#内置锁还是ReentrantLock"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">内置锁还是ReentrantLock</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#读写锁"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">读写锁</span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#caution"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">caution</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E5%BC%80%E5%A4%B4"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">开头</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Lock%E5%92%8CReentrantLock"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">Lock和ReentrantLock</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E6%80%A7%E8%83%BD%E5%AF%B9%E6%AF%94"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">性能对比</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E5%85%AC%E5%B9%B3%E6%80%A7"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">公平性</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E5%86%85%E7%BD%AE%E9%94%81%E8%BF%98%E6%98%AFReentrantLock"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">内置锁还是ReentrantLock</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E8%AF%BB%E5%86%99%E9%94%81"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">读写锁</span></a></li></ol>
         
         </div>
       </aside>
@@ -395,13 +409,13 @@
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; Overspark 2018 
+                    Copyright &copy; Overspark 2021 
                     <br>
-                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    Theme by <a target="_blank" rel="noopener" href="http://huangxuan.me">Hux</a> 
                     <span style="display: inline-block; margin: 0 5px;">
                         <i class="fa fa-heart"></i>
                     </span> 
-                    re-Ported by <a href="http://beantech.org">BeanTech</a> | 
+                    re-Ported by <a target="_blank" rel="noopener" href="http://beantech.org">BeanTech</a> | 
                     <iframe
                         style="margin-left: 2px; margin-bottom:-5px;"
                         frameborder="0" scrolling="0" width="91px" height="20px"
@@ -414,13 +428,19 @@
 </footer>
 
 <!-- jQuery -->
+
 <script src="/js/jquery.min.js"></script>
 
+
 <!-- Bootstrap Core JavaScript -->
+
 <script src="/js/bootstrap.min.js"></script>
 
+
 <!-- Custom Theme JavaScript -->
+
 <script src="/js/hux-blog.min.js"></script>
+
 
 
 <!-- async load function -->
