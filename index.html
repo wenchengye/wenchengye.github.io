@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="null">
+    <meta name="keyword" content>
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          World&#39;s End Tavern
+        
+    </title>
+
+    <link rel="canonical" href="http://blog.overspark.me/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/img/header_img/home-header.jpg') 
+            /*config*/
+        
+    }
+    
+    #signature{
+        background-image: url('/undefined');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="site-heading">
+                        <h1>World&#39;s End Tavern</h1>
+                        <!--<hr class="small">-->
+                        <span class="subheading">Lower City, Shattrath</span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">World&#39;s End Tavern</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Main Content -->
+<div class="container">
+    <div class="row">
+        
+
+<!-- USE SIDEBAR -->
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-1
+                col-md-8 col-md-offset-1
+                col-sm-12
+                col-xs-12
+                post-container
+            ">
+            
+                <!-- Main Content -->
+
+
+<div class="post-preview">
+
+    <a href="/2021/06/17/tips-move-git-with-history/">
+        <h2 class="post-title">
+            在迁移 Git 仓库时保留历史
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            公司做“组件化”的时候热爱新建 Git 仓库，但是有些代码被搬来搬去之后丢掉了 Git 历史，导致不好追溯代码是怎么被写残的。所以在这里简短的存档一下文明有爱的迁移步骤。
+操作步骤假定要将仓库 A 下面的 “/module_0” 目录迁移到新建的仓库 B 中。
+在本地仓库 A 挑选 Git 历史这一步的目标是从仓库 A 中挑选仅仅和 “/module_0” 目录有关的 Git 历史。
+
+在初......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Overspark on
+            2021-06-17
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Git" title="Git">Git</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2018/05/04/tips-decompile-android-rom/">
+        <h2 class="post-title">
+            反编译Android厂商的ROM
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            为了解释某些厂商ROM反直觉的现象，或者绕过厂商ROM埋的坑，有时反编译ROM源码是一条不错的途径。
+获取Rom包google 搜索 + 下载；也许需要百度网盘。
+解压System.img文件参考解压 Android 系统中的 system.img
+如果Rom包中不包含system.img文件，而是有system.new.dat、system.patch.dat、system.transfe......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Overspark on
+            2018-05-04
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Android" title="Android">Android</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2017/10/09/JCIP-chapter5-building-blocks/">
+        <h2 class="post-title">
+            Java库中的线程安全类
+        </h2>
+        <h3 class="post-subtitle">
+            JCIP读书笔记第五章
+        </h3>
+        <div class="post-content-preview">
+            概览最稳定的实现线程安全类的方式，就是借助已有的线程安全类。这一章将介绍Java库中的线程安全类，包括一些线程安全容器类和同步工具类。
+同步容器Java库中的同步容器包括Vector、Hashtable以及Collections.synchronized*系列容器，这些容器都采用内置锁来执行同步操作。
+同步容器的问题client-side锁如果需要同步的组合操作(例如取得容器长度，然后删除最......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Overspark on
+            2017-10-09
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Java" title="Java">Java</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2017/10/09/JCIP-chapter7-cancellation-and-shutdown/">
+        <h2 class="post-title">
+            中止线程
+        </h2>
+        <h3 class="post-subtitle">
+            JCIP读书笔记第七章
+        </h3>
+        <div class="post-content-preview">
+            概述中止线程比启动线程要复杂，Java没有提供之间中止线程的机制(初期的中止线程方法被弃用)，而是提供了interruption机制提醒线程自己进行中止。用interruption机制来代替中止线程的原因是，如果线程被类似stop()的方法立即中止可能会打断正在进行的操作，而使变量处于非法的状态。
+任务中止中止任务的需求有很多，例如用户请求、任务时限、发生错误、服务关闭等情况。没有主动中止任......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Overspark on
+            2017-10-09
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Java" title="Java">Java</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2017/10/06/JCIP-chapter12-testing-concurrent-programs/">
+        <h2 class="post-title">
+            测试并发程序
+        </h2>
+        <h3 class="post-subtitle">
+            JCIP读书笔记第十二章
+        </h3>
+        <div class="post-content-preview">
+            展开点
+aspect-oriented programming (AOP) 。
+
+概述并发相关的测试通常可以归类为线程安全测试和线程活跃性测试。线程安全测试通常需要验证变量的一致性，所以测试代码本身也需要时线程安全的；但有时候加入这样的测试代码之后会隐藏原有的线程安全类bug。线程活跃性测试的难点在于，如何界定活跃性问题(例如死锁)真的发生了和程序运行效率低之间的区别。并发相关的性能测试包含......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Overspark on
+            2017-10-06
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Java" title="Java">Java</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2017/10/05/JCIP-chapter10-avoiding-liveness-hazards/">
+        <h2 class="post-title">
+            活跃性问题
+        </h2>
+        <h3 class="post-subtitle">
+            JCIP读书笔记第十章
+        </h3>
+        <div class="post-content-preview">
+            死锁再来一次五哲学家用筷子吃饭的例子，解释什么是死锁。数据库系统采用如下方法来避免死锁，在互相死锁的事务中挑选牺牲者并中止该事务。
+加锁顺序造成的死锁当线程需要同时获取多个锁时，有可能会发生加锁顺序造成的死锁；如果所有线程，都依照一个全局固定的顺序来依次获取多个锁，那么就可以避免加锁顺序造成的死锁。
+要保持全局的加锁顺序固定，看起来是相当脆弱易出错的协议，尤其有动态的锁对象的时候。
+动态的加......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Overspark on
+            2017-10-05
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Java" title="Java">Java</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2017/09/29/JCIP-chapter13-explicit-locks/">
+        <h2 class="post-title">
+            显式锁
+        </h2>
+        <h3 class="post-subtitle">
+            JCIP读书笔记第十三章
+        </h3>
+        <div class="post-content-preview">
+            caution开头Java 5.0之前，Java只有内置锁和volatile；从Java 5.0开始，引入了显式锁来提供一些内置锁所不具备的功能。
+Lock和ReentrantLockLock是个接口，定义了显式锁的基本行为；ReentrantLock是Lock的常用实现，其同步语意和内置锁基本相同。
+ReentrantLock相对于内置锁提供了更多的功能：可中断的获取锁的方法、如果失败立即......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Overspark on
+            2017-09-29
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Java" title="Java">Java</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2017/09/29/JCIP-chapter14-building-custom-synchronizers/">
+        <h2 class="post-title">
+            自定义同步工具类
+        </h2>
+        <h3 class="post-subtitle">
+            JCIP读书笔记第十四章
+        </h3>
+        <div class="post-content-preview">
+            caution概述自定义同步工具类最简单的方式就是基于已有的同步工具类；当然你也可以借助”内置Condition Queue”、”显示Condition Queue”以及AQS(AbstractQueuedSynchronizer)。
+条件依赖操作与同步如果不借助Condition Queue，Blocking等待条件成立写起来往往很麻烦，比如：
+1234567acquire lock on......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Overspark on
+            2017-09-29
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Java" title="Java">Java</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2017/09/21/JCIP-chapter15-atomic-variable-and-nonblocking-synchronization/">
+        <h2 class="post-title">
+            原子变量与非阻塞同步
+        </h2>
+        <h3 class="post-subtitle">
+            JCIP读书笔记第十五章
+        </h3>
+        <div class="post-content-preview">
+            Caution
+Float.floatToIntBits()/Double.doubleToLongBits()。
+AtomicFieldUpdater。
+
+前言java.util.concurrent中的一些线程安全类/同步工具类声称自己有更好的性能和伸缩性，这一章将介绍这种性能提升的基础——非阻塞同步。
+非阻塞同步算法的特点非阻塞同步基于硬件提供的一些原子指令(例如CAS)；非阻塞同步算......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Overspark on
+            2017-09-21
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Java" title="Java">Java</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2017/09/10/tips-read-aosp-in-intellij/">
+        <h2 class="post-title">
+            使用Intellij/Android Studio阅读Android源码
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            最近想看看AOSP，对于Java／Android开发者来说，最习惯的方式就是在Intellij／Android Studio中阅读源码了，记录一下折腾的过程。
+硬件准备移动硬盘因为使用256G的MBP，硬盘空间常年吃紧，把AOSP直接下载到硬盘实在太奢侈了。所以准备了一块移动硬盘来放代码，这样大概会拖慢编译/IDE读工程的速度，但随后证明我这个决定是正确的。
+需要留多少硬盘空间因为需要作大小......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Overspark on
+            2017-09-10
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Android" title="Android">Android</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+
+
+<!-- Pager -->
+
+<ul class="pager">
+    
+    
+        <li class="next">
+            <a href="/page/2/">Older Posts &rarr;</a>
+        </li>
+    
+</ul>
+
+
+
+                <!-- 如果开启评论功能 -->
+                
+            </div>
+
+          <!-- Sidebar Container -->
+<div class="
+    col-lg-3 col-lg-offset-0
+    col-md-3 col-md-offset-0
+    col-sm-12
+    col-xs-12
+    sidebar-container
+">
+    
+        <!-- Featured Tags -->
+
+<section>
+    <!-- no hr -->
+    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+    <div class="tags">
+        
+            
+            <a href="/tags/#Java" title="Java" rel="8">Java</a>
+            
+        
+            
+            <a href="/tags/#Android" title="Android" rel="11">Android</a>
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+</section>
+
+        <hr>
+    
+        <!-- Short About -->
+<section class="visible-md visible-lg">
+    <h5><a href="/about/">ABOUT ME</a></h5>
+    <div class="short-about">
+
+        
+            <img id = "avatar_pic" src="/img/overspark-img.jpeg" />
+        
+
+        
+            <p>Fear cuts deeper than swords.</p>
+        
+
+        <!-- SNS Link -->
+        <ul class="list-inline">
+            
+            
+            
+
+            
+
+            
+
+            
+                <li>
+                    <a target="_blank"  href="https://github.com/wenchengye">
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                        </span>
+                    </a>
+                </li>
+            
+            
+            
+            
+        </ul>
+    </div>
+</section>
+        <hr>
+    
+        
+  <h5>RECENT POSTS</h3>
+  <div class="widget">
+    <ul>
+      
+        <li>
+          <a href="/2021/06/17/tips-move-git-with-history/">在迁移 Git 仓库时保留历史</a>
+        </li>
+      
+        <li>
+          <a href="/2018/05/04/tips-decompile-android-rom/">反编译Android厂商的ROM</a>
+        </li>
+      
+        <li>
+          <a href="/2017/10/09/JCIP-chapter5-building-blocks/">Java库中的线程安全类</a>
+        </li>
+      
+        <li>
+          <a href="/2017/10/09/JCIP-chapter7-cancellation-and-shutdown/">中止线程</a>
+        </li>
+      
+        <li>
+          <a href="/2017/10/06/JCIP-chapter12-testing-concurrent-programs/">测试并发程序</a>
+        </li>
+      
+    </ul>
+  </div>
+
+        <hr>
+    
+        <!-- Categories -->
+
+    <h5>categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/经验/">经验</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/读书笔记/">读书笔记</a><span class="category-list-count">17</span></li></ul>
+    </div>
+
+        <hr>
+    
+</div>
+
+        
+    </div>
+</div>
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/wenchengye">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Overspark 2021 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    re-Ported by <a href="http://beantech.org">BeanTech</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=YenYuHsuan&repo=hexo-theme-beantech&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://blog.overspark.me/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="http://blog.overspark.me/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

@@ -2,13 +2,13 @@
 <html lang="en">
 
 <!-- Head tag -->
-<head>
+<head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="null">
-    <meta name="keyword"  content="">
+    <meta name="keyword" content>
     <link rel="shortcut icon" href="/img/ironman-draw.png">
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
@@ -21,35 +21,21 @@
     <link rel="canonical" href="http://blog.overspark.me/2018/05/04/tips-decompile-android-rom/">
 
     <!-- Bootstrap Core CSS -->
-    
-<link rel="stylesheet" href="/css/bootstrap.min.css">
-
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
 
     <!-- Custom CSS --> 
-    
-<link rel="stylesheet" href="/css/beantech.min.css">
-
+    <link rel="stylesheet" href="/css/beantech.min.css">
     
     <!-- Pygments Highlight CSS -->
-    
-<link rel="stylesheet" href="/css/highlight.css">
+    <link rel="stylesheet" href="/css/highlight.css">
 
+    <link rel="stylesheet" href="/css/widget.css">
 
-    
-<link rel="stylesheet" href="/css/widget.css">
+    <link rel="stylesheet" href="/css/rocket.css">
 
+    <link rel="stylesheet" href="/css/signature.css">
 
-    
-<link rel="stylesheet" href="/css/rocket.css">
-
-
-    
-<link rel="stylesheet" href="/css/signature.css">
-
-
-    
-<link rel="stylesheet" href="/css/toc.css">
-
+    <link rel="stylesheet" href="/css/toc.css">
 
     <!-- Custom Fonts -->
     <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
@@ -73,7 +59,7 @@
 
     <!-- ga & ba script hoook -->
     <script></script>
-<meta name="generator" content="Hexo 5.4.0"></head>
+</head>
 
 
 <!-- hack iOS CSS :active style -->
@@ -158,14 +144,14 @@
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
@@ -230,12 +216,12 @@
 
                 <p>为了解释某些厂商ROM反直觉的现象，或者绕过厂商ROM埋的坑，有时反编译ROM源码是一条不错的途径。</p>
 <h3 id="获取Rom包"><a href="#获取Rom包" class="headerlink" title="获取Rom包"></a>获取Rom包</h3><p>google 搜索 + 下载；也许需要百度网盘。</p>
-<h3 id="解压System-img文件"><a href="#解压System-img文件" class="headerlink" title="解压System.img文件"></a>解压System.img文件</h3><p>参考<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/db70835d41c8">解压 Android 系统中的 system.img</a></p>
-<p>如果Rom包中不包含system.img文件，而是有system.new.dat、system.patch.dat、system.transfer.list三个文件，需要使用<a target="_blank" rel="noopener" href="https://github.com/xpirt/sdat2img">sdat2img工具</a>生成system.img。</p>
-<p>使用file命令确定system.img文件的文件类型，如果是“Linux rev 1.0 ext4 filesystem data”文件可以使用<a target="_blank" rel="noopener" href="https://github.com/gerard/ext4fuse">ext4fuse工具</a>在MacOS上挂载。</p>
+<h3 id="解压System-img文件"><a href="#解压System-img文件" class="headerlink" title="解压System.img文件"></a>解压System.img文件</h3><p>参考<a href="https://www.jianshu.com/p/db70835d41c8" target="_blank" rel="noopener">解压 Android 系统中的 system.img</a></p>
+<p>如果Rom包中不包含system.img文件，而是有system.new.dat、system.patch.dat、system.transfer.list三个文件，需要使用<a href="https://github.com/xpirt/sdat2img" target="_blank" rel="noopener">sdat2img工具</a>生成system.img。</p>
+<p>使用file命令确定system.img文件的文件类型，如果是“Linux rev 1.0 ext4 filesystem data”文件可以使用<a href="https://github.com/gerard/ext4fuse" target="_blank" rel="noopener">ext4fuse工具</a>在MacOS上挂载。</p>
 <p>成功挂载之后就可以读取system.img中的文件了。</p>
 <h3 id="在System-img中寻找代码文件"><a href="#在System-img中寻找代码文件" class="headerlink" title="在System.img中寻找代码文件"></a>在System.img中寻找代码文件</h3><p>不同rom的system.img中的文件布局各异，以vivo X9S为例，代码文件通常是在/framework目录下的.odex文件或.oat文件。</p>
-<h3 id="反编译-odex或-oat文件成-jar文件"><a href="#反编译-odex或-oat文件成-jar文件" class="headerlink" title="反编译.odex或.oat文件成.jar文件"></a>反编译.odex或.oat文件成.jar文件</h3><p>.odex&amp;.oat -&gt; .smali -&gt; .dex ：使用<a target="_blank" rel="noopener" href="https://bitbucket.org/JesusFreke/smali/overview">smail工具</a>，baksmali.jar可以将.odex&amp;.oat转成.smali，smali.jar可以将.smali转成.dex。<br>.dex -&gt; .jar：dex2jar工具。</p>
+<h3 id="反编译-odex或-oat文件成-jar文件"><a href="#反编译-odex或-oat文件成-jar文件" class="headerlink" title="反编译.odex或.oat文件成.jar文件"></a>反编译.odex或.oat文件成.jar文件</h3><p>.odex&amp;.oat -&gt; .smali -&gt; .dex ：使用<a href="https://bitbucket.org/JesusFreke/smali/overview" target="_blank" rel="noopener">smail工具</a>，baksmali.jar可以将.odex&amp;.oat转成.smali，smali.jar可以将.smali转成.dex。<br>.dex -&gt; .jar：dex2jar工具。</p>
 <p>有了.jar文件之后就可以开心的看厂商ROM都留了哪些坑了。</p>
 
                 
@@ -280,7 +266,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E8%8E%B7%E5%8F%96Rom%E5%8C%85"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">获取Rom包</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E8%A7%A3%E5%8E%8BSystem-img%E6%96%87%E4%BB%B6"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">解压System.img文件</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%9C%A8System-img%E4%B8%AD%E5%AF%BB%E6%89%BE%E4%BB%A3%E7%A0%81%E6%96%87%E4%BB%B6"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">在System.img中寻找代码文件</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%8F%8D%E7%BC%96%E8%AF%91-odex%E6%88%96-oat%E6%96%87%E4%BB%B6%E6%88%90-jar%E6%96%87%E4%BB%B6"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">反编译.odex或.oat文件成.jar文件</span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#获取Rom包"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">获取Rom包</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#解压System-img文件"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">解压System.img文件</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#在System-img中寻找代码文件"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">在System.img中寻找代码文件</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#反编译-odex或-oat文件成-jar文件"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">反编译.odex或.oat文件成.jar文件</span></a></li></ol>
         
         </div>
       </aside>
@@ -409,11 +395,11 @@
                 <p class="copyright text-muted">
                     Copyright &copy; Overspark 2021 
                     <br>
-                    Theme by <a target="_blank" rel="noopener" href="http://huangxuan.me">Hux</a> 
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
                     <span style="display: inline-block; margin: 0 5px;">
                         <i class="fa fa-heart"></i>
                     </span> 
-                    re-Ported by <a target="_blank" rel="noopener" href="http://beantech.org">BeanTech</a> | 
+                    re-Ported by <a href="http://beantech.org">BeanTech</a> | 
                     <iframe
                         style="margin-left: 2px; margin-bottom:-5px;"
                         frameborder="0" scrolling="0" width="91px" height="20px"
@@ -426,19 +412,13 @@
 </footer>
 
 <!-- jQuery -->
-
 <script src="/js/jquery.min.js"></script>
 
-
 <!-- Bootstrap Core JavaScript -->
-
 <script src="/js/bootstrap.min.js"></script>
 
-
 <!-- Custom Theme JavaScript -->
-
 <script src="/js/hux-blog.min.js"></script>
-
 
 
 <!-- async load function -->

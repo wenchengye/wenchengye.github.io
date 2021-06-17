@@ -2,13 +2,13 @@
 <html lang="en">
 
 <!-- Head tag -->
-<head>
+<head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="null">
-    <meta name="keyword"  content="">
+    <meta name="keyword" content>
     <link rel="shortcut icon" href="/img/ironman-draw.png">
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
@@ -21,35 +21,21 @@
     <link rel="canonical" href="http://blog.overspark.me/2017/07/18/android-developers-guide-note-introduction/">
 
     <!-- Bootstrap Core CSS -->
-    
-<link rel="stylesheet" href="/css/bootstrap.min.css">
-
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
 
     <!-- Custom CSS --> 
-    
-<link rel="stylesheet" href="/css/beantech.min.css">
-
+    <link rel="stylesheet" href="/css/beantech.min.css">
     
     <!-- Pygments Highlight CSS -->
-    
-<link rel="stylesheet" href="/css/highlight.css">
+    <link rel="stylesheet" href="/css/highlight.css">
 
+    <link rel="stylesheet" href="/css/widget.css">
 
-    
-<link rel="stylesheet" href="/css/widget.css">
+    <link rel="stylesheet" href="/css/rocket.css">
 
+    <link rel="stylesheet" href="/css/signature.css">
 
-    
-<link rel="stylesheet" href="/css/rocket.css">
-
-
-    
-<link rel="stylesheet" href="/css/signature.css">
-
-
-    
-<link rel="stylesheet" href="/css/toc.css">
-
+    <link rel="stylesheet" href="/css/toc.css">
 
     <!-- Custom Fonts -->
     <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
@@ -73,7 +59,7 @@
 
     <!-- ga & ba script hoook -->
     <script></script>
-<meta name="generator" content="Hexo 5.4.0"></head>
+</head>
 
 
 <!-- hack iOS CSS :active style -->
@@ -158,14 +144,14 @@
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
@@ -233,12 +219,12 @@
 <li>令不同app使用同一个Linux UID的方法与用处（文中提到了share UID的app需要有相同签名）。</li>
 <li>Android各个组件状态(background、foreground、service是否被bind)和进程回收优先级的关系。</li>
 <li>JobScheduler、JobScheduler和Service的关系。</li>
-<li><a target="_blank" rel="noopener" href="https://source.android.com/compatibility/overview">Android compatibility program</a>，Android系统对设备的要求。</li>
+<li><a href="https://source.android.com/compatibility/overview" target="_blank" rel="noopener">Android compatibility program</a>，Android系统对设备的要求。</li>
 <li>PackageManager的职责。</li>
 <li>google play filter</li>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=f17qe9vZ8RM">Google I/O 2015 - Android M Permissions</a>。</li>
+<li><a href="https://www.youtube.com/watch?v=f17qe9vZ8RM" target="_blank" rel="noopener">Google I/O 2015 - Android M Permissions</a>。</li>
 <li>SYSTEM_ALERT_WINDOW和WRITE_SETTINGS这两个属于Special Permissions，不是normal or dangerous permissions。</li>
-<li><a target="_blank" rel="noopener" href="https://source.android.com/security/">Android系统的安全模型</a>。</li>
+<li><a href="https://source.android.com/security/" target="_blank" rel="noopener">Android系统的安全模型</a>。</li>
 <li>实验自动权限调整，查看自动加入的权限会否在安装时显示，实验自动权限调整是怎么影响dangerous权限的。</li>
 <li>自定义权限和签名的关系（相同的签名的App可以自动获取权限？）&amp; <code>&lt;permission&gt;</code>标签android:protectionLevel属性的取值，signature。</li>
 <li>如何做验证签名，App-to-App，App-to-Server。</li>
@@ -370,7 +356,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E5%B1%95%E5%BC%80%E7%82%B9"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">展开点</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Caution"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Caution</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Application-Fundamentals"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">Application Fundamentals</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#app-components"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">app components</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#manifest"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">manifest</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E8%B5%84%E6%BA%90"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">资源</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Device-Compatibility"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">Device Compatibility</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%9F%BA%E4%BA%8E%E6%8A%80%E6%9C%AF%E5%8E%9F%E5%9B%A0%E7%AD%9B%E9%80%89%E8%AE%BE%E5%A4%87"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">基于技术原因筛选设备</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%9F%BA%E4%BA%8E%E9%9D%9E%E6%8A%80%E6%9C%AF%E5%8E%9F%E5%9B%A0%E7%AD%9B%E9%80%89%E8%AE%BE%E5%A4%87"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">基于非技术原因筛选设备</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#System-Permissions%E2%80%94%E2%80%94Requesting-Permissions"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">System Permissions——Requesting Permissions</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E8%AF%B7%E6%B1%82%E6%9D%83%E9%99%90"><span class="toc-nav-number">5.1.</span> <span class="toc-nav-text">请求权限</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%8A%A8%E6%80%81%E8%AF%B7%E6%B1%82%E6%9D%83%E9%99%90"><span class="toc-nav-number">5.2.</span> <span class="toc-nav-text">动态请求权限</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E8%87%AA%E5%8A%A8%E6%9D%83%E9%99%90%E8%B0%83%E6%95%B4"><span class="toc-nav-number">5.3.</span> <span class="toc-nav-text">自动权限调整</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%9D%83%E9%99%90%E5%88%97%E8%A1%A8"><span class="toc-nav-number">5.4.</span> <span class="toc-nav-text">查看权限列表</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#permission-group"><span class="toc-nav-number">5.5.</span> <span class="toc-nav-text">permission group</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#System-Permissions%E2%80%94%E2%80%94Defining-Permissons"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">System Permissions——Defining Permissons</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86"><span class="toc-nav-number">6.1.</span> <span class="toc-nav-text">背景知识</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%AE%9A%E4%B9%89%E6%9D%83%E9%99%90"><span class="toc-nav-number">6.2.</span> <span class="toc-nav-text">定义权限</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E6%9D%83%E9%99%90%E7%9A%84%E5%BB%BA%E8%AE%AE"><span class="toc-nav-number">6.3.</span> <span class="toc-nav-text">自定义权限的建议</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E8%A6%81%E6%B1%82%E6%9D%83%E9%99%90"><span class="toc-nav-number">6.4.</span> <span class="toc-nav-text">要求权限</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%B9%BF%E6%92%AD%E6%8E%A5%E6%94%B6%E6%9D%83%E9%99%90"><span class="toc-nav-number">6.5.</span> <span class="toc-nav-text">广播接收权限</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%85%B6%E4%BB%96%E8%A6%81%E6%B1%82%E6%9D%83%E9%99%90%E6%96%B9%E6%B3%95"><span class="toc-nav-number">6.6.</span> <span class="toc-nav-text">其他要求权限方法</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#URI%E6%9D%83%E9%99%90"><span class="toc-nav-number">6.7.</span> <span class="toc-nav-text">URI权限</span></a></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#展开点"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">展开点</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Caution"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Caution</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Application-Fundamentals"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">Application Fundamentals</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#app-components"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">app components</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#manifest"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">manifest</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#资源"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">资源</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Device-Compatibility"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">Device Compatibility</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#基于技术原因筛选设备"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">基于技术原因筛选设备</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#基于非技术原因筛选设备"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">基于非技术原因筛选设备</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#System-Permissions——Requesting-Permissions"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">System Permissions——Requesting Permissions</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#请求权限"><span class="toc-nav-number">5.1.</span> <span class="toc-nav-text">请求权限</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#动态请求权限"><span class="toc-nav-number">5.2.</span> <span class="toc-nav-text">动态请求权限</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#自动权限调整"><span class="toc-nav-number">5.3.</span> <span class="toc-nav-text">自动权限调整</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#查看权限列表"><span class="toc-nav-number">5.4.</span> <span class="toc-nav-text">查看权限列表</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#permission-group"><span class="toc-nav-number">5.5.</span> <span class="toc-nav-text">permission group</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#System-Permissions——Defining-Permissons"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">System Permissions——Defining Permissons</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#背景知识"><span class="toc-nav-number">6.1.</span> <span class="toc-nav-text">背景知识</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#定义权限"><span class="toc-nav-number">6.2.</span> <span class="toc-nav-text">定义权限</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#自定义权限的建议"><span class="toc-nav-number">6.3.</span> <span class="toc-nav-text">自定义权限的建议</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#要求权限"><span class="toc-nav-number">6.4.</span> <span class="toc-nav-text">要求权限</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#广播接收权限"><span class="toc-nav-number">6.5.</span> <span class="toc-nav-text">广播接收权限</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#其他要求权限方法"><span class="toc-nav-number">6.6.</span> <span class="toc-nav-text">其他要求权限方法</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#URI权限"><span class="toc-nav-number">6.7.</span> <span class="toc-nav-text">URI权限</span></a></li></ol></li></ol>
         
         </div>
       </aside>
@@ -499,11 +485,11 @@
                 <p class="copyright text-muted">
                     Copyright &copy; Overspark 2021 
                     <br>
-                    Theme by <a target="_blank" rel="noopener" href="http://huangxuan.me">Hux</a> 
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
                     <span style="display: inline-block; margin: 0 5px;">
                         <i class="fa fa-heart"></i>
                     </span> 
-                    re-Ported by <a target="_blank" rel="noopener" href="http://beantech.org">BeanTech</a> | 
+                    re-Ported by <a href="http://beantech.org">BeanTech</a> | 
                     <iframe
                         style="margin-left: 2px; margin-bottom:-5px;"
                         frameborder="0" scrolling="0" width="91px" height="20px"
@@ -516,19 +502,13 @@
 </footer>
 
 <!-- jQuery -->
-
 <script src="/js/jquery.min.js"></script>
 
-
 <!-- Bootstrap Core JavaScript -->
-
 <script src="/js/bootstrap.min.js"></script>
 
-
 <!-- Custom Theme JavaScript -->
-
 <script src="/js/hux-blog.min.js"></script>
-
 
 
 <!-- async load function -->

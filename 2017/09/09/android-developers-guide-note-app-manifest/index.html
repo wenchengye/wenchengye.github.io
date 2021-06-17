@@ -2,13 +2,13 @@
 <html lang="en">
 
 <!-- Head tag -->
-<head>
+<head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="null">
-    <meta name="keyword"  content="">
+    <meta name="keyword" content>
     <link rel="shortcut icon" href="/img/ironman-draw.png">
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
@@ -21,35 +21,21 @@
     <link rel="canonical" href="http://blog.overspark.me/2017/09/09/android-developers-guide-note-app-manifest/">
 
     <!-- Bootstrap Core CSS -->
-    
-<link rel="stylesheet" href="/css/bootstrap.min.css">
-
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
 
     <!-- Custom CSS --> 
-    
-<link rel="stylesheet" href="/css/beantech.min.css">
-
+    <link rel="stylesheet" href="/css/beantech.min.css">
     
     <!-- Pygments Highlight CSS -->
-    
-<link rel="stylesheet" href="/css/highlight.css">
+    <link rel="stylesheet" href="/css/highlight.css">
 
+    <link rel="stylesheet" href="/css/widget.css">
 
-    
-<link rel="stylesheet" href="/css/widget.css">
+    <link rel="stylesheet" href="/css/rocket.css">
 
+    <link rel="stylesheet" href="/css/signature.css">
 
-    
-<link rel="stylesheet" href="/css/rocket.css">
-
-
-    
-<link rel="stylesheet" href="/css/signature.css">
-
-
-    
-<link rel="stylesheet" href="/css/toc.css">
-
+    <link rel="stylesheet" href="/css/toc.css">
 
     <!-- Custom Fonts -->
     <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
@@ -73,7 +59,7 @@
 
     <!-- ga & ba script hoook -->
     <script></script>
-<meta name="generator" content="Hexo 5.4.0"></head>
+</head>
 
 
 <!-- hack iOS CSS :active style -->
@@ -158,14 +144,14 @@
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
@@ -231,7 +217,7 @@
                 <h1 id="展开点"><a href="#展开点" class="headerlink" title="展开点"></a>展开点</h1><ul>
 <li><code>&lt;activity-alias&gt;</code>。</li>
 <li><code>&lt;instrumentation&gt;</code>。</li>
-<li><a target="_blank" rel="noopener" href="https://cloud.google.com/tools/android-studio/app_engine/run_test_deploy">Google Cloud（backend）</a>。</li>
+<li><a href="https://cloud.google.com/tools/android-studio/app_engine/run_test_deploy" target="_blank" rel="noopener">Google Cloud（backend）</a>。</li>
 <li>App自身组件声明的permission对本app是否有限制作用；App自己定义的permission对本app是否有限制作用。</li>
 </ul>
 <h2 id="App-Manifest"><a href="#App-Manifest" class="headerlink" title="App Manifest"></a>App Manifest</h2><p>Manifest文件包含了App向系统注册的信息，相当于系统如何使用这个App的参考手册。</p>
@@ -250,17 +236,17 @@
 <h3 id="Manifest文件中的功能"><a href="#Manifest文件中的功能" class="headerlink" title="Manifest文件中的功能"></a>Manifest文件中的功能</h3><h4 id="Intent-filters"><a href="#Intent-filters" class="headerlink" title="Intent filters"></a>Intent filters</h4><p>见<a href="http://blog.overspark.me/2017/07/26/android-developers-guide-note-app-components-intents/">Intent相关笔记</a></p>
 <h4 id="Icon和Label"><a href="#Icon和Label" class="headerlink" title="Icon和Label"></a>Icon和Label</h4><p>很多表情都包含android:icon和android:label属性，这两个属性的默认值会继承自父标签。这两个属性的默认值继承树的根节点一般是<code>&lt;application&gt;</code>标签(应用Icon和应用名)。有时候一些抽象标签，例如<code>intent-filter</code>的android:icon和android:label属性会被某些系统UI使用，例如Setting App。</p>
 <h3 id="Manifest结构一览表"><a href="#Manifest结构一览表" class="headerlink" title="Manifest结构一览表"></a>Manifest结构一览表</h3><p><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</code></p>
-<p><a target="_blank" rel="noopener" href="https://developer.android.com/guide/topics/manifest/manifest-element.html"><code>&lt;manifest&gt;</code></a></p>
-<p>&emsp;&emsp;<a target="_blank" rel="noopener" href="https://developer.android.com/guide/topics/manifest/uses-permission-element.html"><code>&lt;uses-permission /&gt;</code></a><br>&emsp;&emsp;<a target="_blank" rel="noopener" href="https://developer.android.com/guide/topics/manifest/permission-element.html"><code>&lt;permission /&gt;</code></a><br>&emsp;&emsp;<a target="_blank" rel="noopener" href="https://developer.android.com/guide/topics/manifest/permission-tree-element.html"><code>&lt;permission-tree /&gt;</code></a><br>&emsp;&emsp;<a target="_blank" rel="noopener" href="https://developer.android.com/guide/topics/manifest/permission-group-element.html"><code>&lt;permission-group /&gt;</code></a><br>&emsp;&emsp;<a target="_blank" rel="noopener" href="https://developer.android.com/guide/topics/manifest/instrumentation-element.html"><code>&lt;instrumentation /&gt;</code></a><br>&emsp;&emsp;<a target="_blank" rel="noopener" href="https://developer.android.com/guide/topics/manifest/uses-sdk-element.html"><code>&lt;uses-sdk /&gt;</code></a><br>&emsp;&emsp;<a target="_blank" rel="noopener" href="https://developer.android.com/guide/topics/manifest/uses-configuration-element.html"><code>&lt;uses-configuration /&gt;</code></a><br>&emsp;&emsp;<a target="_blank" rel="noopener" href="https://developer.android.com/guide/topics/manifest/uses-feature-element.html"><code>&lt;uses-feature /&gt;</code></a><br>&emsp;&emsp;<a target="_blank" rel="noopener" href="https://developer.android.com/guide/topics/manifest/supports-screens-element.html"><code>&lt;supports-screens /&gt;</code></a><br>&emsp;&emsp;<a target="_blank" rel="noopener" href="https://developer.android.com/guide/topics/manifest/compatible-screens-element.html"><code>&lt;compatible-screens /&gt;</code></a><br>&emsp;&emsp;<a target="_blank" rel="noopener" href="https://developer.android.com/guide/topics/manifest/supports-gl-texture-element.html"><code>&lt;supports-gl-texture /&gt;</code></a>   </p>
-<p>&emsp;&emsp;<a target="_blank" rel="noopener" href="https://developer.android.com/guide/topics/manifest/application-element.html"><code>&lt;application&gt;</code></a>   </p>
-<p>&emsp;&emsp;&emsp;&emsp;<a target="_blank" rel="noopener" href="https://developer.android.com/guide/topics/manifest/activity-element.html"><code>&lt;activity&gt;</code></a><br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a target="_blank" rel="noopener" href="https://developer.android.com/guide/topics/manifest/intent-filter-element.html"><code>&lt;intent-filter&gt;</code></a><br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a target="_blank" rel="noopener" href="https://developer.android.com/guide/topics/manifest/action-element.html"><code>&lt;action /&gt;</code></a><br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a target="_blank" rel="noopener" href="https://developer.android.com/guide/topics/manifest/category-element.html"><code>&lt;category /&gt;</code></a><br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a target="_blank" rel="noopener" href="https://developer.android.com/guide/topics/manifest/data-element.html"><code>&lt;data /&gt;</code></a><br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a target="_blank" rel="noopener" href="https://developer.android.com/guide/topics/manifest/intent-filter-element.html"><code>&lt;/intent-filter&gt;</code></a><br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a target="_blank" rel="noopener" href="https://developer.android.com/guide/topics/manifest/meta-data-element.html"><code>&lt;meta-data /&gt;</code></a><br> &emsp;&emsp;&emsp;&emsp;<a target="_blank" rel="noopener" href="https://developer.android.com/guide/topics/manifest/activity-element.html"><code>&lt;/activity&gt;</code></a>   </p>
-<p>&emsp;&emsp;&emsp;&emsp;<a target="_blank" rel="noopener" href="https://developer.android.com/guide/topics/manifest/activity-alias-element.html"><code>&lt;activity-alias&gt;</code></a><br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a target="_blank" rel="noopener" href="https://developer.android.com/guide/topics/manifest/intent-filter-element.html"><code>&lt;intent-filter&gt; . . . &lt;/intent-filter&gt;</code></a><br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a target="_blank" rel="noopener" href="https://developer.android.com/guide/topics/manifest/meta-data-element.html"><code>&lt;meta-data /&gt;</code></a><br>&emsp;&emsp;&emsp;&emsp;<a target="_blank" rel="noopener" href="https://developer.android.com/guide/topics/manifest/activity-alias-element.html"><code>&lt;/activity-alias&gt;</code></a>   </p>
-<p>&emsp;&emsp;&emsp;&emsp;<a target="_blank" rel="noopener" href="https://developer.android.com/guide/topics/manifest/service-element.html"><code>&lt;service&gt;</code></a><br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a target="_blank" rel="noopener" href="https://developer.android.com/guide/topics/manifest/intent-filter-element.html"><code>&lt;intent-filter&gt; . . . &lt;/intent-filter&gt;</code></a><br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a target="_blank" rel="noopener" href="https://developer.android.com/guide/topics/manifest/meta-data-element.html"><code>&lt;meta-data/&gt;</code></a><br>&emsp;&emsp;&emsp;&emsp;<a target="_blank" rel="noopener" href="https://developer.android.com/guide/topics/manifest/service-element.html"><code>&lt;/service&gt;</code></a>   </p>
-<p>&emsp;&emsp;&emsp;&emsp;<a target="_blank" rel="noopener" href="https://developer.android.com/guide/topics/manifest/receiver-element.html"><code>&lt;receiver&gt;</code></a><br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a target="_blank" rel="noopener" href="https://developer.android.com/guide/topics/manifest/intent-filter-element.html"><code>&lt;intent-filter&gt; . . . &lt;/intent-filter&gt;</code></a><br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a target="_blank" rel="noopener" href="https://developer.android.com/guide/topics/manifest/meta-data-element.html"><code>&lt;meta-data /&gt;</code></a><br>&emsp;&emsp;&emsp;&emsp;<a target="_blank" rel="noopener" href="https://developer.android.com/guide/topics/manifest/receiver-element.html"><code>&lt;/receiver&gt;</code></a>   </p>
-<p>&emsp;&emsp;&emsp;&emsp;<a target="_blank" rel="noopener" href="https://developer.android.com/guide/topics/manifest/provider-element.html"><code>&lt;provider&gt;</code></a><br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a target="_blank" rel="noopener" href="https://developer.android.com/guide/topics/manifest/grant-uri-permission-element.html"><code>&lt;grant-uri-permission /&gt;</code></a><br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a target="_blank" rel="noopener" href="https://developer.android.com/guide/topics/manifest/meta-data-element.html"><code>&lt;meta-data /&gt;</code></a><br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a target="_blank" rel="noopener" href="https://developer.android.com/guide/topics/manifest/path-permission-element.html"><code>&lt;path-permission /&gt;</code></a><br>&emsp;&emsp;&emsp;&emsp;<a target="_blank" rel="noopener" href="https://developer.android.com/guide/topics/manifest/provider-element.html"><code>&lt;/provider&gt;</code></a>   </p>
-<p>&emsp;&emsp;&emsp;&emsp;<a target="_blank" rel="noopener" href="https://developer.android.com/guide/topics/manifest/uses-library-element.html"><code>&lt;uses-library /&gt;</code></a>   </p>
-<p>&emsp;&emsp;<a target="_blank" rel="noopener" href="https://developer.android.com/guide/topics/manifest/application-element.html"><code>&lt;/application&gt;</code></a>   </p>
-<p><a target="_blank" rel="noopener" href="https://developer.android.com/guide/topics/manifest/manifest-element.html"><code>&lt;/manifest&gt;</code></a>   </p>
+<p><a href="https://developer.android.com/guide/topics/manifest/manifest-element.html" target="_blank" rel="noopener"><code>&lt;manifest&gt;</code></a></p>
+<p>&emsp;&emsp;<a href="https://developer.android.com/guide/topics/manifest/uses-permission-element.html" target="_blank" rel="noopener"><code>&lt;uses-permission /&gt;</code></a><br>&emsp;&emsp;<a href="https://developer.android.com/guide/topics/manifest/permission-element.html" target="_blank" rel="noopener"><code>&lt;permission /&gt;</code></a><br>&emsp;&emsp;<a href="https://developer.android.com/guide/topics/manifest/permission-tree-element.html" target="_blank" rel="noopener"><code>&lt;permission-tree /&gt;</code></a><br>&emsp;&emsp;<a href="https://developer.android.com/guide/topics/manifest/permission-group-element.html" target="_blank" rel="noopener"><code>&lt;permission-group /&gt;</code></a><br>&emsp;&emsp;<a href="https://developer.android.com/guide/topics/manifest/instrumentation-element.html" target="_blank" rel="noopener"><code>&lt;instrumentation /&gt;</code></a><br>&emsp;&emsp;<a href="https://developer.android.com/guide/topics/manifest/uses-sdk-element.html" target="_blank" rel="noopener"><code>&lt;uses-sdk /&gt;</code></a><br>&emsp;&emsp;<a href="https://developer.android.com/guide/topics/manifest/uses-configuration-element.html" target="_blank" rel="noopener"><code>&lt;uses-configuration /&gt;</code></a><br>&emsp;&emsp;<a href="https://developer.android.com/guide/topics/manifest/uses-feature-element.html" target="_blank" rel="noopener"><code>&lt;uses-feature /&gt;</code></a><br>&emsp;&emsp;<a href="https://developer.android.com/guide/topics/manifest/supports-screens-element.html" target="_blank" rel="noopener"><code>&lt;supports-screens /&gt;</code></a><br>&emsp;&emsp;<a href="https://developer.android.com/guide/topics/manifest/compatible-screens-element.html" target="_blank" rel="noopener"><code>&lt;compatible-screens /&gt;</code></a><br>&emsp;&emsp;<a href="https://developer.android.com/guide/topics/manifest/supports-gl-texture-element.html" target="_blank" rel="noopener"><code>&lt;supports-gl-texture /&gt;</code></a>   </p>
+<p>&emsp;&emsp;<a href="https://developer.android.com/guide/topics/manifest/application-element.html" target="_blank" rel="noopener"><code>&lt;application&gt;</code></a>   </p>
+<p>&emsp;&emsp;&emsp;&emsp;<a href="https://developer.android.com/guide/topics/manifest/activity-element.html" target="_blank" rel="noopener"><code>&lt;activity&gt;</code></a><br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a href="https://developer.android.com/guide/topics/manifest/intent-filter-element.html" target="_blank" rel="noopener"><code>&lt;intent-filter&gt;</code></a><br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a href="https://developer.android.com/guide/topics/manifest/action-element.html" target="_blank" rel="noopener"><code>&lt;action /&gt;</code></a><br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a href="https://developer.android.com/guide/topics/manifest/category-element.html" target="_blank" rel="noopener"><code>&lt;category /&gt;</code></a><br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a href="https://developer.android.com/guide/topics/manifest/data-element.html" target="_blank" rel="noopener"><code>&lt;data /&gt;</code></a><br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a href="https://developer.android.com/guide/topics/manifest/intent-filter-element.html" target="_blank" rel="noopener"><code>&lt;/intent-filter&gt;</code></a><br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a href="https://developer.android.com/guide/topics/manifest/meta-data-element.html" target="_blank" rel="noopener"><code>&lt;meta-data /&gt;</code></a><br> &emsp;&emsp;&emsp;&emsp;<a href="https://developer.android.com/guide/topics/manifest/activity-element.html" target="_blank" rel="noopener"><code>&lt;/activity&gt;</code></a>   </p>
+<p>&emsp;&emsp;&emsp;&emsp;<a href="https://developer.android.com/guide/topics/manifest/activity-alias-element.html" target="_blank" rel="noopener"><code>&lt;activity-alias&gt;</code></a><br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a href="https://developer.android.com/guide/topics/manifest/intent-filter-element.html" target="_blank" rel="noopener"><code>&lt;intent-filter&gt; . . . &lt;/intent-filter&gt;</code></a><br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a href="https://developer.android.com/guide/topics/manifest/meta-data-element.html" target="_blank" rel="noopener"><code>&lt;meta-data /&gt;</code></a><br>&emsp;&emsp;&emsp;&emsp;<a href="https://developer.android.com/guide/topics/manifest/activity-alias-element.html" target="_blank" rel="noopener"><code>&lt;/activity-alias&gt;</code></a>   </p>
+<p>&emsp;&emsp;&emsp;&emsp;<a href="https://developer.android.com/guide/topics/manifest/service-element.html" target="_blank" rel="noopener"><code>&lt;service&gt;</code></a><br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a href="https://developer.android.com/guide/topics/manifest/intent-filter-element.html" target="_blank" rel="noopener"><code>&lt;intent-filter&gt; . . . &lt;/intent-filter&gt;</code></a><br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a href="https://developer.android.com/guide/topics/manifest/meta-data-element.html" target="_blank" rel="noopener"><code>&lt;meta-data/&gt;</code></a><br>&emsp;&emsp;&emsp;&emsp;<a href="https://developer.android.com/guide/topics/manifest/service-element.html" target="_blank" rel="noopener"><code>&lt;/service&gt;</code></a>   </p>
+<p>&emsp;&emsp;&emsp;&emsp;<a href="https://developer.android.com/guide/topics/manifest/receiver-element.html" target="_blank" rel="noopener"><code>&lt;receiver&gt;</code></a><br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a href="https://developer.android.com/guide/topics/manifest/intent-filter-element.html" target="_blank" rel="noopener"><code>&lt;intent-filter&gt; . . . &lt;/intent-filter&gt;</code></a><br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a href="https://developer.android.com/guide/topics/manifest/meta-data-element.html" target="_blank" rel="noopener"><code>&lt;meta-data /&gt;</code></a><br>&emsp;&emsp;&emsp;&emsp;<a href="https://developer.android.com/guide/topics/manifest/receiver-element.html" target="_blank" rel="noopener"><code>&lt;/receiver&gt;</code></a>   </p>
+<p>&emsp;&emsp;&emsp;&emsp;<a href="https://developer.android.com/guide/topics/manifest/provider-element.html" target="_blank" rel="noopener"><code>&lt;provider&gt;</code></a><br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a href="https://developer.android.com/guide/topics/manifest/grant-uri-permission-element.html" target="_blank" rel="noopener"><code>&lt;grant-uri-permission /&gt;</code></a><br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a href="https://developer.android.com/guide/topics/manifest/meta-data-element.html" target="_blank" rel="noopener"><code>&lt;meta-data /&gt;</code></a><br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a href="https://developer.android.com/guide/topics/manifest/path-permission-element.html" target="_blank" rel="noopener"><code>&lt;path-permission /&gt;</code></a><br>&emsp;&emsp;&emsp;&emsp;<a href="https://developer.android.com/guide/topics/manifest/provider-element.html" target="_blank" rel="noopener"><code>&lt;/provider&gt;</code></a>   </p>
+<p>&emsp;&emsp;&emsp;&emsp;<a href="https://developer.android.com/guide/topics/manifest/uses-library-element.html" target="_blank" rel="noopener"><code>&lt;uses-library /&gt;</code></a>   </p>
+<p>&emsp;&emsp;<a href="https://developer.android.com/guide/topics/manifest/application-element.html" target="_blank" rel="noopener"><code>&lt;/application&gt;</code></a>   </p>
+<p><a href="https://developer.android.com/guide/topics/manifest/manifest-element.html" target="_blank" rel="noopener"><code>&lt;/manifest&gt;</code></a>   </p>
 
                 
 
@@ -304,7 +290,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#%E5%B1%95%E5%BC%80%E7%82%B9"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">展开点</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#App-Manifest"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">App Manifest</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Manifest%E6%96%87%E4%BB%B6%E4%B9%A6%E5%86%99%E6%83%AF%E4%BE%8B"><span class="toc-nav-number">1.1.1.</span> <span class="toc-nav-text">Manifest文件书写惯例</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E6%A0%87%E7%AD%BE%E4%BD%BF%E7%94%A8%E6%83%AF%E4%BE%8B"><span class="toc-nav-number">1.1.1.1.</span> <span class="toc-nav-text">标签使用惯例</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E5%B1%9E%E6%80%A7%E4%BD%BF%E7%94%A8%E6%83%AF%E4%BE%8B"><span class="toc-nav-number">1.1.1.2.</span> <span class="toc-nav-text">属性使用惯例</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E5%BC%95%E7%94%A8Java-Class"><span class="toc-nav-number">1.1.1.3.</span> <span class="toc-nav-text">引用Java Class</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E5%BC%95%E7%94%A8%E8%B5%84%E6%BA%90"><span class="toc-nav-number">1.1.1.4.</span> <span class="toc-nav-text">引用资源</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%80%BC"><span class="toc-nav-number">1.1.1.5.</span> <span class="toc-nav-text">字符串值</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Manifest%E6%96%87%E4%BB%B6%E4%B8%AD%E7%9A%84%E5%8A%9F%E8%83%BD"><span class="toc-nav-number">1.1.2.</span> <span class="toc-nav-text">Manifest文件中的功能</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#Intent-filters"><span class="toc-nav-number">1.1.2.1.</span> <span class="toc-nav-text">Intent filters</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#Icon%E5%92%8CLabel"><span class="toc-nav-number">1.1.2.2.</span> <span class="toc-nav-text">Icon和Label</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Manifest%E7%BB%93%E6%9E%84%E4%B8%80%E8%A7%88%E8%A1%A8"><span class="toc-nav-number">1.1.3.</span> <span class="toc-nav-text">Manifest结构一览表</span></a></li></ol></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#展开点"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">展开点</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#App-Manifest"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">App Manifest</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Manifest文件书写惯例"><span class="toc-nav-number">1.1.1.</span> <span class="toc-nav-text">Manifest文件书写惯例</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#标签使用惯例"><span class="toc-nav-number">1.1.1.1.</span> <span class="toc-nav-text">标签使用惯例</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#属性使用惯例"><span class="toc-nav-number">1.1.1.2.</span> <span class="toc-nav-text">属性使用惯例</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#引用Java-Class"><span class="toc-nav-number">1.1.1.3.</span> <span class="toc-nav-text">引用Java Class</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#引用资源"><span class="toc-nav-number">1.1.1.4.</span> <span class="toc-nav-text">引用资源</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#字符串值"><span class="toc-nav-number">1.1.1.5.</span> <span class="toc-nav-text">字符串值</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Manifest文件中的功能"><span class="toc-nav-number">1.1.2.</span> <span class="toc-nav-text">Manifest文件中的功能</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#Intent-filters"><span class="toc-nav-number">1.1.2.1.</span> <span class="toc-nav-text">Intent filters</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#Icon和Label"><span class="toc-nav-number">1.1.2.2.</span> <span class="toc-nav-text">Icon和Label</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Manifest结构一览表"><span class="toc-nav-number">1.1.3.</span> <span class="toc-nav-text">Manifest结构一览表</span></a></li></ol></li></ol></li></ol>
         
         </div>
       </aside>
@@ -433,11 +419,11 @@
                 <p class="copyright text-muted">
                     Copyright &copy; Overspark 2021 
                     <br>
-                    Theme by <a target="_blank" rel="noopener" href="http://huangxuan.me">Hux</a> 
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
                     <span style="display: inline-block; margin: 0 5px;">
                         <i class="fa fa-heart"></i>
                     </span> 
-                    re-Ported by <a target="_blank" rel="noopener" href="http://beantech.org">BeanTech</a> | 
+                    re-Ported by <a href="http://beantech.org">BeanTech</a> | 
                     <iframe
                         style="margin-left: 2px; margin-bottom:-5px;"
                         frameborder="0" scrolling="0" width="91px" height="20px"
@@ -450,19 +436,13 @@
 </footer>
 
 <!-- jQuery -->
-
 <script src="/js/jquery.min.js"></script>
 
-
 <!-- Bootstrap Core JavaScript -->
-
 <script src="/js/bootstrap.min.js"></script>
 
-
 <!-- Custom Theme JavaScript -->
-
 <script src="/js/hux-blog.min.js"></script>
-
 
 
 <!-- async load function -->

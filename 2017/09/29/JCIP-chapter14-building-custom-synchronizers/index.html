@@ -2,13 +2,13 @@
 <html lang="en">
 
 <!-- Head tag -->
-<head>
+<head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="null">
-    <meta name="keyword"  content="">
+    <meta name="keyword" content>
     <link rel="shortcut icon" href="/img/ironman-draw.png">
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
@@ -21,35 +21,21 @@
     <link rel="canonical" href="http://blog.overspark.me/2017/09/29/JCIP-chapter14-building-custom-synchronizers/">
 
     <!-- Bootstrap Core CSS -->
-    
-<link rel="stylesheet" href="/css/bootstrap.min.css">
-
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
 
     <!-- Custom CSS --> 
-    
-<link rel="stylesheet" href="/css/beantech.min.css">
-
+    <link rel="stylesheet" href="/css/beantech.min.css">
     
     <!-- Pygments Highlight CSS -->
-    
-<link rel="stylesheet" href="/css/highlight.css">
+    <link rel="stylesheet" href="/css/highlight.css">
 
+    <link rel="stylesheet" href="/css/widget.css">
 
-    
-<link rel="stylesheet" href="/css/widget.css">
+    <link rel="stylesheet" href="/css/rocket.css">
 
+    <link rel="stylesheet" href="/css/signature.css">
 
-    
-<link rel="stylesheet" href="/css/rocket.css">
-
-
-    
-<link rel="stylesheet" href="/css/signature.css">
-
-
-    
-<link rel="stylesheet" href="/css/toc.css">
-
+    <link rel="stylesheet" href="/css/toc.css">
 
     <!-- Custom Fonts -->
     <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
@@ -73,7 +59,7 @@
 
     <!-- ga & ba script hoook -->
     <script></script>
-<meta name="generator" content="Hexo 5.4.0"></head>
+</head>
 
 
 <!-- hack iOS CSS :active style -->
@@ -158,14 +144,14 @@
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
@@ -230,7 +216,7 @@
 
                 <h2 id="caution"><a href="#caution" class="headerlink" title="caution"></a>caution</h2><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>自定义同步工具类最简单的方式就是基于已有的同步工具类；当然你也可以借助”内置Condition Queue”、”显示Condition Queue”以及AQS(AbstractQueuedSynchronizer)。</p>
 <h2 id="条件依赖操作与同步"><a href="#条件依赖操作与同步" class="headerlink" title="条件依赖操作与同步"></a>条件依赖操作与同步</h2><p>如果不借助Condition Queue，Blocking等待条件成立写起来往往很麻烦，比如：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">acquire lock on object state</span></span><br><span class="line"><span class="function"><span class="title">while</span> <span class="params">(precondition does not hold)</span> </span>&#123;</span><br><span class="line">    release lock</span><br><span class="line">    wait until precondition might hold</span><br><span class="line">    optionally fail <span class="keyword">if</span> interrupted or timeout expires reacquire lock</span><br><span class="line">&#125;</span><br><span class="line">perform action release lock</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">acquire lock on object state</span><br><span class="line"><span class="keyword">while</span> (precondition does not hold) &#123;</span><br><span class="line">    release lock</span><br><span class="line">    wait until precondition might hold</span><br><span class="line">    optionally fail <span class="keyword">if</span> interrupted or timeout expires reacquire lock</span><br><span class="line">&#125;</span><br><span class="line">perform action release lock</span><br></pre></td></tr></table></figure>
 <p>在依赖条件不满足时，可以选择抛出异常、返回错误码、等待条件成立等不同策略。</p>
 <h3 id="当没有Condition-Queue"><a href="#当没有Condition-Queue" class="headerlink" title="当没有Condition Queue"></a>当没有Condition Queue</h3><p>这里在不使用Condition Queue的情况下，提供两个BlockingQueue的简单实现，并指出其不方便或没效率的缺点。</p>
 <h3 id="当有了Condition-Queue"><a href="#当有了Condition-Queue" class="headerlink" title="当有了Condition Queue"></a>当有了Condition Queue</h3><p>Condition Queue提供了“挂起线程，等待条件成立”和“提醒等待线程条件成立”的一组操作。所以在Condition Queue这个概念中，Queue中的元素是等待的线程。</p>
@@ -304,7 +290,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#caution"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">caution</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">概述</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E6%9D%A1%E4%BB%B6%E4%BE%9D%E8%B5%96%E6%93%8D%E4%BD%9C%E4%B8%8E%E5%90%8C%E6%AD%A5"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">条件依赖操作与同步</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%BD%93%E6%B2%A1%E6%9C%89Condition-Queue"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">当没有Condition Queue</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%BD%93%E6%9C%89%E4%BA%86Condition-Queue"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">当有了Condition Queue</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#CQ%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">CQ的使用</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E7%AD%89%E5%BE%85%E6%9D%A1%E4%BB%B6"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">等待条件</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#CQ%E8%A2%AB%E5%8F%8D%E5%A4%8D%E5%94%A4%E9%86%92"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">CQ被反复唤醒</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%94%A4%E9%86%92CQ"><span class="toc-nav-number">4.3.</span> <span class="toc-nav-text">唤醒CQ</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E7%BB%A7%E6%89%BF%E5%92%8CCQ-%E5%B0%81%E8%A3%85%E5%92%8CCQ"><span class="toc-nav-number">4.4.</span> <span class="toc-nav-text">继承和CQ&#x2F;封装和CQ</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E6%98%BE%E5%BC%8F%E7%9A%84CQ%E5%AF%B9%E8%B1%A1"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">显式的CQ对象</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#AQS-AbstractQueuedSynchronizer"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">AQS(AbstractQueuedSynchronizer)</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E5%9C%A8Java%E6%A0%87%E5%87%86%E5%BA%93%E4%B8%AD%E7%9A%84AQS"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">在Java标准库中的AQS</span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#caution"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">caution</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#概述"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">概述</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#条件依赖操作与同步"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">条件依赖操作与同步</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#当没有Condition-Queue"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">当没有Condition Queue</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#当有了Condition-Queue"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">当有了Condition Queue</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#CQ的使用"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">CQ的使用</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#等待条件"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">等待条件</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#CQ被反复唤醒"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">CQ被反复唤醒</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#唤醒CQ"><span class="toc-nav-number">4.3.</span> <span class="toc-nav-text">唤醒CQ</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#继承和CQ-封装和CQ"><span class="toc-nav-number">4.4.</span> <span class="toc-nav-text">继承和CQ/封装和CQ</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#显式的CQ对象"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">显式的CQ对象</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#AQS-AbstractQueuedSynchronizer"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">AQS(AbstractQueuedSynchronizer)</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#在Java标准库中的AQS"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">在Java标准库中的AQS</span></a></li></ol>
         
         </div>
       </aside>
@@ -433,11 +419,11 @@
                 <p class="copyright text-muted">
                     Copyright &copy; Overspark 2021 
                     <br>
-                    Theme by <a target="_blank" rel="noopener" href="http://huangxuan.me">Hux</a> 
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
                     <span style="display: inline-block; margin: 0 5px;">
                         <i class="fa fa-heart"></i>
                     </span> 
-                    re-Ported by <a target="_blank" rel="noopener" href="http://beantech.org">BeanTech</a> | 
+                    re-Ported by <a href="http://beantech.org">BeanTech</a> | 
                     <iframe
                         style="margin-left: 2px; margin-bottom:-5px;"
                         frameborder="0" scrolling="0" width="91px" height="20px"
@@ -450,19 +436,13 @@
 </footer>
 
 <!-- jQuery -->
-
 <script src="/js/jquery.min.js"></script>
 
-
 <!-- Bootstrap Core JavaScript -->
-
 <script src="/js/bootstrap.min.js"></script>
 
-
 <!-- Custom Theme JavaScript -->
-
 <script src="/js/hux-blog.min.js"></script>
-
 
 
 <!-- async load function -->

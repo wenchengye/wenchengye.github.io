@@ -2,13 +2,13 @@
 <html lang="en">
 
 <!-- Head tag -->
-<head>
+<head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="null">
-    <meta name="keyword"  content="">
+    <meta name="keyword" content>
     <link rel="shortcut icon" href="/img/ironman-draw.png">
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
@@ -21,35 +21,21 @@
     <link rel="canonical" href="http://blog.overspark.me/2017/10/09/JCIP-chapter7-cancellation-and-shutdown/">
 
     <!-- Bootstrap Core CSS -->
-    
-<link rel="stylesheet" href="/css/bootstrap.min.css">
-
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
 
     <!-- Custom CSS --> 
-    
-<link rel="stylesheet" href="/css/beantech.min.css">
-
+    <link rel="stylesheet" href="/css/beantech.min.css">
     
     <!-- Pygments Highlight CSS -->
-    
-<link rel="stylesheet" href="/css/highlight.css">
+    <link rel="stylesheet" href="/css/highlight.css">
 
+    <link rel="stylesheet" href="/css/widget.css">
 
-    
-<link rel="stylesheet" href="/css/widget.css">
+    <link rel="stylesheet" href="/css/rocket.css">
 
+    <link rel="stylesheet" href="/css/signature.css">
 
-    
-<link rel="stylesheet" href="/css/rocket.css">
-
-
-    
-<link rel="stylesheet" href="/css/signature.css">
-
-
-    
-<link rel="stylesheet" href="/css/toc.css">
-
+    <link rel="stylesheet" href="/css/toc.css">
 
     <!-- Custom Fonts -->
     <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
@@ -73,7 +59,7 @@
 
     <!-- ga & ba script hoook -->
     <script></script>
-<meta name="generator" content="Hexo 5.4.0"></head>
+</head>
 
 
 <!-- hack iOS CSS :active style -->
@@ -158,14 +144,14 @@
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
@@ -313,7 +299,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">概述</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E4%BB%BB%E5%8A%A1%E4%B8%AD%E6%AD%A2"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">任务中止</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E4%B8%AD%E6%96%AD-Interruption"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">中断(Interruption)</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E4%B8%AD%E6%96%AD%E7%AD%96%E7%95%A5"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">中断策略</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%93%8D%E5%BA%94%E4%B8%AD%E6%96%AD"><span class="toc-nav-number">2.3.</span> <span class="toc-nav-text">响应中断</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E4%BD%BF%E7%94%A8Future%E6%8F%90%E4%BE%9B%E7%9A%84%E4%B8%AD%E6%AD%A2%E4%BB%BB%E5%8A%A1%E7%9A%84%E5%8A%9F%E8%83%BD"><span class="toc-nav-number">2.4.</span> <span class="toc-nav-text">使用Future提供的中止任务的功能</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%A4%84%E7%90%86%E4%B8%8D%E5%8F%AF%E4%B8%AD%E6%96%AD%E7%9A%84%E9%98%BB%E5%A1%9E"><span class="toc-nav-number">2.5.</span> <span class="toc-nav-text">处理不可中断的阻塞</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E9%87%8D%E5%86%99ThreadPoolExecutor%E7%9A%84newTaskFor%E6%96%B9%E6%B3%95"><span class="toc-nav-number">2.6.</span> <span class="toc-nav-text">重写ThreadPoolExecutor的newTaskFor方法</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E5%85%B3%E9%97%AD%E6%9C%8D%E5%8A%A1-%E5%8C%85%E5%90%AB%E7%BA%BF%E7%A8%8B%E7%9A%84%E6%9C%8D%E5%8A%A1"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">关闭服务(包含线程的服务)</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E4%B8%80%E4%B8%AALog%E6%9C%8D%E5%8A%A1"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">一个Log服务</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#ExecutorService%E7%9A%84%E5%85%B3%E9%97%AD%E6%96%B9%E6%B3%95"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">ExecutorService的关闭方法</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Poison-Pills"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">Poison Pills</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E4%BD%BF%E7%94%A8%E9%9D%9E%E5%B8%B8%E9%A9%BB%E7%9A%84ExecutorService"><span class="toc-nav-number">3.4.</span> <span class="toc-nav-text">使用非常驻的ExecutorService</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#showdownNow-%E7%AB%8B%E5%8D%B3%E5%85%B3%E9%97%AD-%E7%9A%84%E5%B1%80%E9%99%90%E6%80%A7"><span class="toc-nav-number">3.5.</span> <span class="toc-nav-text">showdownNow(立即关闭)的局限性</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E5%A4%84%E7%90%86%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%BC%82%E5%B8%B8%E7%BB%93%E6%9D%9F"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">处理线程的异常结束</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Uncaught-exception-handler"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">Uncaught exception handler</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E5%85%B3%E9%97%ADJVM"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">关闭JVM</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Shutdown-hook"><span class="toc-nav-number">5.1.</span> <span class="toc-nav-text">Shutdown hook</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%AE%88%E6%8A%A4%E7%BA%BF%E7%A8%8B"><span class="toc-nav-number">5.2.</span> <span class="toc-nav-text">守护线程</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#finalizer"><span class="toc-nav-number">5.3.</span> <span class="toc-nav-text">finalizer</span></a></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#概述"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">概述</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#任务中止"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">任务中止</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#中断-Interruption"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">中断(Interruption)</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#中断策略"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">中断策略</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#响应中断"><span class="toc-nav-number">2.3.</span> <span class="toc-nav-text">响应中断</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#使用Future提供的中止任务的功能"><span class="toc-nav-number">2.4.</span> <span class="toc-nav-text">使用Future提供的中止任务的功能</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#处理不可中断的阻塞"><span class="toc-nav-number">2.5.</span> <span class="toc-nav-text">处理不可中断的阻塞</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#重写ThreadPoolExecutor的newTaskFor方法"><span class="toc-nav-number">2.6.</span> <span class="toc-nav-text">重写ThreadPoolExecutor的newTaskFor方法</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#关闭服务-包含线程的服务"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">关闭服务(包含线程的服务)</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#一个Log服务"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">一个Log服务</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#ExecutorService的关闭方法"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">ExecutorService的关闭方法</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Poison-Pills"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">Poison Pills</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#使用非常驻的ExecutorService"><span class="toc-nav-number">3.4.</span> <span class="toc-nav-text">使用非常驻的ExecutorService</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#showdownNow-立即关闭-的局限性"><span class="toc-nav-number">3.5.</span> <span class="toc-nav-text">showdownNow(立即关闭)的局限性</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#处理线程的异常结束"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">处理线程的异常结束</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Uncaught-exception-handler"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">Uncaught exception handler</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#关闭JVM"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">关闭JVM</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Shutdown-hook"><span class="toc-nav-number">5.1.</span> <span class="toc-nav-text">Shutdown hook</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#守护线程"><span class="toc-nav-number">5.2.</span> <span class="toc-nav-text">守护线程</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#finalizer"><span class="toc-nav-number">5.3.</span> <span class="toc-nav-text">finalizer</span></a></li></ol></li></ol>
         
         </div>
       </aside>
@@ -442,11 +428,11 @@
                 <p class="copyright text-muted">
                     Copyright &copy; Overspark 2021 
                     <br>
-                    Theme by <a target="_blank" rel="noopener" href="http://huangxuan.me">Hux</a> 
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
                     <span style="display: inline-block; margin: 0 5px;">
                         <i class="fa fa-heart"></i>
                     </span> 
-                    re-Ported by <a target="_blank" rel="noopener" href="http://beantech.org">BeanTech</a> | 
+                    re-Ported by <a href="http://beantech.org">BeanTech</a> | 
                     <iframe
                         style="margin-left: 2px; margin-bottom:-5px;"
                         frameborder="0" scrolling="0" width="91px" height="20px"
@@ -459,19 +445,13 @@
 </footer>
 
 <!-- jQuery -->
-
 <script src="/js/jquery.min.js"></script>
 
-
 <!-- Bootstrap Core JavaScript -->
-
 <script src="/js/bootstrap.min.js"></script>
 
-
 <!-- Custom Theme JavaScript -->
-
 <script src="/js/hux-blog.min.js"></script>
-
 
 
 <!-- async load function -->
