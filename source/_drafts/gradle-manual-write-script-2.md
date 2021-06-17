@@ -1,10 +1,10 @@
 ---
-title: 编写Gradle脚本Part2
-subtitle: Gradle Manual读书笔记2.2
+title: 使用 Task - 编写 Gradle 脚本 (Part2)
+subtitle: Gradle Manual 读书笔记 （2.2）
 catalog: true
 header-img: /img/header_img/tools-note-header.jpg
 tags:
-  - Grale
+  - Gradle
 categories:
   - 读书笔记
 ---
@@ -81,36 +81,6 @@ task顺序并不规定task之间的依赖关系，而是当一些task在一次gr
 
 * 如果任务A的某个输入被赋值为任务B的某个输出，那么任务A自动dependsOn任务B。
 * 被(input & output)注解的属性，会检查其值的合法性，例如文件&目录是否存在。
-
-## Gradle的生命周期
-
-Gradle的核心是建立起task的有向无环图，并按照顺序执行这些task；所以gradle脚本的核心就是定义和配置任务。
-
-* 一次Gradle执行可以被分为三个阶段
-    - 初始化阶段，确定Project结构并为每个Project生成Project对象(settings.gradle)。
-    - 配置阶段，对所有参与这次Gradle执行Project进行配置(build.gradle)。
-    - 执行阶段，确定taskGraph，并依次执行task。
-
-### 初始化阶段
-
-初始化阶段Gradle会寻找setting.gradle文件并创建Project对象(多个)。
-
-* 寻找setting.gradle是为了确定当次执行是多工程还是单工程，寻找规则如下：
-    - 在相邻目录中的名为'master'的目录中寻找(flat结构，所以flat结构的rootProject目录最好命名为'master')。
-    - 在父目录中寻找。
-    - 如果没有找到，或者执行目录没有在setting.gradle中定义，当次执行为单工程；否则为多工程。
-* 可以在命令行中加入`-u`参数，强制当次执行为单工程；但是如果执行目录中存在setting.gradle，`-u`参数被忽略。
-
-### 监听脚本执行
-
-* `Project.beforeEvaluate(Closure)`、`Project.afterEvaluate(Closure)`、`Gradle.beforeProject(Closure)`、`Gradle.afterProject(Closure)`等方法可以用于监听Project的evaluate过程。
-* 通过`Project.tasks`和`Gradle.taskGraph`的监听方法，可以监听task的创建过程和执行过程。
-
-### settings.gradle和多工程结构
-
-* "Settings文件"用于定义多工程结构，其默认命名是settings.gradle；多工程构建时，root project目录下必须存在settings.gradle；正如build.gradle会delegate一个Project对象，settings.gradle会delegate一个Settings对象。
-* 多工程结构被定一个为一个单根树形结构，根节点被称为rootProject；默认配置下，rootProject物理路径就是setting.gradle文件所在的目录，subProject物理路径结构的和Project树结构相同；这种默认配置可以在setting.gradle中修改。
-* `Settings.getRootProject()`和`Settings.project(String)`方法会返回ProjectDescriptor对象，可以通过ProjectDescriptor对象来修改Project的物理路径、build脚本名字等。
 
 ## 依赖管理
 
