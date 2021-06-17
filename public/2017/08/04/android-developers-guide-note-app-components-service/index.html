@@ -2,13 +2,13 @@
 <html lang="en">
 
 <!-- Head tag -->
-<head>
+<head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="null">
-    <meta name="keyword"  content="">
+    <meta name="keyword" content>
     <link rel="shortcut icon" href="/img/ironman-draw.png">
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
@@ -21,35 +21,21 @@
     <link rel="canonical" href="http://blog.overspark.me/2017/08/04/android-developers-guide-note-app-components-service/">
 
     <!-- Bootstrap Core CSS -->
-    
-<link rel="stylesheet" href="/css/bootstrap.min.css">
-
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
 
     <!-- Custom CSS --> 
-    
-<link rel="stylesheet" href="/css/beantech.min.css">
-
+    <link rel="stylesheet" href="/css/beantech.min.css">
     
     <!-- Pygments Highlight CSS -->
-    
-<link rel="stylesheet" href="/css/highlight.css">
+    <link rel="stylesheet" href="/css/highlight.css">
 
+    <link rel="stylesheet" href="/css/widget.css">
 
-    
-<link rel="stylesheet" href="/css/widget.css">
+    <link rel="stylesheet" href="/css/rocket.css">
 
+    <link rel="stylesheet" href="/css/signature.css">
 
-    
-<link rel="stylesheet" href="/css/rocket.css">
-
-
-    
-<link rel="stylesheet" href="/css/signature.css">
-
-
-    
-<link rel="stylesheet" href="/css/toc.css">
-
+    <link rel="stylesheet" href="/css/toc.css">
 
     <!-- Custom Fonts -->
     <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
@@ -73,7 +59,7 @@
 
     <!-- ga & ba script hoook -->
     <script></script>
-<meta name="generator" content="Hexo 5.4.0"></head>
+</head>
 
 
 <!-- hack iOS CSS :active style -->
@@ -359,7 +345,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E5%B1%95%E5%BC%80%E7%82%B9"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">展开点</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Caution"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Caution</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Services"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">Services</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%9F%BA%E7%A1%80"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">基础</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E9%87%8D%E8%A6%81%E5%9B%9E%E8%B0%83"><span class="toc-nav-number">3.1.1.</span> <span class="toc-nav-text">重要回调</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E5%9C%A8manifest%E4%B8%AD%E5%A3%B0%E6%98%8E"><span class="toc-nav-number">3.1.2.</span> <span class="toc-nav-text">在manifest中声明</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%88%9B%E5%BB%BAStarted%E7%B1%BB%E5%9E%8B%E7%9A%84Service"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">创建Started类型的Service</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E7%BB%A7%E6%89%BFIntentService"><span class="toc-nav-number">3.2.1.</span> <span class="toc-nav-text">继承IntentService</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E7%BB%A7%E6%89%BFService"><span class="toc-nav-number">3.2.2.</span> <span class="toc-nav-text">继承Service</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#Start-Service"><span class="toc-nav-number">3.2.3.</span> <span class="toc-nav-text">Start Service</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#Stop-Service"><span class="toc-nav-number">3.2.4.</span> <span class="toc-nav-text">Stop Service</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Foreground-Service"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">Foreground Service</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Service%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-nav-number">3.4.</span> <span class="toc-nav-text">Service的生命周期</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Bound-Service"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">Bound Service</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%9F%BA%E7%A1%80-1"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">基础</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E6%8F%90%E4%BE%9BIBinder"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">提供IBinder</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E7%BB%A7%E6%89%BFBinder"><span class="toc-nav-number">4.2.1.</span> <span class="toc-nav-text">继承Binder</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E4%BD%BF%E7%94%A8Messenger"><span class="toc-nav-number">4.2.2.</span> <span class="toc-nav-text">使用Messenger</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%8F%91%E8%B5%B7Bind%E8%AF%B7%E6%B1%82"><span class="toc-nav-number">4.3.</span> <span class="toc-nav-text">发起Bind请求</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-nav-number">4.4.</span> <span class="toc-nav-text">注意事项</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#AIDL-Android-Interface-Definition-Language"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">AIDL(Android Interface Definition Language)</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E4%BD%BF%E7%94%A8AIDL"><span class="toc-nav-number">5.1.</span> <span class="toc-nav-text">使用AIDL</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E7%BC%96%E5%86%99-aidl%E6%96%87%E4%BB%B6"><span class="toc-nav-number">5.1.1.</span> <span class="toc-nav-text">编写.aidl文件</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E5%AE%9E%E7%8E%B0AIDL%E6%8E%A5%E5%8F%A3"><span class="toc-nav-number">5.1.2.</span> <span class="toc-nav-text">实现AIDL接口</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E8%BF%94%E5%9B%9EAIDL%E6%8E%A5%E5%8F%A3"><span class="toc-nav-number">5.1.3.</span> <span class="toc-nav-text">返回AIDL接口</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E9%80%9A%E8%BF%87AIDL%E6%8E%A5%E5%8F%A3%E4%BC%A0%E9%80%92%E5%A4%8D%E6%9D%82%E7%B1%BB%E5%9E%8B"><span class="toc-nav-number">5.2.</span> <span class="toc-nav-text">通过AIDL接口传递复杂类型</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E8%B0%83%E7%94%A8IPC%E6%8E%A5%E5%8F%A3"><span class="toc-nav-number">5.3.</span> <span class="toc-nav-text">调用IPC接口</span></a></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#展开点"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">展开点</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Caution"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Caution</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Services"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">Services</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#基础"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">基础</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#重要回调"><span class="toc-nav-number">3.1.1.</span> <span class="toc-nav-text">重要回调</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#在manifest中声明"><span class="toc-nav-number">3.1.2.</span> <span class="toc-nav-text">在manifest中声明</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#创建Started类型的Service"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">创建Started类型的Service</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#继承IntentService"><span class="toc-nav-number">3.2.1.</span> <span class="toc-nav-text">继承IntentService</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#继承Service"><span class="toc-nav-number">3.2.2.</span> <span class="toc-nav-text">继承Service</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#Start-Service"><span class="toc-nav-number">3.2.3.</span> <span class="toc-nav-text">Start Service</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#Stop-Service"><span class="toc-nav-number">3.2.4.</span> <span class="toc-nav-text">Stop Service</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Foreground-Service"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">Foreground Service</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Service的生命周期"><span class="toc-nav-number">3.4.</span> <span class="toc-nav-text">Service的生命周期</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Bound-Service"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">Bound Service</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#基础-1"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">基础</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#提供IBinder"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">提供IBinder</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#继承Binder"><span class="toc-nav-number">4.2.1.</span> <span class="toc-nav-text">继承Binder</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#使用Messenger"><span class="toc-nav-number">4.2.2.</span> <span class="toc-nav-text">使用Messenger</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#发起Bind请求"><span class="toc-nav-number">4.3.</span> <span class="toc-nav-text">发起Bind请求</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#注意事项"><span class="toc-nav-number">4.4.</span> <span class="toc-nav-text">注意事项</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#AIDL-Android-Interface-Definition-Language"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">AIDL(Android Interface Definition Language)</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#使用AIDL"><span class="toc-nav-number">5.1.</span> <span class="toc-nav-text">使用AIDL</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#编写-aidl文件"><span class="toc-nav-number">5.1.1.</span> <span class="toc-nav-text">编写.aidl文件</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#实现AIDL接口"><span class="toc-nav-number">5.1.2.</span> <span class="toc-nav-text">实现AIDL接口</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#返回AIDL接口"><span class="toc-nav-number">5.1.3.</span> <span class="toc-nav-text">返回AIDL接口</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#通过AIDL接口传递复杂类型"><span class="toc-nav-number">5.2.</span> <span class="toc-nav-text">通过AIDL接口传递复杂类型</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#调用IPC接口"><span class="toc-nav-number">5.3.</span> <span class="toc-nav-text">调用IPC接口</span></a></li></ol></li></ol>
         
         </div>
       </aside>
@@ -488,11 +474,11 @@
                 <p class="copyright text-muted">
                     Copyright &copy; Overspark 2021 
                     <br>
-                    Theme by <a target="_blank" rel="noopener" href="http://huangxuan.me">Hux</a> 
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
                     <span style="display: inline-block; margin: 0 5px;">
                         <i class="fa fa-heart"></i>
                     </span> 
-                    re-Ported by <a target="_blank" rel="noopener" href="http://beantech.org">BeanTech</a> | 
+                    re-Ported by <a href="http://beantech.org">BeanTech</a> | 
                     <iframe
                         style="margin-left: 2px; margin-bottom:-5px;"
                         frameborder="0" scrolling="0" width="91px" height="20px"
@@ -505,19 +491,13 @@
 </footer>
 
 <!-- jQuery -->
-
 <script src="/js/jquery.min.js"></script>
 
-
 <!-- Bootstrap Core JavaScript -->
-
 <script src="/js/bootstrap.min.js"></script>
 
-
 <!-- Custom Theme JavaScript -->
-
 <script src="/js/hux-blog.min.js"></script>
-
 
 
 <!-- async load function -->

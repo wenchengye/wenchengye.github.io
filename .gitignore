@@ -51,3 +51,8 @@ ajcore.*
 
 # Js
 node_modules/
+package-lock.json
+
+# hexo
+db.json
+public/

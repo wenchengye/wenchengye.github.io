@@ -2,13 +2,13 @@
 <html lang="en">
 
 <!-- Head tag -->
-<head>
+<head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="null">
-    <meta name="keyword"  content="">
+    <meta name="keyword" content>
     <link rel="shortcut icon" href="/img/ironman-draw.png">
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
@@ -21,35 +21,21 @@
     <link rel="canonical" href="http://blog.overspark.me/2017/09/21/JCIP-chapter15-atomic-variable-and-nonblocking-synchronization/">
 
     <!-- Bootstrap Core CSS -->
-    
-<link rel="stylesheet" href="/css/bootstrap.min.css">
-
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
 
     <!-- Custom CSS --> 
-    
-<link rel="stylesheet" href="/css/beantech.min.css">
-
+    <link rel="stylesheet" href="/css/beantech.min.css">
     
     <!-- Pygments Highlight CSS -->
-    
-<link rel="stylesheet" href="/css/highlight.css">
+    <link rel="stylesheet" href="/css/highlight.css">
 
+    <link rel="stylesheet" href="/css/widget.css">
 
-    
-<link rel="stylesheet" href="/css/widget.css">
+    <link rel="stylesheet" href="/css/rocket.css">
 
+    <link rel="stylesheet" href="/css/signature.css">
 
-    
-<link rel="stylesheet" href="/css/rocket.css">
-
-
-    
-<link rel="stylesheet" href="/css/signature.css">
-
-
-    
-<link rel="stylesheet" href="/css/toc.css">
-
+    <link rel="stylesheet" href="/css/toc.css">
 
     <!-- Custom Fonts -->
     <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
@@ -73,7 +59,7 @@
 
     <!-- ga & ba script hoook -->
     <script></script>
-<meta name="generator" content="Hexo 5.4.0"></head>
+</head>
 
 
 <!-- hack iOS CSS :active style -->
@@ -244,7 +230,7 @@
 <h3 id="原子变量是更好的volatile"><a href="#原子变量是更好的volatile" class="headerlink" title="原子变量是更好的volatile"></a>原子变量是更好的volatile</h3><p>因为原子变量提供了很多原子性接口，基于之前状态的符合操作(例如++i)，在使用原子变量时其原子性才能实现；仅仅使用volatile而不加锁无法实现原子性的复合操作。</p>
 <h3 id="锁和原子变量的性能对比"><a href="#锁和原子变量的性能对比" class="headerlink" title="锁和原子变量的性能对比"></a>锁和原子变量的性能对比</h3><p>结论：在低竞争和中等竞争的情况下，原子变量的性能远好于锁；在竞争极高的情况下锁的戏能，锁的性能会优于原子变量。在高竞争情况下，锁的挂起线程机制会比使用CAS的CPU自旋机制性能更好。</p>
 <h2 id="非阻塞算法"><a href="#非阻塞算法" class="headerlink" title="非阻塞算法"></a>非阻塞算法</h2><p>非阻塞同步不会造成诸如死锁的活跃性问题，也不会造成线程优先级反转…文章开头说过了。<br>非阻塞同步算法常见于各种数据结构中，这一章介绍了一些非阻塞同步的例子。</p>
-<h3 id="非阻塞栈"><a href="#非阻塞栈" class="headerlink" title="非阻塞栈"></a>非阻塞栈</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ThreadSafe</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcurrentStack</span> &lt;<span class="title">E</span>&gt; </span>&#123;</span><br><span class="line">  AtomicReference&lt;Node&lt;E&gt;&gt; top = <span class="keyword">new</span> AtomicReference&lt;Node&lt;E&gt;&gt;();</span><br><span class="line">   </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">push</span><span class="params">(E item)</span> </span>&#123;</span><br><span class="line">    Node&lt;E&gt; newHead = <span class="keyword">new</span> Node&lt;E&gt;(item); Node&lt;E&gt; oldHead;</span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">      oldHead = top.get();</span><br><span class="line">      newHead.next = oldHead;</span><br><span class="line">    &#125; <span class="keyword">while</span> (!top.compareAndSet(oldHead, newHead));</span><br><span class="line">  &#125;</span><br><span class="line">    </span><br><span class="line">  <span class="function"><span class="keyword">public</span> E <span class="title">pop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Node&lt;E&gt; oldHead;</span><br><span class="line">    Node&lt;E&gt; newHead;</span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">      oldHead = top.get(); <span class="keyword">if</span> (oldHead == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">      newHead = oldHead.next;</span><br><span class="line">    &#125; <span class="keyword">while</span> (!top.compareAndSet(oldHead, newHead)); <span class="keyword">return</span> oldHead.item;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span> &lt;<span class="title">E</span>&gt; </span>&#123; </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> E item;</span><br><span class="line">    <span class="keyword">public</span> Node&lt;E&gt; next;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Node</span><span class="params">(E item)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">this</span>.item = item;</span><br><span class="line">    &#125; </span><br><span class="line">  &#125;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+<h3 id="非阻塞栈"><a href="#非阻塞栈" class="headerlink" title="非阻塞栈"></a>非阻塞栈</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ThreadSafe</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcurrentStack</span> &lt;<span class="title">E</span>&gt; </span>&#123;</span><br><span class="line">  AtomicReference&lt;Node&lt;E&gt;&gt; top = <span class="keyword">new</span> AtomicReference&lt;Node&lt;E&gt;&gt;();</span><br><span class="line">   </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">push</span><span class="params">(E item)</span> </span>&#123;</span><br><span class="line">    Node&lt;E&gt; newHead = <span class="keyword">new</span> Node&lt;E&gt;(item); Node&lt;E&gt; oldHead;</span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">      oldHead = top.get();</span><br><span class="line">      newHead.next = oldHead;</span><br><span class="line">    &#125; <span class="keyword">while</span> (!top.compareAndSet(oldHead, newHead));</span><br><span class="line">  &#125;</span><br><span class="line">    </span><br><span class="line">  <span class="function"><span class="keyword">public</span> E <span class="title">pop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Node&lt;E&gt; oldHead;</span><br><span class="line">    Node&lt;E&gt; newHead;</span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">      oldHead = top.get(); <span class="keyword">if</span> (oldHead == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">      newHead = oldHead.next;</span><br><span class="line">    &#125; <span class="keyword">while</span> (!top.compareAndSet(oldHead, newHead)); <span class="keyword">return</span> oldHead.item;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span> &lt;<span class="title">E</span>&gt; </span>&#123; </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> E item;</span><br><span class="line">    <span class="keyword">public</span> Node&lt;E&gt; next;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Node</span><span class="params">(E item)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">this</span>.item = item;</span><br><span class="line">    &#125; </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="非阻塞链表"><a href="#非阻塞链表" class="headerlink" title="非阻塞链表"></a>非阻塞链表</h3><p>果然很难写，充满了trick，关键需要理清需一次操作要更新哪些Atomic变量，并保持对多个Atomic更新的一致性。如果下面算法看不懂，可以回去阅读原文的解释。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ThreadSafe</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LinkedQueue</span> &lt;<span class="title">E</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span> &lt;<span class="title">E</span>&gt; </span>&#123; </span><br><span class="line">        <span class="keyword">final</span> E item;</span><br><span class="line">        <span class="keyword">final</span> AtomicReference&lt;Node&lt;E&gt;&gt; next;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Node</span><span class="params">(E item, Node&lt;E&gt; next)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.item = item;</span><br><span class="line">            <span class="keyword">this</span>.next = <span class="keyword">new</span> AtomicReference&lt;Node&lt;E&gt;&gt;(next);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Node&lt;E&gt; dummy = <span class="keyword">new</span> Node&lt;E&gt;(<span class="keyword">null</span>, <span class="keyword">null</span>); </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> AtomicReference&lt;Node&lt;E&gt;&gt; head = <span class="keyword">new</span> AtomicReference&lt;Node&lt;E&gt;&gt;(dummy);</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> AtomicReference&lt;Node&lt;E&gt;&gt; tail = <span class="keyword">new</span> AtomicReference&lt;Node&lt;E&gt;&gt;(dummy);</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">put</span><span class="params">(E item)</span> </span>&#123;</span><br><span class="line">        Node&lt;E&gt; newNode = <span class="keyword">new</span> Node&lt;E&gt;(item, <span class="keyword">null</span>); </span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">            Node&lt;E&gt; curTail = tail.get();</span><br><span class="line">            Node&lt;E&gt; tailNext = curTail.next.get(); </span><br><span class="line">            <span class="keyword">if</span> (curTail == tail.get()) &#123;</span><br><span class="line">                <span class="keyword">if</span> (tailNext != <span class="keyword">null</span>) &#123;  </span><br><span class="line">                    <span class="comment">// Queue in intermediate state, advance tail </span></span><br><span class="line">                    tail.compareAndSet(curTail, tailNext); </span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="comment">// In quiescent state, try inserting new node</span></span><br><span class="line">                    <span class="keyword">if</span> (curTail.next.compareAndSet(<span class="keyword">null</span>, newNode)) &#123;</span><br><span class="line">                        <span class="comment">// Insertion succeeded, try advancing tail</span></span><br><span class="line">                        tail.compareAndSet(curTail, newNode);</span><br><span class="line">                        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="Atomic-field-updater"><a href="#Atomic-field-updater" class="headerlink" title="Atomic field updater"></a>Atomic field updater</h3><p>AtomicFieldUpdater作为一个“Helper类”，可以为一般的volatile变量提供CAS操作。<br>与上一节的实现不同，在Java库中的非阻塞链表的实现里，Node类的next字段是一个volatile引用，并使用AtomicFieldUpdater更新；因为Node类对象会频繁的创建和销毁，这样做可以避免创建Atomic对象的消耗。</p>
@@ -292,7 +278,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Caution"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Caution</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">前言</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E9%94%81%E7%9A%84%E7%BC%BA%E9%99%B7"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">锁的缺陷</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E9%9D%9E%E9%98%BB%E5%A1%9E%E5%90%8C%E6%AD%A5%E7%9A%84%E7%A1%AC%E4%BB%B6%E6%94%AF%E6%8C%81"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">非阻塞同步的硬件支持</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#CAS"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">CAS</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E4%B8%80%E4%B8%AA%E9%9D%9E%E9%98%BB%E5%A1%9E%E8%AE%A1%E6%95%B0%E5%99%A8"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">一个非阻塞计数器</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E5%8E%9F%E5%AD%90%E5%8F%98%E9%87%8F"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">原子变量</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%8E%9F%E5%AD%90%E5%8F%98%E9%87%8F%E6%98%AF%E6%9B%B4%E5%A5%BD%E7%9A%84volatile"><span class="toc-nav-number">5.1.</span> <span class="toc-nav-text">原子变量是更好的volatile</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E9%94%81%E5%92%8C%E5%8E%9F%E5%AD%90%E5%8F%98%E9%87%8F%E7%9A%84%E6%80%A7%E8%83%BD%E5%AF%B9%E6%AF%94"><span class="toc-nav-number">5.2.</span> <span class="toc-nav-text">锁和原子变量的性能对比</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E9%9D%9E%E9%98%BB%E5%A1%9E%E7%AE%97%E6%B3%95"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">非阻塞算法</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E9%9D%9E%E9%98%BB%E5%A1%9E%E6%A0%88"><span class="toc-nav-number">6.1.</span> <span class="toc-nav-text">非阻塞栈</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E9%9D%9E%E9%98%BB%E5%A1%9E%E9%93%BE%E8%A1%A8"><span class="toc-nav-number">6.2.</span> <span class="toc-nav-text">非阻塞链表</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Atomic-field-updater"><span class="toc-nav-number">6.3.</span> <span class="toc-nav-text">Atomic field updater</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#ABA%E9%94%99%E8%AF%AF"><span class="toc-nav-number">6.4.</span> <span class="toc-nav-text">ABA错误</span></a></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Caution"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Caution</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#前言"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">前言</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#锁的缺陷"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">锁的缺陷</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#非阻塞同步的硬件支持"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">非阻塞同步的硬件支持</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#CAS"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">CAS</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#一个非阻塞计数器"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">一个非阻塞计数器</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#原子变量"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">原子变量</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#原子变量是更好的volatile"><span class="toc-nav-number">5.1.</span> <span class="toc-nav-text">原子变量是更好的volatile</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#锁和原子变量的性能对比"><span class="toc-nav-number">5.2.</span> <span class="toc-nav-text">锁和原子变量的性能对比</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#非阻塞算法"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">非阻塞算法</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#非阻塞栈"><span class="toc-nav-number">6.1.</span> <span class="toc-nav-text">非阻塞栈</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#非阻塞链表"><span class="toc-nav-number">6.2.</span> <span class="toc-nav-text">非阻塞链表</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Atomic-field-updater"><span class="toc-nav-number">6.3.</span> <span class="toc-nav-text">Atomic field updater</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#ABA错误"><span class="toc-nav-number">6.4.</span> <span class="toc-nav-text">ABA错误</span></a></li></ol></li></ol>
         
         </div>
       </aside>
@@ -421,11 +407,11 @@
                 <p class="copyright text-muted">
                     Copyright &copy; Overspark 2021 
                     <br>
-                    Theme by <a target="_blank" rel="noopener" href="http://huangxuan.me">Hux</a> 
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
                     <span style="display: inline-block; margin: 0 5px;">
                         <i class="fa fa-heart"></i>
                     </span> 
-                    re-Ported by <a target="_blank" rel="noopener" href="http://beantech.org">BeanTech</a> | 
+                    re-Ported by <a href="http://beantech.org">BeanTech</a> | 
                     <iframe
                         style="margin-left: 2px; margin-bottom:-5px;"
                         frameborder="0" scrolling="0" width="91px" height="20px"
@@ -438,19 +424,13 @@
 </footer>
 
 <!-- jQuery -->
-
 <script src="/js/jquery.min.js"></script>
 
-
 <!-- Bootstrap Core JavaScript -->
-
 <script src="/js/bootstrap.min.js"></script>
 
-
 <!-- Custom Theme JavaScript -->
-
 <script src="/js/hux-blog.min.js"></script>
-
 
 
 <!-- async load function -->

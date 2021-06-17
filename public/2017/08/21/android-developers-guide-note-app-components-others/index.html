@@ -2,13 +2,13 @@
 <html lang="en">
 
 <!-- Head tag -->
-<head>
+<head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="null">
-    <meta name="keyword"  content="">
+    <meta name="keyword" content>
     <link rel="shortcut icon" href="/img/ironman-draw.png">
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
@@ -21,35 +21,21 @@
     <link rel="canonical" href="http://blog.overspark.me/2017/08/21/android-developers-guide-note-app-components-others/">
 
     <!-- Bootstrap Core CSS -->
-    
-<link rel="stylesheet" href="/css/bootstrap.min.css">
-
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
 
     <!-- Custom CSS --> 
-    
-<link rel="stylesheet" href="/css/beantech.min.css">
-
+    <link rel="stylesheet" href="/css/beantech.min.css">
     
     <!-- Pygments Highlight CSS -->
-    
-<link rel="stylesheet" href="/css/highlight.css">
+    <link rel="stylesheet" href="/css/highlight.css">
 
+    <link rel="stylesheet" href="/css/widget.css">
 
-    
-<link rel="stylesheet" href="/css/widget.css">
+    <link rel="stylesheet" href="/css/rocket.css">
 
+    <link rel="stylesheet" href="/css/signature.css">
 
-    
-<link rel="stylesheet" href="/css/rocket.css">
-
-
-    
-<link rel="stylesheet" href="/css/signature.css">
-
-
-    
-<link rel="stylesheet" href="/css/toc.css">
-
+    <link rel="stylesheet" href="/css/toc.css">
 
     <!-- Custom Fonts -->
     <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
@@ -73,7 +59,7 @@
 
     <!-- ga & ba script hoook -->
     <script></script>
-<meta name="generator" content="Hexo 5.4.0"></head>
+</head>
 
 
 <!-- hack iOS CSS :active style -->
@@ -229,17 +215,17 @@
                 post-container">
 
                 <h2 id="展开点"><a href="#展开点" class="headerlink" title="展开点"></a>展开点</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=vBjTXKpaFj8&amp;feature=youtu.be">Background Optimizations</a>。</li>
+<li><a href="https://www.youtube.com/watch?v=vBjTXKpaFj8&amp;feature=youtu.be" target="_blank" rel="noopener">Background Optimizations</a>。</li>
 <li>foreground broadcast and receiver；FLAG_RECEIVER_FOREGROUND。</li>
 <li>custom permission的定义App和使用App的安装顺序；如果在permission还没定义时使用会发生什么。</li>
 <li>explicit intent with receiver。</li>
 <li>local broadcast and receiver。</li>
-<li><a target="_blank" rel="noopener" href="https://developer.android.google.cn/topic/performance/scheduling.html">Intelligent Job-Scheduling</a>。</li>
+<li><a href="https://developer.android.google.cn/topic/performance/scheduling.html" target="_blank" rel="noopener">Intelligent Job-Scheduling</a>。</li>
 <li>Resize App Widget。</li>
 <li>ViewStub。</li>
 <li>AppWidgetManager in Detail。</li>
 <li>orderedBroadcast。 </li>
-<li><a target="_blank" rel="noopener" href="https://android.googlesource.com/platform/packages/apps/Launcher3/">Launcher</a>。</li>
+<li><a href="https://android.googlesource.com/platform/packages/apps/Launcher3/" target="_blank" rel="noopener">Launcher</a>。</li>
 </ul>
 <h2 id="Cautions"><a href="#Cautions" class="headerlink" title="Cautions"></a>Cautions</h2><ul>
 <li>所有的系统Broadcast记录在Android SDK的BROADCAST_ACTIONS.TXT文件中。</li>
@@ -342,7 +328,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#%E5%B1%95%E5%BC%80%E7%82%B9"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">展开点</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Cautions"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Cautions</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Broadcasts"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">Broadcasts</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E7%B3%BB%E7%BB%9F%E5%B9%BF%E6%92%AD"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">系统广播</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E6%8E%A5%E6%94%B6%E5%B9%BF%E6%92%AD"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">接收广播</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#goAsync"><span class="toc-nav-number">3.2.1.</span> <span class="toc-nav-text">goAsync()</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%8F%91%E9%80%81%E5%B9%BF%E6%92%AD"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">发送广播</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5"><span class="toc-nav-number">3.4.</span> <span class="toc-nav-text">最佳实践</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#App-Widget"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">App Widget</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%9F%BA%E7%A1%80"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">基础</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%9C%A8Manifest%E4%B8%AD"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">在Manifest中</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#MetaData"><span class="toc-nav-number">4.3.</span> <span class="toc-nav-text">MetaData</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Widget%E5%B8%83%E5%B1%80%E6%96%87%E4%BB%B6"><span class="toc-nav-number">4.4.</span> <span class="toc-nav-text">Widget布局文件</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E8%AE%BE%E7%BD%AEmargin"><span class="toc-nav-number">4.4.1.</span> <span class="toc-nav-text">设置margin</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%AE%9E%E7%8E%B0AppWidgetProvider%E7%B1%BB"><span class="toc-nav-number">4.5.</span> <span class="toc-nav-text">实现AppWidgetProvider类</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Configuration-Activity"><span class="toc-nav-number">4.6.</span> <span class="toc-nav-text">Configuration Activity</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E9%A2%84%E8%A7%88%E5%9B%BE"><span class="toc-nav-number">4.7.</span> <span class="toc-nav-text">预览图</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#AppWidget%E6%98%BE%E7%A4%BA%E5%88%97%E8%A1%A8"><span class="toc-nav-number">4.8.</span> <span class="toc-nav-text">AppWidget显示列表</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#App-Widget-Host"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">App Widget Host</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Processes-and-Threads"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">Processes and Threads</span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#展开点"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">展开点</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Cautions"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Cautions</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Broadcasts"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">Broadcasts</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#系统广播"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">系统广播</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#接收广播"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">接收广播</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#goAsync"><span class="toc-nav-number">3.2.1.</span> <span class="toc-nav-text">goAsync()</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#发送广播"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">发送广播</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#最佳实践"><span class="toc-nav-number">3.4.</span> <span class="toc-nav-text">最佳实践</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#App-Widget"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">App Widget</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#基础"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">基础</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#在Manifest中"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">在Manifest中</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#MetaData"><span class="toc-nav-number">4.3.</span> <span class="toc-nav-text">MetaData</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Widget布局文件"><span class="toc-nav-number">4.4.</span> <span class="toc-nav-text">Widget布局文件</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#设置margin"><span class="toc-nav-number">4.4.1.</span> <span class="toc-nav-text">设置margin</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#实现AppWidgetProvider类"><span class="toc-nav-number">4.5.</span> <span class="toc-nav-text">实现AppWidgetProvider类</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Configuration-Activity"><span class="toc-nav-number">4.6.</span> <span class="toc-nav-text">Configuration Activity</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#预览图"><span class="toc-nav-number">4.7.</span> <span class="toc-nav-text">预览图</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#AppWidget显示列表"><span class="toc-nav-number">4.8.</span> <span class="toc-nav-text">AppWidget显示列表</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#App-Widget-Host"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">App Widget Host</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Processes-and-Threads"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">Processes and Threads</span></a></li></ol>
         
         </div>
       </aside>
@@ -471,11 +457,11 @@
                 <p class="copyright text-muted">
                     Copyright &copy; Overspark 2021 
                     <br>
-                    Theme by <a target="_blank" rel="noopener" href="http://huangxuan.me">Hux</a> 
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
                     <span style="display: inline-block; margin: 0 5px;">
                         <i class="fa fa-heart"></i>
                     </span> 
-                    re-Ported by <a target="_blank" rel="noopener" href="http://beantech.org">BeanTech</a> | 
+                    re-Ported by <a href="http://beantech.org">BeanTech</a> | 
                     <iframe
                         style="margin-left: 2px; margin-bottom:-5px;"
                         frameborder="0" scrolling="0" width="91px" height="20px"
@@ -488,19 +474,13 @@
 </footer>
 
 <!-- jQuery -->
-
 <script src="/js/jquery.min.js"></script>
 
-
 <!-- Bootstrap Core JavaScript -->
-
 <script src="/js/bootstrap.min.js"></script>
 
-
 <!-- Custom Theme JavaScript -->
-
 <script src="/js/hux-blog.min.js"></script>
-
 
 
 <!-- async load function -->
